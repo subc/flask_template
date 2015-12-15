@@ -5,10 +5,11 @@ import requests
 from pip._vendor.distlib.util import cached_property
 
 from app import conf
+from module.scraping.matome import MatomeMixin
 from module.scraping.storage import SearchStorage
 
 
-class Subject(object):
+class Subject(MatomeMixin):
     def __init__(self, site, line):
         self.site = site
         self._line = line
@@ -35,6 +36,14 @@ class Subject(object):
         match_str = re.search(r'\(\d{1,4}\)', tail6).group(0)
         return int(match_str.replace('(', '').replace(')', ''))
 
+    @cached_property
+    def dat_url(self):
+        """
+        http://news22.2ch.net/newsplus/dat/1185716060.dat
+        :return:
+        """
+        return '{}dat/{}'.format(self.site.url, self.dat)
+
     @classmethod
     def get_from_url(cls, site):
         """
@@ -42,7 +51,7 @@ class Subject(object):
         :param site: Site
         :return: list[cls]
         """
-        response = requests.get(site.url)
+        response = requests.get(site.subjects_url)
         assert (response.status_code == 200), response.text
 
         # parse
@@ -56,7 +65,7 @@ class Subject(object):
                 r.append(_)
             except:
                 pass
-            
+
         # 投稿数でsubjectをフィルタリング
         limit = conf().get('SCRAPING_LIMIT')
         return [_r for _r in r if _r.count_res >= limit]
@@ -82,3 +91,10 @@ class Subject(object):
 
     def printer(self):
         print(self)
+
+    def execute_matome(self):
+        """
+        まとめる
+        """
+        print(self.dat_url)
+        Subject.matome(self.dat_url)

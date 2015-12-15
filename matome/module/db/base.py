@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, DateTime
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 import re
 from utils.db import get_db_session
+import datetime
 
 Base = declarative_base()
 
@@ -93,3 +94,8 @@ class DBBaseMixin(object):
         session.add(self)
         session.commit()
         return self
+
+
+class CreateUpdateMixin(object):
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.now, nullable=True)

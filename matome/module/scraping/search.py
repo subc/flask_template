@@ -33,17 +33,19 @@ class SearchManager(object):
         ]
 
         # 名前でフィルタ
-        r = {}
+        subjects_dict = {}
         for key in keywords:
             for subject in subjects:
                 if key in subject.title:
-                    r[subject.dat] = subject
+                    subjects_dict[subject.dat] = subject
 
         # 禁止名でフィルタ
-
-
-        print(r)
-        raise
-
-        print("Finish")
         pass
+
+        print(subjects_dict)
+
+        for key in subjects_dict:
+            sub = subjects_dict[key]
+            sub.execute_matome()
+
+        return subject

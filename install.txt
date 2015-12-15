@@ -1,0 +1,13 @@
+
+
+
+# DB
+CREATE DATABASE matome DEFAULT CHARACTER SET utf8;
+
+INSERT INTO `site` (`id`, `title`, `url`, `created_at`, `updated_at`)
+VALUES
+	(1, 'phantom', 'http://anago.2ch.sc/applism/', '2015-12-15 00:00:00', NULL);
+
+
+
+# require

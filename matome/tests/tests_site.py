@@ -9,5 +9,5 @@ def tests_site():
 
 
 def tests_site_search():
-    SearchManager.search(Site.get(1))
-    raise
+    site = Site.get(1)
+    SearchManager().search(site)

@@ -30,3 +30,7 @@ def create_app(config=None):
     app.register_blueprint(report.app, url_prefix="/report")
 
     return app
+
+
+def conf():
+    return create_app().config

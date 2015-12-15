@@ -8,22 +8,42 @@ class SearchManager(object):
     """
     スレッドを検索する
     """
-    @classmethod
-    def search(cls, site):
-        method = getattr(cls, site.name)
-        method(site)
+    def search(self, site):
+        subjects = Subject.get_from_url(site)
+        method = getattr(self, site.name)
+        r = method(subjects, site)
 
         # 参照を切る
         method = None
+        del method
+        return r
 
-    @classmethod
-    def punk(cls, site):
+    def phantom(self, subjects, site):
         """
         ファンキル
+        :param subjects: list[Subject]
         :param site: Site
         """
-        print("Start ファンキル")
-        subjects = Subject.get_from_url(site.url)
+        keywords = [
+            'ファンキル',
+            'オブキル'
+        ]
+        keywords_ignore = [
+
+        ]
+
+        # 名前でフィルタ
+        r = {}
+        for key in keywords:
+            for subject in subjects:
+                if key in subject.title:
+                    r[subject.dat] = subject
+
+        # 禁止名でフィルタ
+
+
+        print(r)
+        raise
 
         print("Finish")
         pass

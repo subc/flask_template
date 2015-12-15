@@ -4,16 +4,17 @@ import re
 import requests
 from pip._vendor.distlib.util import cached_property
 
+from app import conf
+from module.scraping.storage import SearchStorage
+
 
 class Subject(object):
-    def __init__(self, line):
-        # self check
-        Subject.check(line)
-
+    def __init__(self, site, line):
+        self.site = site
         self._line = line
-        self.dat
-        self.count_res
-        self.title
+
+        # self check
+        self.check(line)
 
     def __repr__(self):
         return 'Title:{} R:{} D:{}'.format(self.title, self.count_res, self.dat)
@@ -32,16 +33,16 @@ class Subject(object):
         body = self._line.split('<>')[1]
         tail6 = body[-6:]
         match_str = re.search(r'\(\d{1,4}\)', tail6).group(0)
-        return match_str.replace('(', '').replace(')', '')
+        return int(match_str.replace('(', '').replace(')', ''))
 
     @classmethod
-    def get_from_url(cls, url):
+    def get_from_url(cls, site):
         """
         urlからダウンロードする
-        :param url: str
+        :param site: Site
         :return: list[cls]
         """
-        response = requests.get(url)
+        response = requests.get(site.url)
         assert (response.status_code == 200), response.text
 
         # parse
@@ -51,21 +52,33 @@ class Subject(object):
         r = []
         for line in data:
             try:
-                _ = cls(line)
+                _ = cls(site, line)
                 r.append(_)
             except:
                 pass
-        print(r)
-        return r
+            
+        # 投稿数でsubjectをフィルタリング
+        limit = conf().get('SCRAPING_LIMIT')
+        return [_r for _r in r if _r.count_res >= limit]
 
-    @classmethod
-    def check(cls, line):
+    def check(self, line):
         """
         正常なデータであること
         input example) 1449279464.dat<>白猫プロジェクト無課金スレ★1217 (827)
         :param line: s
         """
         assert len(line.split('<>')) == 2, line
+        assert self.dat
+        assert self.count_res
+        assert self.title
+
+    def is_enable(self):
+        """
+        redisに問い合わせてチェック済みならFalse
+        :return: bool
+        """
+        s = SearchStorage(self.site)
+        return not bool(s.get_dat(self.dat))
 
     def printer(self):
         print(self)

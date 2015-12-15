@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+debug = True
 
 # database
 DB = {
@@ -18,5 +19,5 @@ REDIS = {
     }
 }
 
-
-debug = True
+# スクレイピングするスレッドの投稿数上限
+SCRAPING_LIMIT = 200

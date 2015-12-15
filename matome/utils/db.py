@@ -32,6 +32,6 @@ def get_db_engine():
     db_user = _db['user']
     db_host = _db['host']
     db_name = _db['db_name']
-    db_path = 'mysql://{}@{}/{}'.format(db_user, db_host, db_name)
+    db_path = 'mysql://{}@{}/{}?charset=utf8'.format(db_user, db_host, db_name)
     engine = create_engine(db_path, encoding='utf-8')
     return engine

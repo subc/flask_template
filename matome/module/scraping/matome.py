@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
 from collections import defaultdict
 
 import requests
@@ -8,6 +6,8 @@ from werkzeug.utils import cached_property
 from janome.tokenizer import Tokenizer
 import re
 from bs4 import BeautifulSoup
+
+from module.site.page import Page
 
 
 def token_is_sub(token):
@@ -81,7 +81,7 @@ def main(url):
 
     # 評価高い投稿を出力
     for key in r:
-        output = Outputter()
+        output = PageRepository()
         if r[key].priority > 200:
             print("++++++++++++++++++++")
             print(r[key].priority)
@@ -123,6 +123,7 @@ def main(url):
     print("+++++++++++++++++++++++")
     print("tfidf2-post")
     print("+++++++++++++++++++++++")
+    pages = []
     for key in tfidf2_post:
         if tfidf2[key] > 5:
             print("+++++++{}+++++++".format(key))
@@ -130,7 +131,7 @@ def main(url):
             for posted in tfidf2_post[key]:
                 posted.priority_from_keyword()
 
-            printer_res(tfidf2_post[key], r)
+            pages.append(printer_res(tfidf2_post[key], r))
             # print "".join([x.post_message for x in tfidf2_post[key]])
 
     print("+++++++++++++++++++++++")
@@ -139,6 +140,9 @@ def main(url):
     for key in tfidf2:
         if tfidf2[key] > 5:
             print("{}:{}".format(key, tfidf2[key]))
+
+    # dbに記録
+    Page.bulk_insert([page.output_for_page() for page in pages if page.is_enable])
 
     print("finish")
 
@@ -159,6 +163,7 @@ def printer_res(posts, r):
     """
     レス数が多いときは数を減らしてprint
     目安は7
+    :rtype : PageRepository
     """
     # priorityがマイナスは対象外
     posts = [p for p in posts if p.priority >= 0]
@@ -178,10 +183,11 @@ def printer_res(posts, r):
     # printer
     _posts = sorted(_posts, key=lambda x: x.num)
     _printed = []
-    output = Outputter()
+    output = PageRepository()
     for post in _posts:
         _printed = post.printer(r=r, printed=_printed, output=output)
     output.printer()
+    return output
 
 
 def roulette(posts, limit):
@@ -194,7 +200,7 @@ def roulette(posts, limit):
     return posts[:limit]
 
 
-class Outputter(object):
+class PageRepository(object):
     def __init__(self):
         self.output = []
         self.counter = 0
@@ -202,6 +208,26 @@ class Outputter(object):
     @property
     def count(self):
         return self.counter
+
+    @property
+    def is_enable(self):
+        """
+        DB出力するならTrue
+        :return: bool
+        """
+        return self.count > 4
+
+    def output_for_page(self):
+        """
+        DB出力用のPageクラスを出力
+        :rtype : Page
+        """
+        s = ''.join([post.generate_post_message_for_db() for post in self.output])
+        print(s, type(s))
+        return Page(site_id=1,
+                    dat_id=1,
+                    page=s
+                    )
 
     def _count_up(self):
         self.counter += 1
@@ -283,6 +309,9 @@ class Posted(object):
             except:
                 pass
         return r
+
+    def generate_post_message_for_db(self):
+        return '{}<br/>'.format(str(self.num)) + ''.join([_s for _s in self.post_message_for_output])
 
     def set_cheap(self):
         """

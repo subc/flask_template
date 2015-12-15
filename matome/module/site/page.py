@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sqlalchemy import Column, String, Integer, UnicodeText
+from sqlalchemy import Column, String, Integer, Text
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 
@@ -9,7 +9,7 @@ Base = declarative_base()
 class Page(DBBaseMixin, CreateUpdateMixin, Base):
     site_id = Column('site_id', Integer)
     dat_id = Column('dat_id', Integer)
-    page = Column('page', UnicodeText)
+    page = Column('page', Text)
 
     def __init__(self, site_id, dat_id, page):
         self.site_id = site_id,

@@ -6783,7 +6783,8 @@ button.close {
 
   .label-link {
     /*width: 380px;*/
-    bottom: 0;
+    height: 35px;
+    bottom: -10px;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 5px;
@@ -6792,7 +6793,7 @@ button.close {
     -o-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
-    font-size: 20px;
+    font-size: 16px;
     position: absolute;
     left: 10px;
   }
@@ -6800,6 +6801,11 @@ button.close {
   .label-link a {
     color: white;
   }
+  .label-link a:hover {
+    color: white;
+    text-decoration:none;
+  }
+
 
   .label-top-view {
     position: absolute;
@@ -6812,19 +6818,24 @@ button.close {
     margin-top: 75px;
   }
 
-  .label-new {
+  .label-top {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
     position: absolute;
     text-align: right;
-    background-color: rgba(255, 0, 0, 0.7);
-    color: white;
-    right: 10px;
     padding: 5px;
-    margin-top: 5px;
+    margin-top: 7px;
+  }
+  .label-new {
+    background-color: rgba(255, 0, 0, 0.7);
+    right: 10px;
   }
 
   .tile-font {
     color: white;
     text-shadow: 2px 2px 1px #000000;
+    margin-top: 35px;
+    padding-top: 45px;
   }
 
   .span4-custom {
@@ -6889,7 +6900,7 @@ button.close {
 
 @media (min-width: 1200px) {
   .bg-custom {
-    background-position: 10px 50px;
+    background-position: 10px 30px;
   }
   .label-link {
     width: 380px;

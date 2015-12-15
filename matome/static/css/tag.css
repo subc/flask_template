@@ -66,3 +66,24 @@
 
 .tags a:hover:before{border-color:transparent #555 transparent transparent;}
 
+
+/*枠丸ごとリンク*/
+.wrap {
+	width: 100%;
+	height: 100%;
+}
+
+.wrap a {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.wrap a:hover{
+	/*color:orange;*/
+}
+.wrap:hover{
+	opacity:0.85;
+	text-decoration:none;
+}
+

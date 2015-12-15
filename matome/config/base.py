@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 DB = {
-    'db_name': 'flask',
+    'db_name': 'matome',
     'user': 'root',
     'password': '',
     'host': '127.0.0.1',

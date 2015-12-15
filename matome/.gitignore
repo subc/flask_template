@@ -9,3 +9,4 @@ venv
 sysdic
 .cache
 *.egg-info/
+.cache

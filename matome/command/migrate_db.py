@@ -2,15 +2,19 @@
 from flask_script import Command
 from app import create_app
 from module.book import Book
+from module.site.site import Site
 from utils.db import get_db_engine
 
 DatabaseTables = [
-    Book
+    Book,
+    Site,
 ]
 
 
 class MigrateDB(Command):
-    description = 'migrate database table'
+    """
+    migrate database table
+    """
 
     def run(self):
         print("start")

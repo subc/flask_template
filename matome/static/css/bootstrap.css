@@ -6773,16 +6773,11 @@ button.close {
 
 
 @media (min-width: 100px) {
-  /*TODO-dummy 768 - 1200*/
   .bg-custom {
-    /*background-image: url("../img/bg/punk.png");*/
     background-repeat: no-repeat;
-    /*background-attachment: absolute;*/
-    /*background-position: 10px 50px;*/
   }
 
   .label-link {
-    /*width: 380px;*/
     height: 35px;
     bottom: -10px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -6806,7 +6801,6 @@ button.close {
     text-decoration:none;
   }
 
-
   .label-top-view {
     position: absolute;
     text-align: right;
@@ -6824,7 +6818,6 @@ button.close {
     position: absolute;
     text-align: right;
     padding: 5px;
-    margin-top: 7px;
   }
   .label-new {
     background-color: rgba(255, 0, 0, 0.7);
@@ -6835,7 +6828,7 @@ button.close {
     color: white;
     text-shadow: 2px 2px 1px #000000;
     margin-top: 35px;
-    padding-top: 45px;
+    padding-top: 35px;
   }
 
   .span4-custom {
@@ -6860,7 +6853,6 @@ button.close {
     line-height: 30px;
     color: white;
     background-color: #b84d45;
-    /*background-image: url("../img/bg.png");*/
     background-image: url("http://gu3.co.jp/game/files/2014/11/game_670x183_03.jpg");
     background-size: cover;
     -webkit-border-radius: 6px;
@@ -6894,7 +6886,6 @@ button.close {
   .top-view-font {
     font-size: 30px;
   }
-  /*TODO-dummy*/
 }
 
 
@@ -6917,6 +6908,12 @@ button.close {
   .label-top-view {
     margin-right: 40px;
   }
+  .label-top {
+    margin-top: 22px;
+  }
+  .tile-font {
+    padding-top: 55px;
+  }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .bg-custom {
@@ -6927,6 +6924,12 @@ button.close {
   }
   .label-top-view {
     margin-right: 40px;
+  }
+  .label-top {
+    margin-top: 25px;
+  }
+  .tile-font {
+    padding-top: 58px;
   }
 }
 @media (max-width: 767px) {
@@ -6942,6 +6945,12 @@ button.close {
   }
   .label-top-view {
     margin-right: 25px;
+  }
+  .label-top {
+    margin-top: 24px;
+  }
+  .tile-font {
+    padding-top: 55px;
   }
 }
 

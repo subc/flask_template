@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-  <meta charset="utf-8" />
-  <title>{% block title %}{% endblock %} - Hello Flask!</title>
-  <link type="text/css" rel="stylesheet"
-       href="{{ url_for('static',
-                        filename='hello.css')}}" />
+<meta charset="utf-8">
+<title>{% block title %}{% endblock %} - Hello Flask!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<link href="static/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+  body {
+    padding-bottom: 40px;
+  }
+</style>
+<script src="static/js/bootstrap.js"></script>
 </head>
+
 <body>
 
 {% block body %}{% endblock %}

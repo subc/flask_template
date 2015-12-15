@@ -9,7 +9,7 @@ tls = threading.local()
 
 
 def create_app(config=None):
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='/static')
 
     # configをtlsに保存して、2回目以降呼び出したときにもmanage.pyで指定したconfigにアクセスする
     if config:

@@ -3,14 +3,216 @@
 {% block title %}index{% endblock %}
 
 {% block body %}
-{{ book.id }}
-{{ book.title }}
-{{ book.publish }}
 
-<h1>this is index page</h1><br />
-{#<a href="{{ url_for('index.index') }}">index</a><br /><br />#}
-{##}
-{#<h3>report</h3>#}
-{#<a href="{{ url_for('report.index') }}">report - index</a><br />#}
-{#<a href="{{ url_for('report.report_list') }}">report - list</a><br />#}
+    <!--HEADER-->
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" style="color: white" href="#">ファンキルまとめ（仮）</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">過去ログ</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <!--HEADER-->
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="top-view-title">
+        <!--<h1>Hello, world!(開発中のサイト)</h1>-->
+        <div class="label-top-view">(開発中のサイト)</div>
+        <!--<p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
+      </div>
+
+      <div class="page-header">
+        <h1>【リセマラ当たり姫】</h1>
+      </div>
+      <div class="message">
+            <p class="message-contributor">1 :</p>
+
+            <p class="message-body">【リセマラ当たり姫】 <br/>
+                <br/>
+                グリダヴォル <br/>
+                LS:全員に物防+10 <br/>
+                スキル:周囲回復 <br/>
+                <br/>
+                芭蕉扇 <br/>
+                LS:全員に魔防+10 <br/>
+                スキル:自己回復、回避必殺大幅上昇バフ、HP消費1の魔弾 <br/>
+                <br/>
+                シェキナー <br/>
+                LS:全員に技+10 <br/>
+                スキル:攻撃範囲+1 <br/>
+                <br/>
+                イシューリエル <br/>
+                LS:飛行に力+10・守+10 <br/>
+                スキル:HP吸収、飛行 <br/>
+                <br/>
+                ウコンバサラ <br/>
+                LS:剣斧槍ユニットの物防×1.2 <br/>
+                スキル:HP減少分を攻撃力に加算 <br/>
+                <br/>
+                馬パラシュ <br/>
+                LS:斧弓銃ユニットの物防×1.2 <br/>
+                スキル:命中回避大幅上昇自己バフ <br/>
+                <br/>
+                ※LS＝リーダースキル（チームリーダーにするとチーム全体に効果） <br/>
+            </p>
+        </div>
+
+        <div class="message">
+            <p class="message-contributor">2 :</p>
+
+            <p class="message-body">さやかは強いよな <br/>
+                2凸しか出来なかったけど、そこらの4凸よりも全然強いっていう・・・ <br/>
+                赤☆付きまくりの4凸マナレーヴァティンちゃんよりも余裕で強い <br/>
+                なんで2凸で戦闘力４７０とか行っちゃうんだよｗ <br/>
+            </p>
+        </div>
+      <div class="well top-view-font">
+        <p><a href="">【リセマラ当たり姫】.. の続きを読む  >></a></p>
+      </div>
+
+      <hr>
+
+      <!--<div class="hero-unit">-->
+        <!--<h1>Hello, world!</h1>-->
+        <!--<p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>-->
+        <!--<p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
+      <!--</div>-->
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom" style='background-image:url("./static/img/bg/punk.png")'>
+          <h3 class="h3-title">ティル進化できるじゃん</h3>
+          <div class="label-new">New!!</div>
+          <p class="tile-font">ティル進化できるじゃん ☆4まだ50にしてないから進化してみてちょ </p>
+          <p class="label-link"><a class="" href="#">ティル ★5 の続きを読む &raquo;</a></p>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom" style='background-image:url("./static/img/bg/punk.png")'>
+          <h3 class="h3-title">ティル進化できるじゃん</h3>
+          <div class="label-new">New!!</div>
+          <p class="tile-font">ティル進化できるじゃん ☆4まだ50にしてないから進化してみてちょ </p>
+          <p class="label-link"><a class="" href="#">ティル ★5 の続きを読む &raquo;</a></p>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom" style='background-image:url("./static/img/bg/punk.png")'>
+          <h3 class="h3-title">ティル進化できるじゃん</h3>
+          <div class="label-new">New!!</div>
+          <p class="tile-font">ティル進化できるじゃん ☆4まだ50にしてないから進化してみてちょ </p>
+          <p class="label-link"><a class="" href="#">ティル ★5 の続きを読む &raquo;</a></p>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom" style='background-image:url("./static/img/bg/punk2.png")'>
+          <h3 class="h3-title">☆5直にはHPや物防で負け</h3>
+          <div class="label-new">New!!</div>
+          <p class="tile-font">☆5直にはHPや物防で負けるなぁ 未だにティルフィンガーさん守持ってない  </p>
+          <p class="label-link"><a class="" href="#">5直にはHPや の続きを読む &raquo;</a></p>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom" style='background-image:url("./static/img/bg/punk.png")'>
+          <h3 class="h3-title">ティル進化できるじゃん</h3>
+          <div class="label-new">New!!</div>
+          <p class="tile-font">ティル進化できるじゃん ☆4まだ50にしてないから進化してみてちょ </p>
+          <p class="label-link"><a class="" href="#">ティル ★5 の続きを読む &raquo;</a></p>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom" style='background-image:url("./static/img/bg/punk2.png")'>
+          <h3 class="h3-title">☆5直にはHPや物防で負け</h3>
+          <div class="label-new">New!!</div>
+          <p class="tile-font">☆5直にはHPや物防で負けるなぁ 未だにティルフィンガーさん守持ってない  </p>
+          <p class="label-link"><a class="" href="#">5直にはHPや の続きを読む &raquo;</a></p>
+        </div>
+
+      </div>
+
+
+      <hr>
+
+      <div class="page-header">
+        <h1>List groups</h1>
+      </div>
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="list-group">
+            <a href="#" class="list-group-item active">
+              <h4 class="list-group-item-heading">新着記事</h4>
+            </a>
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">5直にはHPや物防で負け</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">ティルフィンガーさん</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">ティル進化できるじゃん</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-6">
+          <div class="list-group">
+            <a href="#" class="list-group-item active">
+              <h4 class="list-group-item-heading">人気記事</h4>
+            </a>
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">5直にはHPや物防で負け</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">ティルフィンガーさん</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">ティル進化できるじゃん</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+          </div>
+        </div><!-- /.col-sm-4 -->
+      </div>
+
+
+      <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!--スマホだけ広告表示-->
+    <script>
+      document.write(navigator.appVersion);
+
+// スマホだけ表示
+      if (navigator.userAgent.indexOf("iPhone") != -1 && navigator.userAgent.indexOf("Android") != -1 && navigator.userAgent.indexOf("iPad") == -1) {
+        document.write(
+          '<div class="navbar navbar-inverse navbar-fixed-bottom">' +
+            '<div class="navbar-inner">' +
+              '<div class="container">' +
+                '<img src="http://placehold.jp/400x100.png">'+
+              '</div>' +
+            '</div>' +
+          '</div>'
+              );
+      }
+    </script>
+    <!--スマホだけ広告表示-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./js/bootstrap.js"></script>
+
+
+
+
 {% endblock %}

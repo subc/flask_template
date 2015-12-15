@@ -8,9 +8,9 @@ class SearchManager(object):
     """
     スレッドを検索する
     """
-    def search(self, site):
+    def search_and_scraping(self, site):
         subjects = Subject.get_from_url(site)
-        method = getattr(self, site.name)
+        method = getattr(self, site.title)
         r = method(subjects, site)
 
         # 参照を切る

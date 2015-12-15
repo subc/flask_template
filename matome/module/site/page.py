@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 from pip._vendor.distlib.util import cached_property
-from sqlalchemy import Column, String, Integer, Text, UnicodeText
+from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 
@@ -9,9 +9,11 @@ Base = declarative_base()
 
 
 class Page(DBBaseMixin, CreateUpdateMixin, Base):
-    site_id = Column('site_id', Integer)
-    dat_id = Column('dat_id', Integer)
+    site_id = Column('site_id', Integer, index=True)
+    dat_id = Column('dat_id', Integer, index=True)
     page = Column('page', UnicodeText)
+    view_count = Column('view_count', Integer, index=True, default=0)
+    page_top = Column('page_top', UnicodeText)
 
     def __init__(self, site_id, dat_id, page):
         self.site_id = site_id,

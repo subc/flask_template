@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from flask import render_template, Blueprint
 
 # 第一引数の名称が、テンプレのurl_for内で呼び出すときの名称と紐づく
@@ -22,7 +23,7 @@ def index():
         'page': page,
         'site': site,
     }
-    print(site.title)
+    print(page.created_at + datetime.timedelta(hours=8))
     return render_template('root/index.html',
                            page=page,
                            site=site)

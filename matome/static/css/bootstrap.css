@@ -6866,6 +6866,7 @@ button.close {
 
   .message {
     margin-top: 20px;
+    border-bottom: 1px solid #eee;
   }
   .message-contributor {
     color: #2e6da4;

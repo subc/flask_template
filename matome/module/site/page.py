@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import datetime
+from pip._vendor.distlib.util import cached_property
 from sqlalchemy import Column, String, Integer, Text, UnicodeText
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
@@ -15,6 +17,16 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         self.site_id = site_id,
         self.dat_id = dat_id
         self.page = page
+
+    @cached_property
+    def time(self):
+        t = self.created_at + datetime.timedelta(hours=8)
+        return t.strftime("%Y年%m月%d日 %H:%M")
+
+    @cached_property
+    def keywords(self):
+        # todo
+        return ['芭蕉扇', 'シェキナー', '剣斧槍ユニット']
 
 
 class PageKeywordRelation(DBBaseMixin, Base):

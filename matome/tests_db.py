@@ -22,7 +22,7 @@ book_rye.save()
 book_rye.delete()
 
 
-# select
+# select    
 print(Book.get(1))
 
 book = get_db_session().query(Book).filter().all()

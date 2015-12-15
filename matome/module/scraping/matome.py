@@ -7,7 +7,7 @@ from janome.tokenizer import Tokenizer
 import re
 from bs4 import BeautifulSoup
 
-from module.site.page import Page
+from module.site.page import Page, PageType
 
 
 def token_is_sub(token):
@@ -80,17 +80,19 @@ def main(url):
     r = _r
 
     # 評価高い投稿を出力
+    pages = []
     for key in r:
-        output = PageRepository()
+        output = PageRepository(_type=PageType.POST_RANK.value)
         if r[key].priority > 200:
+            # 評価の高い投稿を出力
             print("++++++++++++++++++++")
             print(r[key].priority)
             print("++++++++++++++++++++")
             r[key].printer(r=r, output=output)
-        output.printer()
+            # DB出力用に記録
+            pages.append(output)
 
     # キーワード解析
-    tfidf1 = defaultdict(int)
     tfidf2 = defaultdict(int)
     tfidf2_post = defaultdict(list)
 
@@ -104,8 +106,6 @@ def main(url):
             _prev_token = None
             try:
                 for token in t.tokenize(soup.text):
-                    tfidf1[token.surface] += 1
-
                     # tokenが助詞なら相手しない
                     if final_filter(_prev_token, token):
                         tfidf2[_prev_token.surface + token.surface] += 1
@@ -123,7 +123,6 @@ def main(url):
     print("+++++++++++++++++++++++")
     print("tfidf2-post")
     print("+++++++++++++++++++++++")
-    pages = []
     for key in tfidf2_post:
         if tfidf2[key] > 5:
             print("+++++++{}+++++++".format(key))
@@ -183,7 +182,7 @@ def printer_res(posts, r):
     # printer
     _posts = sorted(_posts, key=lambda x: x.num)
     _printed = []
-    output = PageRepository()
+    output = PageRepository(_type=PageType.KEYWORD_RANK.value)
     for post in _posts:
         _printed = post.printer(r=r, printed=_printed, output=output)
     output.printer()
@@ -201,9 +200,10 @@ def roulette(posts, limit):
 
 
 class PageRepository(object):
-    def __init__(self):
+    def __init__(self, _type):
         self.output = []
         self.counter = 0
+        self._matome_type = _type
 
     @property
     def count(self):
@@ -217,16 +217,27 @@ class PageRepository(object):
         """
         return self.count > 4
 
+    @property
+    def matome_type(self):
+        """
+        1 .. priority
+        2 .. keyword
+        :return:
+        """
+        return self._matome_type
+
     def output_for_page(self):
         """
         DB出力用のPageクラスを出力
         :rtype : Page
         """
-        s = ''.join([post.generate_post_message_for_db() for post in self.output])
+        s = ''.join([post.generate_post_message_for_db(prefix_enable=True) for post in self.output])
         print(s, type(s))
         return Page(site_id=1,
                     dat_id=1,
-                    page=s
+                    page=s,
+                    page_top=self.output[0].generate_post_message_for_db(),
+                    type=self.matome_type
                     )
 
     def _count_up(self):
@@ -310,8 +321,11 @@ class Posted(object):
                 pass
         return r
 
-    def generate_post_message_for_db(self):
-        return '{}<br/>'.format(str(self.num)) + ''.join([_s for _s in self.post_message_for_output])
+    def generate_post_message_for_db(self, prefix_enable=False):
+        prefix = ''
+        if prefix_enable:
+            prefix = '{}<br/>'.format(str(self.num))
+        return prefix + ''.join([_s for _s in self.post_message_for_output])
 
     def set_cheap(self):
         """

@@ -109,13 +109,13 @@
 
         <!-- Example row of columns -->
         <div class="row">
-            {% for x in range(0,6)  %}
+            {% for page in front_pages  %}
             <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom" style='background-image:url("./static/img/bg/punk.png")'>
                 <div class="wrap"><a class="wrap" href="#">
                     <div class="label-top label-new">New!!</div>
-                    <div class="label-top">2015年10月20日 20:32</div>
-                    <p class="tile-font">ティル進化できるじゃん ☆4まだ50にしてないから進化してみてちょ </p>
-                    <p class="label-link">ティル進化できるじゃん</p>
+                    <div class="label-top">{{ page.time }}</div>
+                    <p class="tile-font">{{ page.tile_body }} </p>
+                    <p class="label-bottom">{{ page.tile_label }}</p>
                 </a></div>
             </div>
             {% endfor %}

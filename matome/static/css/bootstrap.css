@@ -6777,10 +6777,10 @@ button.close {
     background-repeat: no-repeat;
   }
 
-  .label-link {
+  .label-bottom {
     height: 35px;
     bottom: -10px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 5px;
     -webkit-box-sizing: border-box;
@@ -6793,10 +6793,10 @@ button.close {
     left: 10px;
   }
 
-  .label-link a {
+  .label-bottom a {
     color: white;
   }
-  .label-link a:hover {
+  .label-bottom a:hover {
     color: white;
     text-decoration:none;
   }
@@ -6893,7 +6893,7 @@ button.close {
   .bg-custom {
     background-position: 10px 30px;
   }
-  .label-link {
+  .label-bottom {
     width: 380px;
   }
 }
@@ -6902,7 +6902,7 @@ button.close {
   .bg-custom {
     background-position: 10px 50px;
   }
-  .label-link {
+  .label-bottom {
     width: 475px;
   }
   .label-top-view {
@@ -6919,7 +6919,7 @@ button.close {
   .bg-custom {
     background-position: 10px 50px;
   }
-  .label-link {
+  .label-bottom {
     width: 365px;
   }
   .label-top-view {
@@ -6940,7 +6940,7 @@ button.close {
   .bg-custom {
     background-position: 10px 50px;
   }
-  .label-link {
+  .label-bottom {
     width: 100%;
   }
   .label-top-view {

@@ -9,20 +9,26 @@ class SearchManager(object):
     スレッドを検索する
     """
     def search_and_scraping(self, site):
+        # スレッド検索
         subjects = Subject.get_from_url(site)
         method = getattr(self, site.title)
-        r = method(subjects, site)
+        subjects_dict = method(subjects, site)
+
+        # スクレイピング
+        for key in subjects_dict:
+            sub = subjects_dict[key]
+            sub.execute_matome()
 
         # 参照を切る
         method = None
         del method
-        return r
+        return subjects_dict
 
     def phantom(self, subjects, site):
         """
         ファンキル
         :param subjects: list[Subject]
-        :param site: Site
+        :param site: dict{id: Subject}
         """
         keywords = [
             'ファンキル',
@@ -42,10 +48,4 @@ class SearchManager(object):
         # 禁止名でフィルタ
         pass
 
-        print(subjects_dict)
-
-        for key in subjects_dict:
-            sub = subjects_dict[key]
-            sub.execute_matome()
-
-        return subject
+        return subjects_dict

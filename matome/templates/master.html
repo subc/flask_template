@@ -14,12 +14,35 @@
     padding-bottom: 40px;
   }
 </style>
-<script src="static/js/bootstrap.js"></script>
 </head>
 
 <body>
 
 {% block body %}{% endblock %}
+
+{% block footer %}{% endblock %}
+    <!--スマホだけ広告表示-->
+    <script>
+        document.write(navigator.appVersion);
+
+        // スマホだけ表示
+        if (navigator.userAgent.indexOf("iPhone") != -1 && navigator.userAgent.indexOf("Android") != -1 && navigator.userAgent.indexOf("iPad") == -1) {
+            document.write(
+                    '<div class="navbar navbar-inverse navbar-fixed-bottom">' +
+                    '<div class="navbar-inner">' +
+                    '<div class="container">' +
+                    '<img src="http://placehold.jp/400x100.png">' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
+            );
+        }
+    </script>
+    <!--スマホだけ広告表示-->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="static/js/bootstrap.js"></script>
 
 </body>
 </html>

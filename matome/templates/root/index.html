@@ -3,9 +3,8 @@
 {% block title %}index{% endblock %}
 
 {% block body %}
-
     <!--HEADER-->
-    <nav class="navbar navbar-inverse navbar-static-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -14,14 +13,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" style="color: white" href="#">ファンキルまとめ（仮）</a>
+          <a class="navbar-brand" href="#">{{ site.name }}</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+
+        <div id="navbar" class="navbar-collapse collapse">
+
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">過去ログ</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+
+        </div><!--/.navbar-collapse -->
       </div>
     </nav>
     <!--HEADER-->
@@ -30,8 +32,7 @@
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="top-view-title">
-        <!--<h1>Hello, world!(開発中のサイト)</h1>-->
-        <div class="label-top-view">(開発中のサイト)</div>
+        <div class="label-top-view">{{ site.name }}</div>
         <!--<p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
       </div>
 
@@ -41,7 +42,12 @@
       <div class="message">
             <p class="message-contributor">1 :</p>
 
-            <p class="message-body">【リセマラ当たり姫】 <br/>
+            <p class="message-body">
+                {{ page.page|safe }}
+
+
+
+                【リセマラ当たり姫】 <br/>
                 <br/>
                 グリダヴォル <br/>
                 LS:全員に物防+10 <br/>
@@ -188,31 +194,7 @@
 
     </div> <!-- /container -->
 
-    <!--スマホだけ広告表示-->
-    <script>
-      document.write(navigator.appVersion);
+{% endblock %}
 
-// スマホだけ表示
-      if (navigator.userAgent.indexOf("iPhone") != -1 && navigator.userAgent.indexOf("Android") != -1 && navigator.userAgent.indexOf("iPad") == -1) {
-        document.write(
-          '<div class="navbar navbar-inverse navbar-fixed-bottom">' +
-            '<div class="navbar-inner">' +
-              '<div class="container">' +
-                '<img src="http://placehold.jp/400x100.png">'+
-              '</div>' +
-            '</div>' +
-          '</div>'
-              );
-      }
-    </script>
-    <!--スマホだけ広告表示-->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./js/bootstrap.js"></script>
-
-
-
-
+{% block footer %}
 {% endblock %}

@@ -2,6 +2,9 @@
 from flask import render_template, Blueprint
 
 # 第一引数の名称が、テンプレのurl_for内で呼び出すときの名称と紐づく
+from module.site.page import Page
+from module.site.site import Site
+
 app = Blueprint("index",
                 __name__,
                 url_prefix='/<user_url_slug>')
@@ -10,4 +13,16 @@ app = Blueprint("index",
 # テンプレート内で呼び出すときは url_for('index.index')
 @app.route("/")
 def index():
-    return render_template('root/index.html', book=[0])
+    import random
+    pages = Page.objects().filter().all()
+    page = random.choice(pages)
+    print(type(page.page))
+    site = Site.get(1)
+    context = {
+        'page': page,
+        'site': site,
+    }
+    print(site.title)
+    return render_template('root/index.html',
+                           page=page,
+                           site=site)

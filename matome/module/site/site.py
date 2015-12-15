@@ -7,12 +7,9 @@ Base = declarative_base()
 
 
 class Site(DBBaseMixin, CreateUpdateMixin, Base):
-    name = Column('title', String(10))
+    name = Column('name', String(50))
+    title = Column('title', String(10))
     url = Column('url', String(200))
-
-    def __init__(self, name, url):
-        self.name = name
-        self.url = url
 
     @property
     def subjects_url(self):

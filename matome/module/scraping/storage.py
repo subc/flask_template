@@ -26,9 +26,8 @@ class SearchStorage(object):
 
     @property
     def config(self):
-        from app import create_app
-        app = create_app()
-        return app.config
+        from app import conf
+        return conf()
 
     def get_key(self, dat):
         return KEY.format(self.site_name, dat)
@@ -41,4 +40,4 @@ class SearchStorage(object):
         return self.client.get(self.get_key(dat))
 
     def touch(self, key, expire=EXPIRE):
-            self.client.expire(key, expire)
+        self.client.expire(key, expire)

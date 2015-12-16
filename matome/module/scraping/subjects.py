@@ -24,6 +24,10 @@ class Subject(MatomeMixin):
     def dat(self):
         return self._line.split('<>')[0]
 
+    @property
+    def dat_id(self):
+        return self.dat.replace('.dat', '')
+
     @cached_property
     def title(self):
         body = self._line.split('<>')[1]
@@ -51,6 +55,7 @@ class Subject(MatomeMixin):
         :param site: Site
         :return: list[cls]
         """
+        print(site.subjects_url)
         response = requests.get(site.subjects_url)
         assert (response.status_code == 200), response.text
 
@@ -92,9 +97,10 @@ class Subject(MatomeMixin):
     def printer(self):
         print(self)
 
-    def execute_matome(self):
+    def execute_matome(self, force=None):
         """
         まとめる
+        :param force: bool
         """
         print(self.dat_url)
-        Subject.matome(self)
+        Subject.matome(self, force=force)

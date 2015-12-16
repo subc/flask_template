@@ -8,7 +8,7 @@ class SearchManager(object):
     """
     スレッドを検索する
     """
-    def search_and_scraping(self, site):
+    def search_and_scraping(self, site, force=None):
         # スレッド検索
         subjects = Subject.get_from_url(site)
         method = getattr(self, site.title)
@@ -17,7 +17,7 @@ class SearchManager(object):
         # スクレイピング
         for key in subjects_dict:
             sub = subjects_dict[key]
-            sub.execute_matome()
+            sub.execute_matome(force=force)
 
         # 参照を切る
         method = None
@@ -32,7 +32,8 @@ class SearchManager(object):
         """
         keywords = [
             'ファンキル',
-            'オブキル'
+            'オブキル',
+            'トムオ'
         ]
         keywords_ignore = [
 

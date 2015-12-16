@@ -7,6 +7,7 @@ from janome.tokenizer import Tokenizer
 import re
 from bs4 import BeautifulSoup
 
+from module.scraping.storage import SearchStorage
 from module.site.page import Page, PageType, Keyword
 
 
@@ -94,7 +95,7 @@ def main(subject):
 
     # dbに記録
     keyword_record_dict = {r_index.keyword: r_index.keyword_record for r_index in r_indexes}
-    Page.bulk_insert([page.output_for_page(keyword_record_dict) for page in pages if page.is_enable])
+    Page.bulk_insert([page.output_for_page(subject, keyword_record_dict) for page in pages if page.is_enable])
 
 
 def analyze_post(posts):
@@ -333,17 +334,18 @@ class PageRepository(object):
             r.append(keyword_record_dict[keyword])
         return r
 
-    def output_for_page(self, keyword_record_dict):
+    def output_for_page(self, subject, keyword_record_dict):
         """
         DB出力用のPageクラスを出力
+        :param subject: Subject
         :param keyword_record_dict: dict{int: Keyword}
         :rtype : Page
         """
         s = ''.join([post.generate_post_message_for_db(prefix_enable=True) for post in self.output])
         keyword_record_ids = [keyword_record.id for keyword_record
                               in self.get_keyword_record_ids(keyword_record_dict)]
-        return Page(site_id=1,
-                    dat_id=1,
+        return Page(site_id=subject.site.id,
+                    dat_id=subject.dat_id,
                     page=s,
                     page_top=self.output[0].generate_post_message_for_db(),
                     type=self.matome_type,
@@ -534,8 +536,20 @@ class Posted(object):
 
 class MatomeMixin(object):
     @classmethod
-    def matome(cls, subject):
+    def matome(cls, subject, force=None):
         """
         :param subject: Subject
+        :param force: bool
         """
-        main(subject)
+        # redis問い合わせしてまとめるかチェック
+        storage = SearchStorage(subject.site.title)
+
+        if not storage.get_dat(subject.dat) or force:
+            # まとめる
+            main(subject)
+
+            # redisに記録
+            storage.set_dat(subject.dat)
+
+        else:
+            print('Already Matometa!:{}'.format(str(subject)))

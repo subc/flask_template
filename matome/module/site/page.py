@@ -6,6 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 import enum
 
+from utils.tls_property import cached_tls
+
 Base = declarative_base()
 
 
@@ -22,7 +24,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     page = Column('page', UnicodeText)
     view_count = Column('view_count', Integer, index=True, default=0)
     page_top = Column('page_top', UnicodeText)
-    type = Column('type', Integer, index=True, default=0)  # 1.. post rank 2.. keyword
+    type = Column('type', Integer, index=True, default=0)  # PageTypeのenum
     _keywords = Column('_keywords', String(1000))
 
     @property
@@ -49,8 +51,8 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         _limit = 17
         if not self.is_post_rank and self.keyword_top:
             # キーワードとの親和度
-            last = _limit - len(self.keyword_top)
-            s = '【{}】{}'.format(self.keyword_top, self.page_top[:last])
+            last = _limit - len(self.keyword_top.keyword)
+            s = '【{}】{}'.format(self.keyword_top.keyword, self.page_top[:last])
             return s + '...'
 
         # 投稿者の評価順
@@ -58,12 +60,28 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
     @cached_property
     def keywords(self):
-        # todo
-        return ['芭蕉扇', 'シェキナー', '剣斧槍ユニット']
+        """
+        :return: list(Keyword)
+        """
+        words = [Keyword.get(_id) for _id in self._keyword_ids]
+        words = sorted(words, key=lambda x: x.id, reverse=True)
+        words = sorted(words, key=lambda x: x.count, reverse=True)
+        return words
+
+    @cached_property
+    def _keyword_ids(self):
+        """
+        :return: list(int)
+        """
+        if not self._keywords:
+            return []
+        if ',' not in self._keywords:
+            return [int(self._keywords)]
+        return [int(_id) for _id in self._keywords.split(',')]
 
     @property
     def keyword_top(self):
-        if self.keywords:
+        if self._keywords:
             return self.keywords[0]
         return None
 
@@ -72,6 +90,18 @@ class Keyword(DBBaseMixin, Base):
     site_id = Column('site_id', Integer, index=True)
     keyword = Column('keyword', String(255), index=True)
     count = Column('count', Integer, default=0)
+
+    def __repr__(self):
+        return '{0}[{1}]'.format(self.__class__.__name__, self.id)
+
+    @classmethod
+    @cached_tls
+    def get(cls, pk):
+        """
+        :param pk: int
+        :rtype: cls
+        """
+        return cls.objects().get(pk)
 
     @classmethod
     def get_by_keywords(cls, site_id, keywords):

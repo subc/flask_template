@@ -18,13 +18,12 @@ def index():
     pages = Page.objects().filter().all()
     page = random.choice(pages)
     front_pages = [random.choice(pages) for x in range(6)]
-    print(type(page.page))
     site = Site.get(1)
-    context = {
-        'page': page,
-        'site': site,
-    }
-    print(page.created_at + datetime.timedelta(hours=8))
+
+    # for debug
+    # for page in pages:
+    #     print(page.keywords, page.tile_label, page.keyword_top)
+
     return render_template('root/index.html',
                            page=page,
                            site=site,

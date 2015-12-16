@@ -76,4 +76,4 @@ def keyword(site, keyword_id):
                            site=site,
                            keyword=keyword,
                            panel_pages=panel_pages,
-                           pages=pages)
+                           list_pages=pages)

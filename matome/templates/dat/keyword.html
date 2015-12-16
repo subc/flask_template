@@ -15,37 +15,10 @@
 
     <div class="container">
         <!--BODY-->
-
-        <div class="row">
-            <div>
-                <div class="list-group">
-{#                    <a href="#" class="list-group-item active">#}
-{#                        <h4 class="list-group-item-heading">新着記事</h4>#}
-{#                    </a>#}
-                    {% for page in pages %}
-                    <a href="{{ url_for('dat.index', site_title=site.title, page_id=page.id) }}" class="list-group-item">
-                        <div class="keyword-list-wrap">
-                            <div class="keyword-list-wrap-icon" style='background-image:url("/static/img/bg/punk.png");'>
-                            </div>
-                            <div class="keyword-list-wrap-body">
-                                <p class="keyword-list-text-title">{{ page.list_label }}</p>
-                                <div class="keyword-list-text-wrap">
-                                    <p class="keyword-list-text-position">{{ page.sub_time }}</p>
-                                    <p class="keyword-list-text-position {{ page.text_color|lower }}">{{ page.view_text }} view</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-
+        {% include '/parts/parts_full_list.html' %}
         <!--BODY-->
 
-
-        {% include '/parts/parts_panel.html' %}
+        {% include '/parts/parts_panel.html'%}
 
         <footer>
             <p>&copy; Company 2013</p>

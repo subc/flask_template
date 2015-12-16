@@ -52,6 +52,13 @@
 
         {% include '/parts/parts_panel.html' %}
 
+
+        <hr>
+        {% with title="人気記事" %}
+            {% include '/parts/parts_full_list.html' %}
+        {% endwith %}
+
+
         <footer>
             <p>&copy; Company 2013</p>
         </footer>

@@ -28,4 +28,5 @@ def index(site):
     return render_template('root/index.html',
                            contents=contents,
                            site=site,
-                           panel_pages=panel_pages)
+                           panel_pages=panel_pages,
+                           list_pages=pages)

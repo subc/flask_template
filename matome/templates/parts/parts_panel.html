@@ -2,7 +2,7 @@
 <div class="row">
     {% for page in panel_pages %}
         <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom"
-             style='background-image:url("/static/img/bg/punk.png")'>
+             style='background-image:url("{{ page.background_image }}")'>
             <div class="wrap"><a class="wrap" href="{{ url_for('dat.index', site_title=site.title, page_id=page.id) }}">
                 <div class="label-top label-new">New!!</div>
                 <div class="label-top">{{ page.time }}</div>
@@ -11,58 +11,4 @@
             </a></div>
         </div>
     {% endfor %}
-</div>
-
-
-<hr>
-
-<div class="page-header">
-    <h1>List groups</h1>
-</div>
-<div class="row">
-
-    <div class="col-sm-6">
-        <div class="list-group">
-            <a href="#" class="list-group-item active">
-                <h4 class="list-group-item-heading">新着記事</h4>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">5直にはHPや物防で負け</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                    diam eget risus varius blandit.</p>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">ティルフィンガーさん</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                    diam eget risus varius blandit.</p>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">ティル進化できるじゃん</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                    diam eget risus varius blandit.</p>
-            </a>
-        </div>
-    </div><!-- /.col-sm-4 -->
-    <div class="col-sm-6">
-        <div class="list-group">
-            <a href="#" class="list-group-item active">
-                <h4 class="list-group-item-heading">人気記事</h4>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">5直にはHPや物防で負け</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                    diam eget risus varius blandit.</p>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">ティルフィンガーさん</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                    diam eget risus varius blandit.</p>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">ティル進化できるじゃん</h4>
-                <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                    diam eget risus varius blandit.</p>
-            </a>
-        </div>
-    </div><!-- /.col-sm-4 -->
 </div>

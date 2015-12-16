@@ -21,8 +21,10 @@ def tests_page_models():
 
     all_pages = Page.objects().all()
     for page in all_pages:
-        _id = page.site.get_background_image_id(page.dat_id)
+        _id = page.site.get_background_image_id(page.id)
         assert 1 <= _id <= 5
+        print(_id)
+    raise
 
 
 def tests_keyword():

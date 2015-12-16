@@ -6888,8 +6888,12 @@ button.close {
   .keyword-list-wrap{
       height: 80px;
   }
-  .keyword-list-wrap-icon{
-      float:left;height: 80px; width: 80px;
+  .keyword-list-wrap-icon {
+    float: left;
+    height: 80px;
+    width: 80px;
+    background-position-x:-50px;
+    background-size:cover;
   }
   .keyword-list-wrap-body {
     float: left;

@@ -342,13 +342,14 @@ class PageRepository(object):
         :param keyword_record_dict: dict{int: Keyword}
         :rtype : Page
         """
-        s = ''.join([post.generate_post_message_for_db(prefix_enable=True) for post in self.output])
+        s = ''.join([post.generate_post_message_for_db() for post in self.output])
         keyword_record_ids = [keyword_record.id for keyword_record
                               in self.get_keyword_record_ids(keyword_record_dict)]
+        page_top_post = '<br/>'.join(self.output[0].post_message_for_output)
         return Page(site_id=subject.site.id,
                     dat_id=subject.dat_id,
                     page=s,
-                    page_top=self.output[0].generate_post_message_for_db(),
+                    page_top=page_top_post,
                     type=self.matome_type,
                     _keywords=','.join([str(_id) for _id in keyword_record_ids]),
                     )
@@ -416,9 +417,13 @@ class Posted(object):
         r = []
         for soup in self.parse_bs4:
             s = soup.text
+            a_tag_is_exist = False
             if soup.a:
                 for _a in soup.a:
                     s = s.replace(str(_a), "")
+                    a_tag_is_exist = True
+            if a_tag_is_exist and len(s) < 2:
+                continue
             r.append(s)
         return r
 
@@ -443,11 +448,11 @@ class Posted(object):
                 pass
         return r
 
-    def generate_post_message_for_db(self, prefix_enable=False):
-        prefix = ''
-        if prefix_enable:
-            prefix = '{}<br/>'.format(str(self.num))
-        return prefix + ''.join([_s for _s in self.post_message_for_output])
+    def generate_post_message_for_db(self):
+        prefix = '<p class="m-name">{} :</p>'.format(str(self.num))
+        body_base = '<br/>'.join([_s for _s in self.post_message_for_output])
+        body = '<p class="m-body">{}</p>'.format(body_base)
+        return '<div class="message">{}</div>'.format(prefix + body)
 
     def set_cheap(self):
         """

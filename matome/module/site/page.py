@@ -40,6 +40,25 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         return t.strftime("%Y年%m月%d日 %H:%M")
 
     @cached_property
+    def title(self):
+        prefix = ''
+        if not self.is_post_rank and self.keyword_top:
+            # キーワードとの親和度
+            prefix = '【{}】'.format(self.keyword_top.keyword)
+        return prefix + self._top_first_line
+
+    @cached_property
+    def _top_first_line(self):
+        """
+        表示用: 最初の投稿者の1行目
+        :return: str
+        """
+        if '<br/>' not in self.page_top:
+            return self.page_top
+        s = self.page_top.split('<br/>')
+        return s[0]
+
+    @cached_property
     def tile_body(self):
         _limit = 60
         if len(self.page_top) <= _limit + 3:

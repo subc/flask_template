@@ -6871,10 +6871,10 @@ button.close {
     margin-top: 20px;
     border-bottom: 1px solid #eee;
   }
-  .message-contributor {
+  .m-name {
     color: #2e6da4;
   }
-  .message-body {
+  .m-body {
     font-size: 16px;
     padding-left: 10px;
   }
@@ -6933,6 +6933,9 @@ button.close {
   }
 }
 @media (max-width: 767px) {
+  .bg-custom {
+    background-repeat: repeat-x;
+  }
   .span4-custom {
     height: 210px;
     position: relative;

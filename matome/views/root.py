@@ -12,7 +12,7 @@ app = Blueprint("index",
                 url_prefix='/<user_url_slug>')
 
 
-# テンプレート内で呼び出すときは url_for('index.index')
+# テンプレート内で呼び出すときは {{ url_for('index.index', site_title=site.title) }}
 @app.route("/")
 @requires_site_title
 def index(site):

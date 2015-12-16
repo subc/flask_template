@@ -18,6 +18,11 @@ class PageType(enum.Enum):
     KEYWORD_RANK = 2
 
 
+class PageViewCountColor(enum.Enum):
+    SUPERNOVA = 1
+    HOT = 2
+
+
 class Page(DBBaseMixin, CreateUpdateMixin, Base):
     site_id = Column('site_id', Integer, index=True)
     dat_id = Column('dat_id', Integer, index=True)
@@ -26,6 +31,9 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     page_top = Column('page_top', UnicodeText)
     type = Column('type', Integer, index=True, default=0)  # PageTypeのenum
     _keywords = Column('_keywords', String(1000))
+
+    def __init__(self):
+        self.text_color = None
 
     @property
     def is_post_rank(self):
@@ -66,25 +74,34 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         s = self.page_top.split('<br/>')
         return s[0]
 
-    @cached_property
-    def tile_body(self):
-        _limit = 60
+    def generate_top_body(self, _limit):
         top_body = self.page_top.replace('<br/>', '')
         if len(top_body) <= _limit + 3:
             return top_body
-        return top_body[:60] + '...'
+        return top_body[:_limit] + '...'
 
-    @cached_property
-    def tile_label(self):
-        _limit = 17
+    def generate_top_title(self, _limit):
+        top_body = self.page_top.replace('<br/>', '')
         if not self.is_post_rank and self.keyword_top:
             # キーワードとの親和度
             last = _limit - len(self.keyword_top.keyword)
-            s = '【{}】{}'.format(self.keyword_top.keyword, self.page_top[:last])
+            s = '【{}】{}'.format(self.keyword_top.keyword, top_body[:last])
             return s + '...'
 
         # 投稿者の評価順
-        return self.page_top[:_limit] + '...'
+        return top_body[:_limit] + '...'
+
+    @cached_property
+    def tile_body(self):
+        return self.generate_top_body(60)
+
+    @cached_property
+    def list_label(self):
+        return self.generate_top_title(35)
+
+    @cached_property
+    def tile_label(self):
+        return self.generate_top_title(17)
 
     @cached_property
     def keywords(self):
@@ -112,6 +129,17 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         if self._keywords:
             return self.keywords[0]
         return None
+
+    @property
+    def view_text(self):
+        # todo dummy
+        return self.view_count
+
+    def set_color_supernova(self):
+        self.text_color = PageViewCountColor.SUPERNOVA.name
+
+    def set_color_hot(self):
+        self.text_color = PageViewCountColor.HOT.name
 
     def count_up(self):
         self.view_count += 1

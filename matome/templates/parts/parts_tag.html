@@ -1,7 +1,7 @@
 {% if contents.keywords %}
 <ul class="tags">
     {% for k in contents.keywords %}
-        <li><a href="#">{{ k.keyword }}</a></li>
+        <li><a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=k.id) }}">{{ k.keyword }}</a></li>
     {% endfor %}
 </ul>
 {% endif %}

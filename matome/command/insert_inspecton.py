@@ -3,6 +3,8 @@ from flask_script import Command
 
 from module.scraping.inspection import InspectionWord
 
+# from
+# http://dic.nicovideo.jp/a/%E3%83%8B%E3%82%B3%E3%83%8B%E3%82%B3%E7%94%9F%E6%94%BE%E9%80%81%3A%E9%81%8B%E5%96%B6ng%E3%83%AF%E3%83%BC%E3%83%89%E4%B8%80%E8%A6%A7
 words = [
     "陰毛",
     "いんもう",

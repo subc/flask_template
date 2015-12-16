@@ -11,10 +11,9 @@ class Scraping(Command):
 
     def run(self):
         print("start")
-        self.run()
+        self._run()
         print("finish")
 
-
-    def run(self):
+    def _run(self):
         site = Site.get(1)
         SearchManager().search_and_scraping(site)

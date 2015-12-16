@@ -13,12 +13,18 @@ app = Blueprint("index",
 
 # テンプレート内で呼び出すときは url_for('index.index')
 @app.route("/")
-def index():
+def index(site_title):
+    try:
+        site = Site.get_title(site_title)
+    except IndexError:
+        # todo
+        return 'error site_title does not exist'
+
+
     import random
     pages = Page.objects().filter().all()
     page = random.choice(pages)
     panel_pages = [random.choice(pages) for x in range(6)]
-    site = Site.get(1)
 
     # for debug
     # for page in pages:

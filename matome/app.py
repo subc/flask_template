@@ -26,9 +26,8 @@ def create_app(config=None):
     app.debug = app.config.get('debug')
 
     # 機能毎のURLを定義
-    app.register_blueprint(root.app, url_prefix="/")
-    app.register_blueprint(report.app, url_prefix="/report")
-    app.register_blueprint(dat.app, url_prefix="/dat")
+    app.register_blueprint(root.app, url_prefix="/<site_title>")
+    app.register_blueprint(dat.app, url_prefix="/<site_title>/dat")
 
     return app
 

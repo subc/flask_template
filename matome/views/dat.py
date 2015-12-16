@@ -13,7 +13,14 @@ app = Blueprint('dat',
 
 # テンプレート内で呼び出すときは {{ url_for('dat.index', page_id=page.id) }}
 @app.route('/<page_id>', methods=['GET'], strict_slashes=False)
-def index(page_id):
+def index(site_title, page_id):
+    try:
+        site = Site.get_title(site_title)
+    except IndexError:
+        # todo
+        return 'error site_title does not exist'
+
+    page_id = 1
     # パラメータチェック
     try:
         page_id = int(page_id)

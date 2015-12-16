@@ -9,7 +9,7 @@ Base = declarative_base()
 
 class Site(DBBaseMixin, CreateUpdateMixin, Base):
     name = Column('name', String(50))
-    title = Column('title', String(10))
+    title = Column('title', String(10), index=True)
     url = Column('url', String(200))
 
     @classmethod
@@ -20,6 +20,15 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
         :rtype: cls
         """
         return cls.objects().get(pk)
+
+    @classmethod
+    @cached_tls
+    def get_title(cls, title):
+        """
+        :param title: int
+        :rtype: cls
+        """
+        return cls.objects().filter(cls.title==title)[0]
 
     @property
     def subjects_url(self):

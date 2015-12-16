@@ -5,19 +5,24 @@ from module.site.page import Page, Keyword
 
 
 def tests_page_models():
-    # insert
-    page = Page(site_id=1,
-                dat_id=12345,
-                page="agraeg43g34qhg43qh43qh34")
-    page2 = Page(site_id=1,
-                 dat_id=112345,
-                 page="agraeg43g34qhg43qh43qh34")
+    # # insert
+    # page = Page(site_id=1,
+    #             dat_id=12345,
+    #             page="agraeg43g34qhg43qh43qh34")
+    # page2 = Page(site_id=1,
+    #              dat_id=112345,
+    #              page="agraeg43g34qhg43qh43qh34")
+    #
+    # Page.bulk_insert([page, page2])
+    #
+    # # update
+    # page2.dat_id = 22222
+    # page2.save()
 
-    Page.bulk_insert([page, page2])
-
-    # update
-    page2.dat_id = 22222
-    page2.save()
+    all_pages = Page.objects().all()
+    for page in all_pages:
+        _id = page.site.get_background_image_id(page.dat_id)
+        assert 1 <= _id <= 5
 
 
 def tests_keyword():

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 from utils.tls_property import cached_tls
@@ -11,6 +11,7 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
     name = Column('name', String(50))
     title = Column('title', String(10), index=True)
     url = Column('url', String(200))
+    background_image_count = Column('background_image_count', Integer)
 
     @classmethod
     @cached_tls
@@ -37,3 +38,6 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
         :return:str
         """
         return '{}subject.txt'.format(self.url)
+
+    def get_background_image_id(self, _id):
+        return 1 + _id % self.background_image_count

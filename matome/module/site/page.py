@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 import enum
 
+from module.site.site import Site
 from utils.tls_property import cached_tls
 
 Base = declarative_base()
@@ -34,6 +35,15 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
     def __init__(self):
         self.text_color = None
+
+    @cached_property
+    def site(self):
+        return Site.get(self.site_id)
+
+    @cached_property
+    def background_image(self):
+        image_id = self.site.get_background_image_id(self.dat_id)
+        return '/static/img/{}/{}.png'.format(self.site.title, image_id)
 
     @property
     def is_post_rank(self):

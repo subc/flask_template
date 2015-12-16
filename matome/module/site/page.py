@@ -61,9 +61,10 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     @cached_property
     def tile_body(self):
         _limit = 60
-        if len(self.page_top) <= _limit + 3:
-            return self.page_top
-        return self.page_top[:60] + '...'
+        top_body = self.page_top.replace('<br/>', '')
+        if len(top_body) <= _limit + 3:
+            return top_body
+        return top_body[:60] + '...'
 
     @cached_property
     def tile_label(self):
@@ -103,6 +104,10 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         if self._keywords:
             return self.keywords[0]
         return None
+
+    def count_up(self):
+        self.view_count += 1
+        self.save()
 
 
 class Keyword(DBBaseMixin, Base):

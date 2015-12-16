@@ -2,7 +2,7 @@
 import os
 import threading
 
-from views import root, report
+from views import root, report, dat
 from flask import Flask
 
 tls = threading.local()
@@ -28,6 +28,7 @@ def create_app(config=None):
     # 機能毎のURLを定義
     app.register_blueprint(root.app, url_prefix="/")
     app.register_blueprint(report.app, url_prefix="/report")
+    app.register_blueprint(dat.app, url_prefix="/dat")
 
     return app
 

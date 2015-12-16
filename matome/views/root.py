@@ -17,7 +17,7 @@ def index():
     import random
     pages = Page.objects().filter().all()
     page = random.choice(pages)
-    front_pages = [random.choice(pages) for x in range(6)]
+    panel_pages = [random.choice(pages) for x in range(6)]
     site = Site.get(1)
 
     # for debug
@@ -27,4 +27,4 @@ def index():
     return render_template('root/index.html',
                            page=page,
                            site=site,
-                           front_pages=front_pages)
+                           panel_pages=panel_pages)

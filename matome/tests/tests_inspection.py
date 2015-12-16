@@ -9,5 +9,8 @@ def tests_inspection():
     word = '死'
     assert InspectionWord.inspection(word)
 
+    word = 'チンポには絶対に負けない(プラグ)なキャラと'
+    assert InspectionWord.inspection(word)
+
     for x in range(10000):
         assert InspectionWord.inspection(word)

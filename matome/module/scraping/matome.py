@@ -7,6 +7,7 @@ from janome.tokenizer import Tokenizer
 import re
 from bs4 import BeautifulSoup
 
+from module.scraping.inspection import InspectionWord
 from module.scraping.storage import SearchStorage
 from module.site.page import Page, PageType, Keyword
 
@@ -507,6 +508,9 @@ class Posted(object):
         自己診断する
         """
         # NGワード
+        if InspectionWord.inspection(''.join(self.post_message_for_output)):
+            self.set_cheap()
+
         # レス数の検知
         if self.count_link > 1:
             self.set_cheap()

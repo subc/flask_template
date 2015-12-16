@@ -5,6 +5,7 @@ from flask import render_template, Blueprint
 # 第一引数の名称が、テンプレのurl_for内で呼び出すときの名称と紐づく
 from module.site.page import Page
 from module.site.site import Site
+from views.view_util import requires_site_title
 
 app = Blueprint("index",
                 __name__,
@@ -13,14 +14,8 @@ app = Blueprint("index",
 
 # テンプレート内で呼び出すときは url_for('index.index')
 @app.route("/")
-def index(site_title):
-    try:
-        site = Site.get_title(site_title)
-    except IndexError:
-        # todo
-        return 'error site_title does not exist'
-
-
+@requires_site_title
+def index(site):
     import random
     pages = Page.objects().filter().all()
     page = random.choice(pages)

@@ -5,6 +5,7 @@ from flask import Module, render_template, Blueprint
 
 from module.site.page import Page
 from module.site.site import Site
+from views.view_util import requires_site_title
 
 app = Blueprint('dat',
                 __name__,
@@ -13,13 +14,8 @@ app = Blueprint('dat',
 
 # テンプレート内で呼び出すときは {{ url_for('dat.index', page_id=page.id) }}
 @app.route('/<page_id>', methods=['GET'], strict_slashes=False)
-def index(site_title, page_id):
-    try:
-        site = Site.get_title(site_title)
-    except IndexError:
-        # todo
-        return 'error site_title does not exist'
-
+@requires_site_title
+def index(site, page_id):
     page_id = 1
     # パラメータチェック
     try:

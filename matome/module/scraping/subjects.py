@@ -97,4 +97,4 @@ class Subject(MatomeMixin):
         まとめる
         """
         print(self.dat_url)
-        Subject.matome(self.dat_url)
+        Subject.matome(self)

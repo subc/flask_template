@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from module.site.page import Page
+import random
+
+from module.site.page import Page, Keyword
 
 
 def tests_page_models():
@@ -16,6 +18,14 @@ def tests_page_models():
     # update
     page2.dat_id = 22222
     page2.save()
+
+
+def tests_keyword():
+    site_id = 1
+    keywords = ['シタちゃん', 'メタガ']
+    for x in range(3):
+        result = Keyword.register(site_id, keywords)
+        assert type(random.choice(result) == Keyword)
 
 #
 # # select

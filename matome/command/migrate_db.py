@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 from flask_script import Command
 from app import create_app
-from module.site.page import Page, Keyword, PageKeywordRelation
+from module.site.page import Page, Keyword
 from module.site.site import Site
 from utils.db import get_db_engine
 
 DatabaseTables = [
     Site,
     Page,
-    PageKeywordRelation,
     Keyword
 ]
 

@@ -7,7 +7,7 @@ from janome.tokenizer import Tokenizer
 import re
 from bs4 import BeautifulSoup
 
-from module.site.page import Page, PageType
+from module.site.page import Page, PageType, Keyword
 
 
 def token_is_sub(token):
@@ -60,45 +60,113 @@ def final_filter(prev_token, token):
     return True
 
 
-def main(url):
-    print("start")
-    t = Tokenizer()
-
+def main(subject):
     # 読み込み
-    r = {}
-    for posted in dat_reader(url):
-        r[posted.num] = posted
+    posts = {}
+    for posted in dat_reader(subject.dat_url):
+        posts[posted.num] = posted
 
-    # 読み込み後のパースとエラー排除
-    _r = {}
-    for key in r:
-        try:
-            r[key].self_check(r)
-        except:
-            pass
-        _r[key] = r[key]
-    r = _r
+    # 読み込み後のパースとエラー排除とレスによる重み付け
+    posts = analyze_post(posts)
+
+    # キーワード解析
+    r_indexes = analyze_keyword(posts)
+
+    # postsにキーワード解析内容を反映したあと、keywordデータをDBに一括登録
+    insert_keyword(posts, r_indexes, subject.site.id)
 
     # 評価高い投稿を出力
     pages = []
-    for key in r:
+    for key in posts:
         output = PageRepository(_type=PageType.POST_RANK.value)
-        if r[key].priority > 200:
+        if posts[key].priority > 300:
             # 評価の高い投稿を出力
             print("++++++++++++++++++++")
-            print(r[key].priority)
+            print(posts[key].priority)
             print("++++++++++++++++++++")
-            r[key].printer(r=r, output=output)
+            posts[key].printer(posts=posts, output=output)
             # DB出力用に記録
             pages.append(output)
 
-    # キーワード解析
+    # キーワード評価が高い投稿を出力
+    for r_index in r_indexes:
+        pages.append(printer_res(r_index, posts))
+
+    # dbに記録
+    keyword_record_dict = {r_index.keyword: r_index.keyword_record for r_index in r_indexes}
+    Page.bulk_insert([page.output_for_page(keyword_record_dict) for page in pages if page.is_enable])
+
+
+def analyze_post(posts):
+    """
+    Postedのセルフチェックと投稿による重み付けを行う
+    :param posts: dict{int: Posted}
+    :return: dict{int: Posted}
+    """
+    _r = {}
+    for key in posts:
+        try:
+            posts[key].self_check(posts)
+        except:
+            pass
+        _r[key] = posts[key]
+    return _r
+
+
+class KeywordReverseIndex(object):
+    """
+    キーワードから文中での出現数と
+    出現する投稿を逆索引
+    """
+    def __init__(self, keyword, count, posts):
+        """
+        :param keyword: str
+        :param count: int
+        :param posts: list(Posted)
+        :return:
+        """
+        self.keyword = keyword
+        self.count = count
+        self.posts = posts
+        self.keyword_record = None
+
+    @property
+    def is_enable(self):
+        """
+        出現数が一定以上のキーワードのみ有効
+        :return: bool
+        """
+        return 4 <= self.count
+
+    def insert_keyword_info(self):
+        """
+        キーワード情報を投稿毎に付与
+        """
+        for post in self.posts:
+            post.priority_from_keyword(self.keyword, self.count)
+
+    def extend_keyword_record(self, record):
+        """
+        :param record: Keyword
+        """
+        self.keyword_record = record
+
+
+def analyze_keyword(posts):
+    """
+    投稿を形態素解析して頻出ワードで重み付けして
+    キーワードから出現数と投稿の逆索引を生成する。
+    :param posts: dict{int: Posted}
+    :rtype: list(KeywordReverseIndex)
+    """
+    t = Tokenizer()
     tfidf2 = defaultdict(int)
     tfidf2_post = defaultdict(list)
 
-    for key in r:
-        p = r[key]
-        for message in p.parse_post_message:
+    # 単語毎の重み付け
+    for key in posts:
+        post = posts[key]
+        for message in post.parse_post_message:
             # Aタグ排除
             soup = BeautifulSoup(message, "lxml")
 
@@ -109,8 +177,8 @@ def main(url):
                     # tokenが助詞なら相手しない
                     if final_filter(_prev_token, token):
                         tfidf2[_prev_token.surface + token.surface] += 1
-                        if p not in tfidf2_post[_prev_token.surface + token.surface]:
-                            tfidf2_post[_prev_token.surface + token.surface] += [p]
+                        if post not in tfidf2_post[_prev_token.surface + token.surface]:
+                            tfidf2_post[_prev_token.surface + token.surface] += [post]
 
                     _prev_token = token
 
@@ -120,33 +188,48 @@ def main(url):
             except:
                 pass
 
-    print("+++++++++++++++++++++++")
-    print("tfidf2-post")
-    print("+++++++++++++++++++++++")
-    for key in tfidf2_post:
-        if tfidf2[key] > 5:
-            print("+++++++{}+++++++".format(key))
-            # keywordによるpriorityアップ
-            for posted in tfidf2_post[key]:
-                posted.priority_from_keyword()
-
-            pages.append(printer_res(tfidf2_post[key], r))
-            # print "".join([x.post_message for x in tfidf2_post[key]])
-
-    print("+++++++++++++++++++++++")
-    print("tfidf2")
-    print("+++++++++++++++++++++++")
+    # 逆索引の生成
+    r_indexes = []
     for key in tfidf2:
-        if tfidf2[key] > 5:
-            print("{}:{}".format(key, tfidf2[key]))
+        _index = KeywordReverseIndex(key, tfidf2[key], tfidf2_post[key])
 
-    # dbに記録
-    Page.bulk_insert([page.output_for_page() for page in pages if page.is_enable])
+        # 出現数が一定以上のキーワードのみindexを生成する
+        if _index.is_enable:
+            r_indexes.append(_index)
+    return r_indexes
 
-    print("finish")
+
+def insert_keyword(posts, r_indexes, site_id):
+    """
+    キーワード情報を投稿に付与
+    keywordデータをDBに一括登録
+    :param posts: dict{int: Posted}
+    :param r_indexes: list(KeywordReverseIndex)
+    :param site_id: int
+    :rtype : list(Keyword)
+    """
+    # キーワード情報を投稿に付与
+    keywords = []
+    for r_index in r_indexes:
+        r_index.insert_keyword_info()
+        keywords.append(r_index.keyword)
+
+    # DBに一括登録
+    keyword_records = Keyword.register(site_id, keywords)
+
+    # r_indexにkeyword_idを登録
+    keyword_records_dict = {record.keyword: record for record in keyword_records}
+    for r_index in r_indexes:
+        record = keyword_records_dict[r_index.keyword]
+        r_index.extend_keyword_record(record)
 
 
 def dat_reader(url):
+    """
+    HTTPアクセスしてパースして投稿毎に返却するジェネレータ
+    :param url: str
+    :rtype : list(Posted)
+    """
     response = requests.get(url)
     assert (response.status_code == 200), response.text
 
@@ -158,12 +241,17 @@ def dat_reader(url):
             yield Posted(i + 1, line)
 
 
-def printer_res(posts, r):
+def printer_res(r_index, all_posts):
     """
     レス数が多いときは数を減らしてprint
     目安は7
+
+    :param r_index: KeywordReverseIndex
+    :param all_posts: dict{int: Posted}
     :rtype : PageRepository
     """
+    posts = r_index.posts
+
     # priorityがマイナスは対象外
     posts = [p for p in posts if p.priority >= 0]
     # 子供は除外
@@ -184,7 +272,7 @@ def printer_res(posts, r):
     _printed = []
     output = PageRepository(_type=PageType.KEYWORD_RANK.value)
     for post in _posts:
-        _printed = post.printer(r=r, printed=_printed, output=output)
+        _printed = post.printer(posts=all_posts, printed=_printed, output=output)
     output.printer()
     return output
 
@@ -226,18 +314,40 @@ class PageRepository(object):
         """
         return self._matome_type
 
-    def output_for_page(self):
+    @property
+    def keywords(self):
+        r = {}
+        for p in self.output:
+            for _keyword in p.keywords:
+                r[_keyword] = 1
+        return list(r.keys())
+
+    def get_keyword_record_ids(self, keyword_record_dict):
+        """
+        Keywordのidを返却
+        :param keyword_record_dict: dict{int: Keyword}
+        :return: list(int)
+        """
+        r = []
+        for keyword in self.keywords:
+            r.append(keyword_record_dict[keyword])
+        return r
+
+    def output_for_page(self, keyword_record_dict):
         """
         DB出力用のPageクラスを出力
+        :param keyword_record_dict: dict{int: Keyword}
         :rtype : Page
         """
         s = ''.join([post.generate_post_message_for_db(prefix_enable=True) for post in self.output])
-        print(s, type(s))
+        keyword_record_ids = [keyword_record.id for keyword_record
+                              in self.get_keyword_record_ids(keyword_record_dict)]
         return Page(site_id=1,
                     dat_id=1,
                     page=s,
                     page_top=self.output[0].generate_post_message_for_db(),
-                    type=self.matome_type
+                    type=self.matome_type,
+                    _keywords=','.join([str(_id) for _id in keyword_record_ids]),
                     )
 
     def _count_up(self):
@@ -262,9 +372,18 @@ class Posted(object):
         self.priority = 0
         self.child = []
         self.i_am_child = None
+        self.keywords = []
 
     def __repr__(self):
         return self.parse_post_message[0]
+
+    @property
+    def is_enable(self):
+        """
+        出力する価値がある投稿ならTrue
+        :return: bool
+        """
+        return self.priority >= 0
 
     @cached_property
     def splited(self):
@@ -333,9 +452,9 @@ class Posted(object):
         """
         self.priority = -10000
 
-    def printer(self, depth=0, r=None, printed=[], output=None):
+    def printer(self, depth=0, posts=None, printed=[], output=None):
         # print済みでなければprintする
-        if self.num not in printed:
+        if self.num not in printed and self.is_enable:
             printed.append(self.num)
             if output:
                 output.extend(self)
@@ -346,9 +465,12 @@ class Posted(object):
                     print(prefix, x)
 
         # 子レスをprint
-        if r:
-            printed = [r[child_res].printer(depth=depth + 1, r=r, printed=printed, output=output)
-                       for child_res in self.child if r[child_res].priority >= 0]
+        if posts:
+            printed = [posts[child_res].printer(depth=depth + 1,
+                                                posts=posts,
+                                                printed=printed,
+                                                output=output)
+                       for child_res in self.child if posts[child_res].priority >= 0]
         return printed
 
     def res_from(self, child_res):
@@ -361,11 +483,14 @@ class Posted(object):
         # 子レスを記録
         self.set_child(child_res)
 
-    def priority_from_keyword(self):
+    def priority_from_keyword(self, keyword, count):
         """
         keywordによるpriorityアップ
+        :param keyword: str
+        :param count: int
         """
-        self.priority += 1
+        self.priority += count
+        self.keywords.append(keyword)
 
     def set_child(self, child_res):
         if self.num == child_res:
@@ -409,5 +534,8 @@ class Posted(object):
 
 class MatomeMixin(object):
     @classmethod
-    def matome(cls, url):
-        main(url)
+    def matome(cls, subject):
+        """
+        :param subject: Subject
+        """
+        main(subject)

@@ -23,6 +23,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     view_count = Column('view_count', Integer, index=True, default=0)
     page_top = Column('page_top', UnicodeText)
     type = Column('type', Integer, index=True, default=0)  # 1.. post rank 2.. keyword
+    _keywords = Column('_keywords', String(1000))
 
     @property
     def is_post_rank(self):
@@ -67,12 +68,49 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         return None
 
 
-class PageKeywordRelation(DBBaseMixin, Base):
-    page_id = Column('page_id', Integer)
-    keyword_id = Column('keyword_id', Integer)
-
-
 class Keyword(DBBaseMixin, Base):
-    site_id = Column('site_id', Integer)
-    keyword = Column('keyword', String(255))
-    count = Column('count', Integer)
+    site_id = Column('site_id', Integer, index=True)
+    keyword = Column('keyword', String(255), index=True)
+    count = Column('count', Integer, default=0)
+
+    @classmethod
+    def get_by_keywords(cls, site_id, keywords):
+        """
+        :param site_id: int
+        :param keywords: list(str)
+        :return: list[Keyword]
+        """
+        return cls.objects().filter(cls.site_id==site_id, cls.keyword.in_(keywords)).all()
+
+    @classmethod
+    def register(cls, site_id, keywords):
+        """
+        keywordを一括登録する
+        :param site_id: int
+        :param keywords: list(str)
+        :rtype : list[Keyword]
+        """
+        # 重複排除
+        keywords = list(set(keywords))
+
+        # 存在チェック
+        keyword_records = cls.get_by_keywords(site_id, keywords)
+        keyword_record_dict = {record.keyword: record for record in keyword_records}
+
+        create_objs = []
+        for keyword_str in keywords:
+            if keyword_str in keyword_record_dict:
+                # 存在するからカウントアップだけする
+                keyword_record_dict[keyword_str].count_up()
+            else:
+                obj = cls(site_id=site_id, keyword=keyword_str, count=1)
+                create_objs.append(obj)
+
+        # バルク!
+        objs = cls.bulk_insert(create_objs)
+
+        return objs + keyword_records
+
+    def count_up(self):
+        self.count += 1
+        self.save()

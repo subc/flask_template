@@ -23,13 +23,13 @@ def index(site, page_id):
     except ValueError:
         # todo redirect error page
         return 'error'
-    page = Page.get(page_id)
-    if page is None:
+    contents = Page.get(page_id)
+    if contents is None:
         # todo error
         return 'page id does not exist error'
 
     # pvを記録
-    page.count_up()
+    contents.count_up()
 
     # todo dummy
     site = Site.get(1)
@@ -37,6 +37,6 @@ def index(site, page_id):
     panel_pages = [random.choice(pages) for x in range(6)]
 
     return render_template('dat/page.html',
-                           page=page,
+                           contents=contents,
                            site=site,
                            panel_pages=panel_pages)

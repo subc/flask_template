@@ -18,7 +18,7 @@ app = Blueprint("index",
 def index(site):
     import random
     pages = Page.objects().filter().all()
-    page = random.choice(pages)
+    contents = random.choice(pages)
     panel_pages = [random.choice(pages) for x in range(6)]
 
     # for debug
@@ -26,6 +26,6 @@ def index(site):
     #     print(page.keywords, page.tile_label, page.keyword_top)
 
     return render_template('root/index.html',
-                           page=page,
+                           contents=contents,
                            site=site,
                            panel_pages=panel_pages)

@@ -1265,7 +1265,7 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 36px;
+  font-size: 22px;
 }
 h2,
 .h2 {
@@ -6776,7 +6776,6 @@ button.close {
   .bg-custom {
     background-repeat: no-repeat;
   }
-
   .label-bottom {
     height: 35px;
     bottom: -10px;
@@ -6884,7 +6883,8 @@ button.close {
     margin-bottom: 5px;
   }
   .top-view-font {
-    font-size: 30px;
+    font-size: 22px;
+    margin-top: 20px;
   }
 }
 

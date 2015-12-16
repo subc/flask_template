@@ -40,6 +40,14 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         return t.strftime("%Y年%m月%d日 %H:%M")
 
     @cached_property
+    def sub_time(self):
+        """
+        表示用
+        """
+        t = self.created_at + datetime.timedelta(hours=8)
+        return t.strftime("%Y/%m/%d")
+
+    @cached_property
     def title(self):
         prefix = ''
         if not self.is_post_rank and self.keyword_top:

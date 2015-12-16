@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask_script import Command
 from app import create_app
+from module.scraping.inspection import InspectionWord
 from module.site.page import Page, Keyword
 from module.site.site import Site
 from utils.db import get_db_engine
@@ -8,7 +9,8 @@ from utils.db import get_db_engine
 DatabaseTables = [
     Site,
     Page,
-    Keyword
+    Keyword,
+    InspectionWord,
 ]
 
 

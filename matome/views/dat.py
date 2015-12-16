@@ -36,7 +36,7 @@ def index(site, page_id):
     pages = Page.objects().filter().all()
     panel_pages = [random.choice(pages) for x in range(6)]
 
-    return render_template('root/index.html',
+    return render_template('dat/page.html',
                            page=page,
                            site=site,
                            panel_pages=panel_pages)

@@ -6841,7 +6841,7 @@ button.close {
     margin-bottom: 30px;
     color: white;
     background-color: #3c763d;
-    background-image: url("..static/img/bg.png");
+    background-image: url("/static/img/bg.png");
   }
 
   .top-view-title {

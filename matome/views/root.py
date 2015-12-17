@@ -17,7 +17,7 @@ app = Blueprint("index",
 @requires_site_title
 def index(site):
     import random
-    pages = Page.objects().filter().all()
+    pages = Page.get_new_history(site.id, _limit=12)
     contents = random.choice(pages)
     panel_pages = [random.choice(pages) for x in range(6)]
 

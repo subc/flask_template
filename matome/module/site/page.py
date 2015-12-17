@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 from pip._vendor.distlib.util import cached_property
-from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index
+from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 import enum
@@ -35,6 +35,15 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
     def __init__(self):
         self.text_color = None
+
+    @classmethod
+    @cached_tls
+    def get(cls, pk):
+        """
+        :param pk: int
+        :rtype: cls
+        """
+        return cls.objects().get(pk)
 
     @cached_property
     def site(self):
@@ -142,8 +151,31 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
     @property
     def view_text(self):
-        # todo dummy
+        # todo dummy 日本語表示 kとかMとか
         return self.view_count
+
+    @classmethod
+    def get_history(cls, site_id, pk_until=None, _limit=100):
+        """
+        特定id以下のrecordをN件取得
+        :param site_id: int
+        :param pk_until: int
+        :param _limit: int
+        :return:
+        """
+        return cls.objects().filter(cls.site_id==site_id,
+                                    cls.id<=pk_until).order_by(desc(cls.id)).limit(_limit).all()
+
+    @classmethod
+    @cached_tls
+    def get_new_history(cls, site_id, _limit=100):
+        """
+        最新のrecordをN件取得
+        :param site_id: int
+        :param _limit: int
+        :return:
+        """
+        return cls.objects().filter(cls.site_id == site_id).order_by(desc(cls.id)).limit(_limit).all()
 
     def set_color_supernova(self):
         self.text_color = PageViewCountColor.SUPERNOVA.name

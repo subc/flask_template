@@ -95,7 +95,10 @@ def keyword(site, keyword_id, start_keyword_id):
         keyword_id = int(keyword_id)
         start_keyword_id = int(start_keyword_id)
         keyword = Keyword.get(keyword_id)
-        relation = PageKeywordRelation.get_from_keyword(keyword_id, start_keyword_id, _limit=_limit)
+        if start_keyword_id == 100000000:
+            relation = PageKeywordRelation.get_from_new_keyword(keyword_id, _limit=_limit)
+        else:
+            relation = PageKeywordRelation.get_from_keyword(keyword_id, start_keyword_id, _limit=_limit)
         pages = [r.page for r in relation]
     except ValueError:
         # todo redirect error page

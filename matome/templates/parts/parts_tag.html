@@ -4,7 +4,7 @@
         <li><a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=k.id) }}">{{ k.keyword }}</a></li>
     {% endfor %}
 </ul>
-    {% if range(10)|random == 0 %}
+    {% if range(20)|random == 0 %}
         <!-- タグジャンプを試してみよう画像 -->
         <img src="/static/img/help/yaji.png" class="tag-help-image">
     {% endif %}

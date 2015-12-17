@@ -6838,8 +6838,14 @@ button.close {
     padding-bottom: 30px;
     margin-bottom: 30px;
     color: white;
-    background-color: #3c763d;
+
     background-image: url("/static/img/bg.png");
+  }
+  .bg-green{
+    background-color: #3c763d;
+  }
+  .bg-yellow{
+    background-color: #2e6da4;
   }
 
   .top-view-title {

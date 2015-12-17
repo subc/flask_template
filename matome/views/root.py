@@ -4,7 +4,6 @@ from flask import render_template, Blueprint
 
 # 第一引数の名称が、テンプレのurl_for内で呼び出すときの名称と紐づく
 from module.site.page import Page
-from module.site.site import Site
 from views.view_util import requires_site_title
 
 app = Blueprint("index",

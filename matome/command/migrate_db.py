@@ -2,7 +2,9 @@
 from flask_script import Command
 from app import create_app
 from module.scraping.inspection import InspectionWord
-from module.site.page import Page, Keyword
+from module.site.keyword import Keyword
+from module.site.page import Page
+from module.site.page_keyword import PageKeywordRelation
 from module.site.site import Site
 from utils.db import get_db_engine
 
@@ -11,6 +13,7 @@ DatabaseTables = [
     Page,
     Keyword,
     InspectionWord,
+    PageKeywordRelation,
 ]
 
 

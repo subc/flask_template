@@ -9,6 +9,7 @@ Base = declarative_base()
 
 class Site(DBBaseMixin, CreateUpdateMixin, Base):
     name = Column('name', String(50))
+    short_name = Column('short_name', String(20))
     title = Column('title', String(10), index=True)
     url = Column('url', String(200))
     background_image_count = Column('background_image_count', Integer)

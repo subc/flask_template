@@ -9,7 +9,9 @@ from bs4 import BeautifulSoup
 
 from module.scraping.inspection import InspectionWord
 from module.scraping.storage import SearchStorage
-from module.site.page import Page, PageType, Keyword
+from module.site.keyword import Keyword
+from module.site.page import Page, PageType
+from module.site.page_keyword import PageKeywordRelation
 
 
 def token_is_sub(token):
@@ -96,7 +98,8 @@ def main(subject):
 
     # dbに記録
     keyword_record_dict = {r_index.keyword: r_index.keyword_record for r_index in r_indexes}
-    Page.bulk_insert([page.output_for_page(subject, keyword_record_dict) for page in pages if page.is_enable])
+    pages = Page.bulk_insert([page.output_for_page(subject, keyword_record_dict) for page in pages if page.is_enable])
+    PageKeywordRelation.register(pages)
 
 
 def analyze_post(posts):

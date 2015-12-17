@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 import enum
 
+from module.site.keyword import Keyword
 from module.site.site import Site
 from utils.tls_property import cached_tls
 
@@ -32,9 +33,6 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     page_top = Column('page_top', UnicodeText)
     type = Column('type', Integer, index=True, default=0)  # PageTypeのenum
     _keywords = Column('_keywords', String(1000))
-
-    def __init__(self):
-        self.text_color = None
 
     @classmethod
     @cached_tls
@@ -155,7 +153,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         return self.view_count
 
     @classmethod
-    def get_history(cls, site_id, pk_until=None, _limit=100):
+    def get_history(cls, site_id, pk_until, _limit=100):
         """
         特定id以下のrecordをN件取得
         :param site_id: int
@@ -185,64 +183,4 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
     def count_up(self):
         self.view_count += 1
-        self.save()
-
-
-class Keyword(DBBaseMixin, Base):
-    site_id = Column('site_id', Integer, index=True)
-    keyword = Column('keyword', String(255), index=True)
-    count = Column('count', Integer, default=0)
-
-    def __repr__(self):
-        return '{0}[{1}]'.format(self.__class__.__name__, self.id)
-
-    @classmethod
-    @cached_tls
-    def get(cls, pk):
-        """
-        :param pk: int
-        :rtype: cls
-        """
-        return cls.objects().get(pk)
-
-    @classmethod
-    def get_by_keywords(cls, site_id, keywords):
-        """
-        :param site_id: int
-        :param keywords: list(str)
-        :return: list[Keyword]
-        """
-        return cls.objects().filter(cls.site_id==site_id, cls.keyword.in_(keywords)).all()
-
-    @classmethod
-    def register(cls, site_id, keywords):
-        """
-        keywordを一括登録する
-        :param site_id: int
-        :param keywords: list(str)
-        :rtype : list[Keyword]
-        """
-        # 重複排除
-        keywords = list(set(keywords))
-
-        # 存在チェック
-        keyword_records = cls.get_by_keywords(site_id, keywords)
-        keyword_record_dict = {record.keyword: record for record in keyword_records}
-
-        create_objs = []
-        for keyword_str in keywords:
-            if keyword_str in keyword_record_dict:
-                # 存在するからカウントアップだけする
-                keyword_record_dict[keyword_str].count_up()
-            else:
-                obj = cls(site_id=site_id, keyword=keyword_str, count=1)
-                create_objs.append(obj)
-
-        # バルク!
-        objs = cls.bulk_insert(create_objs)
-
-        return objs + keyword_records
-
-    def count_up(self):
-        self.count += 1
         self.save()

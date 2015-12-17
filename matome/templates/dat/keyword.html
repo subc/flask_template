@@ -1,6 +1,6 @@
 {% extends "master.html" %}
 
-{% block title %}【{{ site.name }}】『{{ keyword.keyword }}』についてまとめた記事{% endblock %}
+{% block title %}『{{ keyword.keyword }}』についてまとめた記事{% endblock %}
 
 {% block body %}
     {% include '/parts/parts_sub_header.html' %}
@@ -15,7 +15,14 @@
 
     <div class="container">
         <!--BODY-->
-        {% include '/parts/parts_full_list.html' %}
+        {% if list_pages %}
+            {% include '/parts/parts_full_list.html' %}
+            {% if is_next %}
+                <a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=keyword.id, start_keyword_id=is_next) }}" class="list-group-item">次のページへ</a>
+            {% endif %}
+        {% else %}
+            でーたないぴょん
+        {% endif %}
         <!--BODY-->
 
         {% include '/parts/parts_panel.html'%}

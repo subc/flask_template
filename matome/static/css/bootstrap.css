@@ -6966,14 +6966,14 @@ button.close {
 }
 @media (max-width: 767px) {
   .bg-custom {
+    background-position: 0px 50px;
+    background-size: cover;
     background-repeat: repeat-x;
+    margin-left: 8px;
   }
   .span4-custom {
     height: 210px;
     position: relative;
-  }
-  .bg-custom {
-    background-position: 10px 50px;
   }
   .label-bottom {
     width: 100%;

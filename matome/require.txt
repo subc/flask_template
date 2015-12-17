@@ -1,2 +1,5 @@
 pip3 install mysqlclient
 
+# uwsgi
+sudo CC=gcc pip3 install uwsgi
+

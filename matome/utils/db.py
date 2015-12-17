@@ -38,7 +38,11 @@ def get_db_engine():
     _db = app.config.get('DB')
     db_user = _db['user']
     db_host = _db['host']
+    db_password = _db['password']
     db_name = _db['db_name']
-    db_path = 'mysql://{}@{}/{}?charset=utf8'.format(db_user, db_host, db_name)
+    if db_password:
+        db_path = 'mysql://{}:{}@{}/{}?charset=utf8'.format(db_user, db_password, db_host, db_name)
+    else:
+        db_path = 'mysql://{}@{}/{}?charset=utf8'.format(db_user, db_host, db_name)
     engine = create_engine(db_path, encoding='utf-8')
     return engine

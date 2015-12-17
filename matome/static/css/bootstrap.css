@@ -6844,8 +6844,11 @@ button.close {
   .bg-green{
     background-color: #3c763d;
   }
-  .bg-yellow{
+  .bg-blue{
     background-color: #2e6da4;
+  }
+  .bg-orange{
+    background-color: #eb9316;
   }
 
   .top-view-title {

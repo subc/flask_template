@@ -129,3 +129,49 @@ def keyword(site, keyword_id, start_keyword_id):
                            panel_pages=panel_pages,
                            list_pages=pages,
                            is_next=is_next)
+
+
+@app.route('/history/<start_page_id>', methods=['GET'], strict_slashes=False)
+@requires_site_title
+def history(site, start_page_id):
+    """
+    過去ログ
+    """
+    _limit = 20
+
+    # パラメータチェック
+    try:
+        start_page_id = int(start_page_id)
+        if start_page_id == 100000000:
+            pages = Page.get_new_history(site_id=site.id, _limit=_limit)
+        else:
+            pages = Page.get_history(site_id=site.id, pk_until=start_page_id, _limit=_limit)
+    except ValueError:
+        # todo redirect error page
+        return 'error'
+
+    # todo dummy
+    page_all = Page.objects().filter().all()
+    panel_pages = [random.choice(page_all) for x in range(6)]
+
+    # todo dummy 色つける
+    if pages:
+        for x in range(4):
+            _ = random.choice(pages)
+            _.set_color_supernova()
+        for x in range(5):
+            _ = random.choice(pages)
+            _.set_color_hot()
+
+    # 次のページの遷移先
+    is_next = None
+    if pages and len(pages) == _limit:
+        last_page_id = pages[-1].id
+        is_next = last_page_id - 1
+
+    return render_template('dat/history.html',
+                           site=site,
+                           keyword=keyword,
+                           panel_pages=panel_pages,
+                           list_pages=pages,
+                           is_next=is_next)

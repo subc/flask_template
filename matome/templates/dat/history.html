@@ -3,22 +3,24 @@
 {% block title %}『{{ keyword.keyword }}』についてまとめた記事{% endblock %}
 
 {% block body %}
-    {% include '/parts/parts_sub_header.html' %}
+    {% with selector="history" %}
+        {% include '/parts/parts_header.html' %}
+    {% endwith %}
 
     <!--TITLE-->
-    <div class="jumbotron-top-view-list-header bg-blue">
+    <div class="jumbotron-top-view-list-header bg-orange" style="margin-top: 30px">
         <div class="container">
-            <h1>『{{ keyword.keyword }}』についてまとめた記事</h1>
+            <h1>過去ログ</h1>
         </div>
     </div>
     <!--TITLE-->
-
+    <p style="color: #f0ad4e; margin-left: 12px">鮮度ランク:&nbsp;{{ is_next if is_next else '最古' }}</p>
     <div class="container">
         <!--BODY-->
         {% if list_pages %}
             {% include '/parts/parts_full_list.html' %}
             {% if is_next %}
-                <a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=keyword.id, start_keyword_id=is_next) }}" class="list-group-item">次のページへ</a>
+                <a href="{{ url_for('dat.history', site_title=site.title, start_page_id=is_next) }}" class="list-group-item">次のページへ</a>
             {% endif %}
         {% else %}
             でーたないぴょん

@@ -47,6 +47,45 @@ class SearchManager(object):
                     subjects_dict[subject.dat] = subject
 
         # 禁止名でフィルタ
-        pass
+
+        return subjects_dict
+
+    def fallout4(self, subjects, site):
+        """
+        ファンキル
+        :param subjects: list[Subject]
+        :param site: dict{id: Subject}
+        """
+        keywords = [
+            'Fallout4',
+        ]
+        keywords_ignore = [
+            '晒',
+            '叩'
+        ]
+
+        # 名前でフィルタ
+        subjects_dict = {}
+        for key in keywords:
+            for subject in subjects:
+                if key in subject.title:
+                    subjects_dict[subject.dat] = subject
+
+        # 禁止名でフィルタ
+        ignore_keys = []
+        for key_subject in subjects_dict:
+            _subject = subjects_dict[key_subject]
+            _title = _subject.title
+            for key_ignore in keywords_ignore:
+                if key_ignore in _title:
+                    ignore_keys.append(key_subject)
+
+        # 禁止名でフィルタの削除部分
+        for key in ignore_keys:
+            del subjects_dict[key]
+
+        # 結果出力
+        for key_subject in subjects_dict:
+            print(subjects_dict[key_subject].title)
 
         return subjects_dict

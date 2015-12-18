@@ -19,3 +19,6 @@ class Scraping(Command):
     def _run(self, force=None):
         site = Site.get(1)
         SearchManager().search_and_scraping(site, force=force)
+
+        site = Site.get(2)
+        SearchManager().search_and_scraping(site, force=force)

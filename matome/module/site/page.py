@@ -50,7 +50,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     @cached_property
     def background_image(self):
         image_id = self.site.get_background_image_id(self.id)
-        return '/static/img/{}/{}.png'.format(self.site.title, image_id)
+        return '/static/img/site/{}/{}.png'.format(self.site.title, image_id)
 
     @property
     def is_post_rank(self):

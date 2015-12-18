@@ -96,10 +96,37 @@ def main(subject):
     for r_index in r_indexes:
         pages.append(printer_res(r_index, posts))
 
-    # dbに記録
+    # dbに記録するレコードの生成
+    pages = filter_overlap(pages)
     keyword_record_dict = {r_index.keyword: r_index.keyword_record for r_index in r_indexes}
-    pages = Page.bulk_insert([page.output_for_page(subject, keyword_record_dict) for page in pages if page.is_enable])
+    bulk_pages = [page.output_for_page(subject, keyword_record_dict) for page in pages if page.is_enable]
+
+    # バルク!
+    pages = Page.bulk_insert(bulk_pages)
     PageKeywordRelation.register(pages)
+
+
+def filter_overlap(pages):
+    """
+    重複を排除する
+    :param pages: list(PageRepository)
+    :return: list(PageRepository)
+    """
+    pages = [p for p in pages if p.is_enable]
+
+    # 重複排除
+    pages = sorted(pages, key=lambda x: x.get_total_priority())
+    result_dict = {}
+    for page in pages:
+        _id = page.get_page_top_id()
+        if _id in result_dict:
+            print('+++++++++')
+            print('page重複排除:削除:{}'.format(str(result_dict[_id].get_total_priority())))
+            print('page重複排除:上書き:{}'.format(str(page.get_total_priority())))
+            print('+++++++++')
+            assert(result_dict[_id].get_total_priority() <= page.get_total_priority())
+        result_dict[_id] = page
+    return result_dict.values()
 
 
 def analyze_post(posts):
@@ -326,6 +353,12 @@ class PageRepository(object):
             for _keyword in p.keywords:
                 r[_keyword] = 1
         return list(r.keys())
+
+    def get_page_top_id(self):
+        return self.output[0].num
+
+    def get_total_priority(self):
+        return sum([o.priority for o in self.output])
 
     def get_keyword_record_ids(self, keyword_record_dict):
         """

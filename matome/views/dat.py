@@ -33,8 +33,7 @@ def index(site, page_id):
     contents.count_up()
 
     # todo dummy
-    site = Site.get(1)
-    pages = Page.objects().filter().all()
+    pages = Page.get_new_history(site.id, _limit=12)
     panel_pages = [random.choice(pages) for x in range(6)]
 
     return render_template('dat/page.html',
@@ -105,8 +104,7 @@ def keyword(site, keyword_id, start_keyword_id):
         return 'error'
 
     # todo dummy
-    page_all = Page.objects().filter().all()
-    panel_pages = [random.choice(page_all) for x in range(6)]
+    panel_pages = [random.choice(pages) for x in range(6)]
 
     # todo dummy 色つける
     if pages:
@@ -150,10 +148,6 @@ def history(site, start_page_id):
         # todo redirect error page
         return 'error'
 
-    # todo dummy
-    page_all = Page.objects().filter().all()
-    panel_pages = [random.choice(page_all) for x in range(6)]
-
     # todo dummy 色つける
     if pages:
         for x in range(4):
@@ -172,6 +166,5 @@ def history(site, start_page_id):
     return render_template('dat/history.html',
                            site=site,
                            keyword=keyword,
-                           panel_pages=panel_pages,
                            list_pages=pages,
                            is_next=is_next)

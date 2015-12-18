@@ -1,6 +1,10 @@
 {% extends "master.html" %}
 
 {% block title %}{{ site.name }}{% endblock %}
+{% block headmeta %}
+<meta content="{{ site.name }}" name="title">
+<meta content="{{ site.name }}は、{{ site.short_name }}好きのための情報共有サービスです。 {{ site.short_name }}に関する最新のTips、ノウハウ、メモが公開されています。" name="description">
+{% endblock %}
 
 {% block body %}
     <!--HEADER-->

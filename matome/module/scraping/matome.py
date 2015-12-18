@@ -553,15 +553,13 @@ class MatomeMixin(object):
         :param subject: Subject
         :param force: bool
         """
-        # redis問い合わせしてまとめるかチェック
-        storage = SearchStorage(subject.site.title)
-
-        if not storage.get_dat(subject.dat) or force:
+        # まとめを実行するか判断する
+        if subject.is_enable() or force:
             # まとめる
             main(subject)
 
-            # redisに記録
-            storage.set_dat(subject.dat)
+            # redisにまとめた履歴を記録
+            subject.done()
 
         else:
             print('Already Matometa!:{}'.format(str(subject)))

@@ -91,8 +91,18 @@ class Subject(MatomeMixin):
         redisに問い合わせてチェック済みならFalse
         :return: bool
         """
+        if self.count_res >= 900:
+            return True
+
         s = SearchStorage(self.site)
         return not bool(s.get_dat(self.dat))
+
+    def done(self):
+        """
+        まとめ終わったら再実行しないようにredisにフラグ立てる
+        """
+        s = SearchStorage(self.site)
+        s.set_dat(self.dat_id)
 
     def printer(self):
         print(self)

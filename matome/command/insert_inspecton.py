@@ -5,7 +5,7 @@ from module.scraping.inspection import InspectionWord
 
 # from
 # http://dic.nicovideo.jp/a/%E3%83%8B%E3%82%B3%E3%83%8B%E3%82%B3%E7%94%9F%E6%94%BE%E9%80%81%3A%E9%81%8B%E5%96%B6ng%E3%83%AF%E3%83%BC%E3%83%89%E4%B8%80%E8%A6%A7
-words = [
+INSPECTION_WORD = [
     "陰毛",
     "いんもう",
     "まんこ",
@@ -187,4 +187,4 @@ class InsertInspection(Command):
     ベキ等性あり、連打可能
     """
     def run(self):
-        InspectionWord.register(words)
+        InspectionWord.register(INSPECTION_WORD)

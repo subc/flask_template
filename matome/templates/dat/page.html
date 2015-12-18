@@ -1,6 +1,6 @@
 {% extends "master.html" %}
 
-{% block title %}{{ contents.title }}{% endblock %}
+{% block title %}{{ contents.title }}{{ site.title_suffix }}{% endblock %}
 
 {% block body %}
     {% include '/parts/parts_sub_header.html' %}

@@ -49,5 +49,12 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
         """
         return '{}subject.txt'.format(self.url)
 
+    @property
+    def title_suffix(self):
+        """
+        - xxxx速報(肉)
+        """
+        return ' - {}'.format(self.name)
+
     def get_background_image_id(self, _id):
         return 1 + _id % self.background_image_count

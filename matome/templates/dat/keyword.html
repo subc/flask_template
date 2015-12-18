@@ -1,6 +1,6 @@
 {% extends "master.html" %}
 
-{% block title %}『{{ keyword.keyword }}』についてまとめた記事{% endblock %}
+{% block title %}『{{ keyword.keyword }}』についてまとめた記事{{ site.title_suffix }}{% endblock %}
 
 {% block body %}
     {% include '/parts/parts_sub_header.html' %}

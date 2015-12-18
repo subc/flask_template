@@ -6979,6 +6979,10 @@ button.close {
     background-size: cover;
     background-repeat: repeat-x;
     margin-left: 8px;
+    /*padding-left: 8px;*/
+  }
+  .wrap-sp-margin{
+    margin-left: -10px;
   }
   .span4-custom {
     height: 210px;
@@ -6992,6 +6996,9 @@ button.close {
   }
   .label-top {
     margin-top: 24px;
+  }
+  .label-new {
+    margin-right: 8px;
   }
   .tile-font {
     padding-top: 55px;

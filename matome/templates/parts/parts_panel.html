@@ -3,11 +3,11 @@
     {% for page in panel_pages %}
         <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom"
              style='background-image:url("{{ page.background_image }}")'>
-            <div class="wrap"><a class="wrap" href="{{ url_for('dat.index', site_title=site.title, page_id=page.id) }}">
+            <div class="wrap wrap-sp-margin"><a class="wrap" href="{{ url_for('dat.index', site_title=site.title, page_id=page.id) }}">
                 <div class="label-top label-new">New!!</div>
                 <div class="label-top">{{ page.time }}</div>
                 <p class="tile-font">{{ page.tile_body }} </p>
-                <p class="label-bottom">{{ page.tile_label }}</p>
+                <p class="label-bottom wrap-sp-margin">{{ page.tile_label }}</p>
             </a></div>
         </div>
     {% endfor %}

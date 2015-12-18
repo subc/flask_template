@@ -52,7 +52,24 @@ class InspectionWord(DBBaseMixin, Base):
         :rtype : bool
         """
         if len(word.strip()) == 0:  # 空白のみで構成されている
-            return True
+            return False
         r = cls.get_re_compile()
         m = r.search(word)
-        return bool(m)
+        if bool(m):
+            return True
+
+        # アフィチェック
+        return inspection_affiliate(word)
+
+
+def inspection_affiliate(word):
+    """
+    ワードが禁止文字列を含んでいるとTrue
+    :param word: unicode
+    :rtype : bool
+    """
+    if len(word.strip()) == 0:  # 空白のみで構成されている
+        return False
+    r = re.compile("あふぃ|アフィ|ア.*フィ|ア.*ふぃ|あ.*ふぃ|あ.*フィ|あ.*フ.*ィ|クリック|くりっく|広告")
+    m = r.search(word)
+    return bool(m)

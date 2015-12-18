@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from pip._vendor.distlib.util import cached_property
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
@@ -31,6 +32,14 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
         :rtype: cls
         """
         return cls.objects().filter(cls.title==title)[0]
+
+    @cached_property
+    def top_image_path(self):
+        """
+        /static/img/site/{title}/top.jpg
+        :return:str
+        """
+        return '/static/img/site/{}/top.jpg'.format(self.title)
 
     @property
     def subjects_url(self):

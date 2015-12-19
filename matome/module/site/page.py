@@ -33,6 +33,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     page_top = Column('page_top', UnicodeText)
     type = Column('type', Integer, index=True, default=0)  # PageTypeのenum
     _keywords = Column('_keywords', String(1000))
+    ad_type = Column('ad_type', Integer, default=None, nullable=True)
 
     def __repr__(self):
         return 'Page[{}]'.format(str(self.id))

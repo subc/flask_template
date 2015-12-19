@@ -14,6 +14,7 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
     title = Column('title', String(10), index=True)
     url = Column('url', String(200))
     background_image_count = Column('background_image_count', Integer)
+    ad_type = Column('ad_type', Integer, default=None, nullable=True)
 
     @classmethod
     @cached_tls

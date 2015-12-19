@@ -3,7 +3,7 @@ host_name = 'niku.tokyo';
 
 // コピーされたときのredirect先
 // redirect_deny_url = 'http://www.niku.tokyo/';
-redirect_millisec = 3000;
+redirect_millisec = 500;
 
 // コピーされたときに表示するメッセージ
 deny_message = '<h3 style="color: white">本ページは削除されました。(・ω<) ﾃﾍﾍﾟﾛ </h3>';

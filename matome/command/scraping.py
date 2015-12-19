@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import traceback
+
+import time
 from flask_script import Command, Option
 
 from command.insert_inspecton import INSPECTION_WORD
@@ -18,14 +21,19 @@ class Scraping(Command):
     def run(self, force=None):
         self.init()
         self._run(force)
+        # supervisordでの連続実行エラー対策
+        print("finish")
+        print("supervisordでの連続実行エラー対策でスリープ開始")
+        time.sleep(20)
 
     def init(self):
         # NGワードを再読み込み
         InspectionWord.register(INSPECTION_WORD)
 
     def _run(self, force=None):
-        site = Site.get(1)
-        SearchManager().search_and_scraping(site, force=force)
-
-        site = Site.get(2)
-        SearchManager().search_and_scraping(site, force=force)
+        for site in Site.get_all():
+            print(site)
+            try:
+                SearchManager().search_and_scraping(site, force=force)
+            except Exception as err:
+                traceback.print_tb(err.__traceback__)

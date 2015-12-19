@@ -63,6 +63,10 @@ class DBBaseMixin(object):
         return cls.objects().get(pk)
 
     @classmethod
+    def get_all(cls):
+        return cls.objects().filter().all()
+
+    @classmethod
     def insert(cls, obj):
         """
         :param obj: cls

@@ -121,7 +121,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
     @cached_property
     def tile_label(self):
-        return self.generate_top_title(17)
+        return self.generate_top_title(15)
 
     @cached_property
     def keywords(self):

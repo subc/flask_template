@@ -6914,6 +6914,9 @@ button.close {
       position: absolute;
       bottom: -10px;
   }
+  .keyword-list-text-title{
+      width: 1000px;
+  }
   .keyword-list-text-position{
       float:left;padding-top: 10px; padding-left: 10px; color: #8c8c8c;
   }

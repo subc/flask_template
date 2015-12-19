@@ -105,6 +105,9 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         if not self.is_post_rank and self.keyword_top:
             # キーワードとの親和度
             last = _limit - len(self.keyword_top.keyword)
+            if last < 0:
+                last = 0
+
             s = '【{}】{}'.format(self.keyword_top.keyword, top_body[:last])
             return s + '...'
 

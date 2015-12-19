@@ -13,8 +13,10 @@
                              style='background-image:url("{{ page.background_image }}");'>
                         </div>
                         <div class="keyword-list-wrap-body">
-                            <p class="keyword-list-text-title">{{ page.list_label }}</p>
-                            <div class="keyword-list-text-wrap">
+                            <div style="height: 50px">
+                                <p class="keyword-list-text-title">{{ page.list_label }}</p><br />
+                            </div>
+                            <div>
                                 <p class="keyword-list-text-position">{{ page.time }} </p>
                                 <p class="keyword-list-text-position">/</p>
                                 <p class="keyword-list-text-position {{ page.text_color|lower }}">{{ page.view_text }}

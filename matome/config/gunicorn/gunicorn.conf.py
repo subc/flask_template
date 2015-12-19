@@ -1,5 +1,7 @@
 # Sample Gunicorn configuration file.
 
+# /etc/nginx/conf.d/ に設置する
+
 #
 # Process naming
 #

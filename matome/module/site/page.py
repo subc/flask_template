@@ -34,6 +34,9 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     type = Column('type', Integer, index=True, default=0)  # PageTypeのenum
     _keywords = Column('_keywords', String(1000))
 
+    def __repr__(self):
+        return 'Page[{}]'.format(str(self.id))
+
     @classmethod
     @cached_tls
     def get(cls, pk):

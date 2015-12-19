@@ -44,5 +44,6 @@ def get_db_engine():
         db_path = 'mysql://{}:{}@{}/{}?charset=utf8'.format(db_user, db_password, db_host, db_name)
     else:
         db_path = 'mysql://{}@{}/{}?charset=utf8'.format(db_user, db_host, db_name)
-    engine = create_engine(db_path, encoding='utf-8')
+    engine = create_engine(db_path, encoding='utf-8',
+                           pool_size=1, max_overflow=1)
     return engine

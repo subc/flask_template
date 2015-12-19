@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sqlalchemy
 from sqlalchemy import Column, Integer, DateTime
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 import re
@@ -91,8 +92,11 @@ class DBBaseMixin(object):
         :return:self
         """
         session = self.__class__.session()
-        session.add(self)
-        session.commit()
+        try:
+            session.add(self)
+            session.commit()
+        except sqlalchemy.exc.StatementError:
+            session.rollback()
         return self
 
 

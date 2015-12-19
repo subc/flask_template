@@ -17,6 +17,7 @@ app = Blueprint("index",
 @requires_site_title
 def index(site):
     svm = generate_index_contents(site)
+    raise
     return render_template('root/index.html',
                            svm=svm,
                            site=site)

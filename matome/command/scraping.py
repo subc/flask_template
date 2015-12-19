@@ -35,5 +35,10 @@ class Scraping(Command):
             print(site)
             try:
                 SearchManager().search_and_scraping(site, force=force)
+            except AttributeError as err:
+                traceback.print_tb(err.__traceback__)
+                for x in range(100):
+                    print('未設定エラー:{}:{}の検出関数が未設定'.format(site.id, site.title))
+                break
             except Exception as err:
                 traceback.print_tb(err.__traceback__)

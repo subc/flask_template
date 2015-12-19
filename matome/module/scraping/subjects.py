@@ -48,6 +48,10 @@ class Subject(MatomeMixin):
         """
         return '{}dat/{}'.format(self.site.url, self.dat)
 
+    @property
+    def storage(self):
+        return SearchStorage(self.site.title)
+
     @classmethod
     def get_from_url(cls, site):
         """
@@ -55,7 +59,6 @@ class Subject(MatomeMixin):
         :param site: Site
         :return: list[cls]
         """
-        print(site.subjects_url)
         response = requests.get(site.subjects_url)
         assert (response.status_code == 200), response.text
 
@@ -88,29 +91,30 @@ class Subject(MatomeMixin):
 
     def is_enable(self):
         """
+        まとめ可能ならTrue
         redisに問い合わせてチェック済みならFalse
         :return: bool
         """
+        # 既にまとめ済みならスキップ
+        already_matome = bool(self.storage.get_dat(self.dat_id))
+        if already_matome:
+            return False
+
+        # レス数が900以上ならまとめる
         if self.count_res >= 900:
             return True
-
-        s = SearchStorage(self.site)
-        return not bool(s.get_dat(self.dat))
+        else:
+            return False
 
     def done(self):
         """
         まとめ終わったら再実行しないようにredisにフラグ立てる
         """
-        s = SearchStorage(self.site)
-        s.set_dat(self.dat_id)
-
-    def printer(self):
-        print(self)
+        self.storage.set_dat(self.dat_id)
 
     def execute_matome(self, force=None):
         """
         まとめる
         :param force: bool
         """
-        print(self.dat_url)
         Subject.matome(self, force=force)

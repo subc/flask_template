@@ -8,6 +8,14 @@ class SearchManager(object):
     """
     スレッドを検索する
     """
+    def search(self, site):
+        # スレッド検索
+        subjects = Subject.get_from_url(site)
+        method = getattr(self, site.title)
+        subjects_dict = method(subjects, site)
+        for key in subjects_dict:
+            print(subjects_dict[key])
+
     def search_and_scraping(self, site, force=None):
         # スレッド検索
         subjects = Subject.get_from_url(site)
@@ -89,3 +97,6 @@ class SearchManager(object):
             print(subjects_dict[key_subject].title)
 
         return subjects_dict
+
+    def fallout4pc(self, *args, **kwargs):
+        return self.fallout4(*args, **kwargs)

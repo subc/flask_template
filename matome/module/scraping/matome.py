@@ -588,11 +588,10 @@ class MatomeMixin(object):
         """
         # まとめを実行するか判断する
         if subject.is_enable() or force:
-            # まとめる
-            main(subject)
-
             # redisにまとめた履歴を記録
             subject.done()
 
+            # まとめる
+            main(subject)
         else:
-            print('Already Matometa!:{}'.format(str(subject)))
+            print('【実行延期】まとめ済みかレス数が不足:{}'.format(str(subject)))

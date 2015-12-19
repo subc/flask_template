@@ -132,9 +132,20 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         :return: list(Keyword)
         """
         words = [Keyword.get(_id) for _id in self._keyword_ids]
+        if not words:
+            return []
+
+        # countが2以下のものは非表示
+        words = [w for w in words if w.count > 2]
+        if not words:
+            return []
+
+        # 並び替えて6個返却
         words = sorted(words, key=lambda x: x.id, reverse=True)
         words = sorted(words, key=lambda x: x.count, reverse=True)
-        return words
+        if words:
+            return words[:6]
+        return []
 
     @cached_property
     def _keyword_ids(self):
@@ -149,7 +160,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
     @property
     def keyword_top(self):
-        if self._keywords:
+        if self.keywords:
             return self.keywords[0]
         return None
 

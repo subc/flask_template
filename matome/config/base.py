@@ -20,4 +20,4 @@ REDIS = {
 }
 
 # スクレイピングするスレッドの投稿数上限
-SCRAPING_LIMIT = 200
+SCRAPING_LIMIT = 950

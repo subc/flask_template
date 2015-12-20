@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import datetime
 from flask import render_template, Blueprint
 
 # 第一引数の名称が、テンプレのurl_for内で呼び出すときの名称と紐づく
-from module.site.page import Page
 from module.view_manager.view_util import generate_index_contents
 from views.view_util import requires_site_title
 

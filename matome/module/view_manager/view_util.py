@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 
-from module.site.page import Page
+from module.site.page import Page, PageViewLevel
 from utils.tls_property import cached_tls
 
 
@@ -48,13 +48,24 @@ def generate_index_contents(site):
 
     # 残りの46件からviewが多い3件を取る
     left_pages = pages_repository.values()
-    left_pages = sorted(left_pages, key=lambda x:x.view_count, reverse=True)
+    left_pages = sorted(left_pages, key=lambda x: x.view_count, reverse=True)
     for x in range(3):
         panels.append(left_pages.pop())
     random.shuffle(panels)
 
+    # 残りページをView数をベースに点数付与
+    for page in left_pages[0:3]:  # 3件
+        page.set_view_level(PageViewLevel.SUPERNOVA)
+
+    for page in left_pages[3:5]:  # 2件
+        page.set_view_level(PageViewLevel.HOT)
+
+    for page in left_pages[5:7]:  # 2件
+        page.set_view_level(PageViewLevel.WARM)
+
     # 残りをidで降順ソートする
     left_pages = sorted(left_pages, key=lambda x:x.id, reverse=True)
+
 
     return SiteViewModel(site=site,
                          contents=contents,

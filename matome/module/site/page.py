@@ -20,9 +20,11 @@ class PageType(enum.Enum):
     KEYWORD_RANK = 2
 
 
-class PageViewCountColor(enum.Enum):
+class PageViewLevel(enum.Enum):
     SUPERNOVA = 1
     HOT = 2
+    WARM = 3
+    NORMAL = 4
 
 
 class Page(DBBaseMixin, CreateUpdateMixin, Base):
@@ -175,9 +177,38 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         return None
 
     @property
-    def view_text(self):
-        # todo dummy 日本語表示 kとかMとか
-        return self.view_count
+    def star_level(self):
+        """
+        0 - 50の範囲を返却
+
+        /*星5.0: <div class="starlevel5 star50"></div>*/
+        /*星4.0: <div class="starlevel5 star40"></div>*/
+        /*星3.0: <div class="starlevel5 star30"></div>*/
+        /*星2.0: <div class="starlevel5 star20"></div>*/
+        /*星1.0: <div class="starlevel5 star10"></div>*/
+        /*星0.0: <div class="starlevel5 star00"></div>*/
+
+        /*星4.5: <div class="starlevel5 star45"></div>*/
+        /*星3.5: <div class="starlevel5 star35"></div>*/
+        /*星2.5: <div class="starlevel5 star25"></div>*/
+        /*星1.5: <div class="starlevel5 star15"></div>*/
+        /*星0.5: <div class="starlevel5 star05"></div>*/
+        http://allabout.co.jp/gm/gc/24018/3/
+        :return: int
+        """
+        if self._level is PageViewLevel.SUPERNOVA:
+            return "starlevel5 star50"
+
+        if self._level is PageViewLevel.HOT:
+            return "starlevel5 star40"
+
+        if self._level is PageViewLevel.WARM:
+            return "starlevel5 star35"
+
+        if self._level is PageViewLevel.NORMAL:
+            return None
+
+        return None
 
     @classmethod
     def get_history(cls, site_id, pk_until, _limit=100):
@@ -202,14 +233,14 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         return cls.objects().filter(cls.site_id == site_id).order_by(desc(cls.id)).limit(_limit).all()
 
-    def set_color_supernova(self):
-        self.text_color = PageViewCountColor.SUPERNOVA.name
-
-    def set_color_hot(self):
-        self.text_color = PageViewCountColor.HOT.name
-
     def set_favorite(self):
         self.is_favorite = True
+
+    def set_view_level(self, level):
+        """
+        :param level: PageViewLevel
+        """
+        self._level = level
 
     def count_up(self):
         self.view_count += 1

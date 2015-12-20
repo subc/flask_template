@@ -4,7 +4,7 @@ import random
 from flask import Module, render_template, Blueprint
 
 from module.site.keyword import Keyword
-from module.site.page import Page
+from module.site.page import Page, PageViewLevel
 from module.site.page_keyword import PageKeywordRelation
 from module.view_manager.view_util import generate_index_contents
 from views.view_util import requires_site_title
@@ -48,6 +48,9 @@ def keyword(site, keyword_id, start_keyword_id):
     pages = [r.page for r in relation]
     svm = generate_index_contents(site)
 
+    # pageのランク付け
+    pages = page_rank(pages)
+
     # 次のページの遷移先
     is_next = None
     if relation and len(relation) == _limit:
@@ -69,6 +72,7 @@ def history(site, start_page_id):
     過去ログ
     """
     _limit = 20
+    svm = generate_index_contents(site)
 
     # パラメータチェック
     start_page_id = int(start_page_id)
@@ -76,7 +80,9 @@ def history(site, start_page_id):
         pages = Page.get_new_history(site_id=site.id, _limit=_limit)
     else:
         pages = Page.get_history(site_id=site.id, pk_until=start_page_id, _limit=_limit)
-    svm = generate_index_contents(site)
+
+    # pageのランク付け
+    pages = page_rank(pages)
 
     # 次のページの遷移先
     is_next = None
@@ -90,3 +96,26 @@ def history(site, start_page_id):
                            list_pages=pages,
                            svm=svm,
                            is_next=is_next)
+
+
+def page_rank(pages):
+    # view数が一定値以下なら何もしない
+    if sum([p.view_count for p in pages]) < 10:
+        return pages
+
+    # view数でソート
+    pages = sorted(pages, key=lambda x: x.view_count, reverse=True)
+
+    # 残りページをView数をベースに点数付与
+    for page in pages[0:2]:  # 2件
+        page.set_view_level(PageViewLevel.SUPERNOVA)
+
+    for page in pages[2:4]:  # 2件
+        page.set_view_level(PageViewLevel.HOT)
+
+    for page in pages[4:6]:  # 2件
+        page.set_view_level(PageViewLevel.WARM)
+
+    # 残りをidで降順ソートする
+    pages = sorted(pages, key=lambda x: x.id, reverse=True)
+    return pages

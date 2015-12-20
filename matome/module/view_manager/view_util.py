@@ -43,14 +43,15 @@ def generate_index_contents(site):
     random.shuffle(new_list)
     panels = new_list[1:4]
     for panel_page in panels:
-        panel_page.set_favorite()
+        panel_page.set_favorite(False)
         pages_repository.pop(panel_page.id)
 
     # 残りの46件からviewが多い3件を取る
     left_pages = pages_repository.values()
     left_pages = sorted(left_pages, key=lambda x: x.view_count, reverse=True)
     for x in range(3):
-        panels.append(left_pages.pop())
+        page = left_pages.pop(True)
+        panels.append(page)
     random.shuffle(panels)
 
     # 残りページをView数をベースに点数付与

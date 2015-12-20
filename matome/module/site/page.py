@@ -233,8 +233,11 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         return cls.objects().filter(cls.site_id == site_id).order_by(desc(cls.id)).limit(_limit).all()
 
-    def set_favorite(self):
-        self.is_favorite = True
+    def set_favorite(self, result):
+        """
+        :param result: bool
+        """
+        self.is_favorite = result
 
     def set_view_level(self, level):
         """

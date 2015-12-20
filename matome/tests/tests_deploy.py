@@ -54,18 +54,23 @@ def parse_and_request(url):
     test_urls = []
     for a in soup.find_all("a"):
         href = a.get("href")
-        if href[0] == '/':
+        if href[0] == '#':
+            pass
+        elif href[0] == '/':
             # 相対リンク
             test_url = 'http://{}{}'.format(host, href)
-            print(test_url)
             test_urls.append(test_url)
         elif host in href:
             # 絶対リンクかつ、同一ドメイン
-            print(href)
             test_urls.append(href)
         else:
             # 外部サイトリンクはテストしない
-            print('ignore url:{}'.format(href))
+            print('IGNORE:{}'.format(href))
+
+    # 重複排除
+    test_urls = list(set(test_urls))
+    for test_url in test_urls:
+        print(test_url)
 
     # リンクが生きているか非同期実行してチェック
     loop = asyncio.get_event_loop()
@@ -73,6 +78,10 @@ def parse_and_request(url):
 
 
 async def check_url(url):
+    """
+    非同期でURLをチェックして、HTTP STATUSが200を応答することをチェック
+    :param url: str
+    """
     response = await aiohttp.request('GET', url)
     status_code = response.status
     assert status_code == 200, status_code

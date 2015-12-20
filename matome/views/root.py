@@ -14,6 +14,9 @@ app = Blueprint("index",
 @app.route("/")
 @requires_site_title
 def index(site):
+    """
+    各サイト毎のトップページ
+    """
     svm = generate_index_contents(site)
     return render_template('root/index.html',
                            svm=svm,

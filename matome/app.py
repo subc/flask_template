@@ -2,7 +2,7 @@
 import os
 import threading
 
-from views import root, dat
+from views import root, dat, site_top
 from flask import Flask
 
 tls = threading.local()
@@ -26,6 +26,7 @@ def create_app(config=None):
     app.debug = app.config.get('debug')
 
     # 機能毎のURLを定義
+    app.register_blueprint(site_top.app, url_prefix="/")
     app.register_blueprint(root.app, url_prefix="/<site_title>")
     app.register_blueprint(dat.app, url_prefix="/<site_title>/dat")
 

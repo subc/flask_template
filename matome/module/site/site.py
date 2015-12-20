@@ -27,6 +27,11 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
 
     @classmethod
     @cached_tls
+    def get_all(cls):
+        return cls.objects().filter().all()
+
+    @classmethod
+    @cached_tls
     def get_title(cls, title):
         """
         :param title: int

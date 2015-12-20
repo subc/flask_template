@@ -1,0 +1,40 @@
+{% extends "master.html" %}
+
+
+{% block title %}{{ name }}{% endblock %}
+{% block siteurl %}{% endblock %}
+{% block headmeta %}
+<meta content="{{ name }}" name="title">
+<meta content="{{ name }}は、ゲーム好きのための情報共有サービスです。 様々なゲームに関する最新のTips、ノウハウ、メモが公開されています。" name="description">
+{% endblock %}
+
+{% block body %}
+    <!--HEADER-->
+    {% with selector="home" %}
+        {% include '/parts/parts_header_top.html' %}
+    {% endwith %}
+    <!--HEADER-->
+
+    <div class="container">
+
+    <!-- Example row of columns -->
+    <div class="row" style="margin-top: 30px">
+        {% for site in sites %}
+            <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom"
+                 style='background-image:url("{{ site.top_image_path }}")'>
+                <div class="wrap wrap-sp-margin"><a class="wrap" href="{{ url_for('index.index', site_title=site.title) }}">
+                    <div class="label-top label-new">{{ site.short_name }}</div>
+                    <div class="label-top">{{ site.time }}</div>
+                    <p class="tile-font">{{ site.tile_body }} </p>
+                    <p class="label-bottom wrap-sp-margin">{{ site.name }}</p>
+                </a></div>
+            </div>
+        {% endfor %}
+    </div>
+
+    </div> <!-- /container -->
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

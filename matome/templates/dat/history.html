@@ -1,7 +1,7 @@
 {% extends "master.html" %}
 
 {% block title %}過去ログ{{ site.title_suffix }}{% endblock %}
-
+{% block siteurl %}{{ site.title }}/{% endblock %}
 {% block body %}
     {% with selector="history" %}
         {% include '/parts/parts_header.html' %}

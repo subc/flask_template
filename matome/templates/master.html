@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>{% block title %}{% endblock %}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="Identifier-URL" content="http://www.niku.tokyo/{{ site.title }}/" />
+<meta name="Identifier-URL" content="http://www.niku.tokyo/{% block siteurl %}{% endblock %}" />
 {% block headmeta %}{% endblock %}
 
 <link rel="apple-touch-icon" sizes="57x57" href="/static/img/favicon/apple-touch-icon-57x57.png">

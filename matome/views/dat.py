@@ -6,7 +6,7 @@ from flask import Module, render_template, Blueprint
 from module.site.keyword import Keyword
 from module.site.page import Page
 from module.site.page_keyword import PageKeywordRelation
-from module.site.site import Site
+from module.view_manager.view_util import generate_index_contents
 from views.view_util import requires_site_title
 
 app = Blueprint('dat',
@@ -18,28 +18,18 @@ app = Blueprint('dat',
 @app.route('/<page_id>', methods=['GET'], strict_slashes=False)
 @requires_site_title
 def index(site, page_id):
-    # パラメータチェック
-    try:
-        page_id = int(page_id)
-    except ValueError:
-        # todo redirect error page
-        return 'error'
-    contents = Page.get(page_id)
-    if contents is None:
-        # todo error
-        return 'page id does not exist error'
+    # パラメータチェックとメインコンテンツ生成
+    page_id = int(page_id)
+    contents = Page.get_by_site(page_id, site.id)
+    svm = generate_index_contents(site)
 
     # pvを記録
     contents.count_up()
 
-    # todo dummy
-    pages = Page.get_new_history(site.id, _limit=12)
-    panel_pages = [random.choice(pages) for x in range(6)]
-
     return render_template('dat/page.html',
                            contents=contents,
                            site=site,
-                           panel_pages=panel_pages)
+                           svm=svm)
 
 
 @app.route('/matome/<keyword_id>/<start_keyword_id>', methods=['GET'], strict_slashes=False)

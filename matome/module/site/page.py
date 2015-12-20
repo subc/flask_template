@@ -46,6 +46,16 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         return cls.objects().get(pk)
 
+    @classmethod
+    @cached_tls
+    def get_by_site(cls, pk, site_id):
+        """
+        :param pk: int
+        :param site_id: int
+        :rtype: cls
+        """
+        return cls.objects().filter(cls.id==pk, cls.site_id==site_id).all()[0]
+
     @cached_property
     def site(self):
         return Site.get(self.site_id)

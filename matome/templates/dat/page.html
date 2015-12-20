@@ -21,13 +21,20 @@
 
 
         <!--TAG-->
-        <div class="message tags-bottom">
-        {% include '/parts/parts_tag.html' %}
+        <div class="tags-bottom">
+            {% include '/parts/parts_tag.html' %}
         </div>
         <!--TAG-->
 
-        {% include '/parts/parts_panel.html' %}
 
+        {% with panel_pages=svm.panels %}
+            {% include '/parts/parts_panel.html' %}
+        {% endwith %}
+
+        <hr>
+        {% with title="人気記事", list_pages=svm.page_list %}
+            {% include '/parts/parts_full_list.html' %}
+        {% endwith %}
 
     </div> <!-- /container -->
 

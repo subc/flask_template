@@ -3,6 +3,16 @@
 
 from module.scraping.subjects import Subject
 
+ignore_base = [
+    '晒',
+    '叩',
+    'フレンド',
+    '協力',
+    '交換',
+    '終わった',
+    '募集'
+]
+
 
 class SearchManager(object):
     """
@@ -68,9 +78,8 @@ class SearchManager(object):
             'Fallout4',
         ]
         keywords_ignore = [
-            '晒',
-            '叩'
         ]
+        keywords_ignore += ignore_base
 
         # 名前でフィルタ
         subjects_dict = {}
@@ -100,3 +109,195 @@ class SearchManager(object):
 
     def fallout4pc(self, *args, **kwargs):
         return self.fallout4(*args, **kwargs)
+
+    def shironeko(self, subjects, site):
+        """
+        ファンキル
+        :param subjects: list[Subject]
+        :param site: dict{id: Subject}
+        """
+        keywords = [
+            '白猫',
+        ]
+        keywords_ignore = [
+            '糞猫',
+        ]
+        keywords_ignore += ignore_base
+
+        # 名前でフィルタ
+        subjects_dict = {}
+        for key in keywords:
+            for subject in subjects:
+                if key in subject.title:
+                    subjects_dict[subject.dat] = subject
+
+        # 禁止名でフィルタ
+        ignore_keys = []
+        for key_subject in subjects_dict:
+            _subject = subjects_dict[key_subject]
+            _title = _subject.title
+            for key_ignore in keywords_ignore:
+                if key_ignore in _title:
+                    ignore_keys.append(key_subject)
+
+        # 禁止名でフィルタの削除部分
+        for key in ignore_keys:
+            del subjects_dict[key]
+
+        # 結果出力
+        for key_subject in subjects_dict:
+            print(subjects_dict[key_subject].title)
+
+        return subjects_dict
+
+    def logres(self, subjects, site):
+        """
+        :param subjects: list[Subject]
+        :param site: dict{id: Subject}
+        """
+        keywords = [
+            'ログレス',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+
+        # 名前でフィルタ
+        subjects_dict = {}
+        for key in keywords:
+            for subject in subjects:
+                if key in subject.title:
+                    subjects_dict[subject.dat] = subject
+
+        # 禁止名でフィルタ
+        ignore_keys = []
+        for key_subject in subjects_dict:
+            _subject = subjects_dict[key_subject]
+            _title = _subject.title
+            for key_ignore in keywords_ignore:
+                if key_ignore in _title:
+                    ignore_keys.append(key_subject)
+
+        # 禁止名でフィルタの削除部分
+        for key in ignore_keys:
+            del subjects_dict[key]
+
+        # 結果出力
+        for key_subject in subjects_dict:
+            print(subjects_dict[key_subject].title)
+
+        return subjects_dict
+
+    def pawaapp(self, subjects, site):
+        """
+        :param subjects: list[Subject]
+        :param site: dict{id: Subject}
+        """
+        keywords = [
+            'パワプロ',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+
+        # 名前でフィルタ
+        subjects_dict = {}
+        for key in keywords:
+            for subject in subjects:
+                if key in subject.title:
+                    subjects_dict[subject.dat] = subject
+
+        # 禁止名でフィルタ
+        ignore_keys = []
+        for key_subject in subjects_dict:
+            _subject = subjects_dict[key_subject]
+            _title = _subject.title
+            for key_ignore in keywords_ignore:
+                if key_ignore in _title:
+                    ignore_keys.append(key_subject)
+
+        # 禁止名でフィルタの削除部分
+        for key in ignore_keys:
+            del subjects_dict[key]
+
+        # 結果出力
+        for key_subject in subjects_dict:
+            print(subjects_dict[key_subject].title)
+
+        return subjects_dict
+
+    def pd(self, subjects, site):
+        """
+        :param subjects: list[Subject]
+        :param site: dict{id: Subject}
+        """
+        keywords = [
+            'パズドラ',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+
+        # 名前でフィルタ
+        subjects_dict = {}
+        for key in keywords:
+            for subject in subjects:
+                if key in subject.title:
+                    subjects_dict[subject.dat] = subject
+
+        # 禁止名でフィルタ
+        ignore_keys = []
+        for key_subject in subjects_dict:
+            _subject = subjects_dict[key_subject]
+            _title = _subject.title
+            for key_ignore in keywords_ignore:
+                if key_ignore in _title:
+                    ignore_keys.append(key_subject)
+
+        # 禁止名でフィルタの削除部分
+        for key in ignore_keys:
+            del subjects_dict[key]
+
+        # 結果出力
+        for key_subject in subjects_dict:
+            print(subjects_dict[key_subject].title)
+
+        return subjects_dict
+
+    def mstrike(self, subjects, site):
+        """
+        :param subjects: list[Subject]
+        :param site: dict{id: Subject}
+        """
+        keywords = [
+            'モンスト',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+
+        # 名前でフィルタ
+        subjects_dict = {}
+        for key in keywords:
+            for subject in subjects:
+                if key in subject.title:
+                    subjects_dict[subject.dat] = subject
+
+        # 禁止名でフィルタ
+        ignore_keys = []
+        for key_subject in subjects_dict:
+            _subject = subjects_dict[key_subject]
+            _title = _subject.title
+            for key_ignore in keywords_ignore:
+                if key_ignore in _title:
+                    ignore_keys.append(key_subject)
+
+        # 禁止名でフィルタの削除部分
+        for key in ignore_keys:
+            del subjects_dict[key]
+
+        # 結果出力
+        for key_subject in subjects_dict:
+            print(subjects_dict[key_subject].title)
+
+        return subjects_dict

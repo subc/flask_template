@@ -11,13 +11,13 @@ worker_connections = 1000
 max_requests = 500
 timeout = 10
 keepalive = 3
-debug = False
+debug = True
 spew = False
 
 # Logging
 logfile = '/var/log/gunicorn/app.log'
-loglevel = 'info'
-logconfig = None
+loglevel = 'debug'
+logconfig = '/var/flask/matome/matome/config/gunicorn/gunicorn-log.conf'
 
 # Process Name
 proc_name = 'gunicorn_my_app'

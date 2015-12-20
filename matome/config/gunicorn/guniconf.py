@@ -20,4 +20,4 @@ loglevel = 'debug'
 logconfig = '/var/flask/matome/matome/config/gunicorn/gunicorn-log.conf'
 
 # Process Name
-proc_name = 'gunicorn_my_app'
+proc_name = 'gunicorn_app'

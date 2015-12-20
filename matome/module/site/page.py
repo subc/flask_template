@@ -208,6 +208,9 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     def set_color_hot(self):
         self.text_color = PageViewCountColor.HOT.name
 
+    def set_favorite(self):
+        self.is_favorite = True
+
     def count_up(self):
         self.view_count += 1
         self.save()

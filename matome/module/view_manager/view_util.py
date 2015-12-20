@@ -39,10 +39,11 @@ def generate_index_contents(site):
     new_list = new_list[1:]
     pages_repository.pop(contents.id)
 
-    # 最新の9件からパネル用の3件を取る
+    # 人気順に並んだ最新の9件からパネル用の3件を取る
     random.shuffle(new_list)
     panels = new_list[1:4]
     for panel_page in panels:
+        panel_page.set_favorite()
         pages_repository.pop(panel_page.id)
 
     # 残りの46件からviewが多い3件を取る
@@ -50,6 +51,7 @@ def generate_index_contents(site):
     left_pages = sorted(left_pages, key=lambda x:x.view_count, reverse=True)
     for x in range(3):
         panels.append(left_pages.pop())
+    random.shuffle(panels)
 
     # 残りをidで降順ソートする
     left_pages = sorted(left_pages, key=lambda x:x.id, reverse=True)

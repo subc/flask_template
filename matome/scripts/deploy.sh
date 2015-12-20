@@ -15,8 +15,8 @@ echo "~~~~~~~~~~~~"
 ab -n 300 -c 10 http://www.niku.tokyo/fallout4/
 /Users/ikeda/.virtualenvs/py35/bin/py.test /Users/ikeda/punk/matome/matome/tests/tests_deploy.py
 curl -LI http://www.niku.tokyo/fallout4/ -o /dev/null -w '%{http_code}\n' -s
-curl -LI http://www.niku.tokyo/fallout4/ -o /dev/null -w '%{http_code}\n' -s
-curl -LI http://www.niku.tokyo/fallout4/ -o /dev/null -w '%{http_code}\n' -s
+curl -LI http://www.niku.tokyo/fallout4pc/ -o /dev/null -w '%{http_code}\n' -s
+curl -LI http://www.niku.tokyo/phantom/ -o /dev/null -w '%{http_code}\n' -s
 curl -LI http://www.niku.tokyo/fallout4/ -o /dev/null -w '%{http_code}\n' -s
 curl -LI http://www.niku.tokyo/fallout4/ -o /dev/null -w '%{http_code}\n' -s
 echo "~~~~~~~~~~~~"

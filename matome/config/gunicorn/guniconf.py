@@ -15,7 +15,7 @@ debug = False
 spew = False
 
 # Logging
-logfile = '/var/www/apps/sampleapp/app.log'
+logfile = '/var/log/gunicorn/app.log'
 loglevel = 'info'
 logconfig = None
 

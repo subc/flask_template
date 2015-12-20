@@ -15,7 +15,9 @@ def cached_tls(func):
             tls.cache = {}
             storage = tls.cache
         key_func_name = args[0].__module__ + args[0].__name__ + func.__name__
-        key = '{}:{}'.format(key_func_name, '-'.join([str(kwargs[_]) for _ in kwargs]))
+        key = '{}:{}:{}'.format(key_func_name,
+                                '-'.join([str(kwargs[_]) for _ in kwargs]),
+                                '-'.join([str(_) for _ in args[1:]]))
 
         if key in storage:
             return storage.get(key)

@@ -93,7 +93,7 @@ def history(site, start_page_id):
     """
     過去ログ
     """
-    _limit = 3
+    _limit = 20
 
     # パラメータチェック
     try:

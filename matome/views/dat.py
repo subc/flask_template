@@ -71,24 +71,12 @@ def history(site, start_page_id):
     _limit = 20
 
     # パラメータチェック
-    try:
-        start_page_id = int(start_page_id)
-        if start_page_id == 100000000:
-            pages = Page.get_new_history(site_id=site.id, _limit=_limit)
-        else:
-            pages = Page.get_history(site_id=site.id, pk_until=start_page_id, _limit=_limit)
-    except ValueError:
-        # todo redirect error page
-        return 'error'
-
-    # todo dummy 色つける
-    if pages:
-        for x in range(4):
-            _ = random.choice(pages)
-            _.set_color_supernova()
-        for x in range(5):
-            _ = random.choice(pages)
-            _.set_color_hot()
+    start_page_id = int(start_page_id)
+    if start_page_id == 100000000:
+        pages = Page.get_new_history(site_id=site.id, _limit=_limit)
+    else:
+        pages = Page.get_history(site_id=site.id, pk_until=start_page_id, _limit=_limit)
+    svm = generate_index_contents(site)
 
     # 次のページの遷移先
     is_next = None
@@ -100,4 +88,5 @@ def history(site, start_page_id):
                            site=site,
                            keyword=keyword,
                            list_pages=pages,
+                           svm=svm,
                            is_next=is_next)

@@ -2,7 +2,7 @@
 import os
 import threading
 
-from views import root, report, dat
+from views import root, dat
 from flask import Flask
 
 tls = threading.local()

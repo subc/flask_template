@@ -50,8 +50,9 @@ def generate_index_contents(site):
     left_pages = pages_repository.values()
     left_pages = sorted(left_pages, key=lambda x: x.view_count, reverse=True)
     for x in range(3):
-        page = left_pages.pop(True)
-        panels.append(page)
+        panel_page = left_pages.pop()
+        panel_page.set_favorite(True)
+        panels.append(panel_page)
     random.shuffle(panels)
 
     # 残りページをView数をベースに点数付与

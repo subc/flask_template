@@ -38,30 +38,15 @@ def keyword(site, keyword_id, start_keyword_id):
     _limit = 20
 
     # パラメータチェック
-    try:
-        keyword_id = int(keyword_id)
-        start_keyword_id = int(start_keyword_id)
-        keyword = Keyword.get(keyword_id)
-        if start_keyword_id == 100000000:
-            relation = PageKeywordRelation.get_from_new_keyword(keyword_id, _limit=_limit)
-        else:
-            relation = PageKeywordRelation.get_from_keyword(keyword_id, start_keyword_id, _limit=_limit)
-        pages = [r.page for r in relation]
-    except ValueError:
-        # todo redirect error page
-        return 'error'
-
-    # todo dummy
-    panel_pages = [random.choice(pages) for x in range(6)]
-
-    # todo dummy 色つける
-    if pages:
-        for x in range(4):
-            _ = random.choice(pages)
-            _.set_color_supernova()
-        for x in range(5):
-            _ = random.choice(pages)
-            _.set_color_hot()
+    keyword_id = int(keyword_id)
+    start_keyword_id = int(start_keyword_id)
+    keyword = Keyword.get(keyword_id)
+    if start_keyword_id == 100000000:
+        relation = PageKeywordRelation.get_from_new_keyword(keyword_id, _limit=_limit)
+    else:
+        relation = PageKeywordRelation.get_from_keyword(keyword_id, start_keyword_id, _limit=_limit)
+    pages = [r.page for r in relation]
+    svm = generate_index_contents(site)
 
     # 次のページの遷移先
     is_next = None
@@ -72,7 +57,7 @@ def keyword(site, keyword_id, start_keyword_id):
     return render_template('dat/keyword.html',
                            site=site,
                            keyword=keyword,
-                           panel_pages=panel_pages,
+                           svm=svm,
                            list_pages=pages,
                            is_next=is_next)
 

@@ -72,8 +72,9 @@ class DBBaseMixin(object):
         :param obj: cls
         :rtype: cls
         """
-        cls.session().add(obj)
-        cls.session().commit()
+        session = cls.session()
+        session.add(obj)
+        session.commit()
         return obj
 
     @classmethod
@@ -82,8 +83,9 @@ class DBBaseMixin(object):
         :param objs: list[cls]
         :rtype: list[cls]
         """
-        cls.session().add_all(objs)
-        cls.session().commit()
+        session = cls.session()
+        session.add_all(objs)
+        session.commit()
         return objs
 
     def delete(self):

@@ -5,11 +5,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 tls = threading.local()
-POOL_SIZE = 5
-
-
-def _get_db_session_id(count):
-    return count % POOL_SIZE
 
 
 def get_db_session():
@@ -19,35 +14,21 @@ def get_db_session():
     """
     if hasattr(tls, "db_session"):
         tls.counter += 1
-        _id = _get_db_session_id(tls.counter)
 
-        session = tls.db_session.get(_id)
-        if session:
-            # 定期的にDBセッションをリセットする
-            if tls.counter >= 10 * 10000:
-                for _session in tls.db_session.values():
-                    _session.close()
-            else:
-                return session
+        # 定期的にDBセッションをリセットする
+        if tls.counter >= 10 * 10000:
+            tls.db_session.close()
         else:
-            session = _create_session()
-            tls.db_session[_id] = session
-            return session
+            return tls.db_session
 
-    # 初回のみ
-    tls.db_session = {}
-    tls.counter = 0
-    session = _create_session()
-    tls.db_session[_get_db_session_id(0)] = session
-    return session
-
-
-def _create_session():
     # DBセッションの生成
     engine = get_db_engine()
-    return scoped_session(sessionmaker(autocommit=False,
-                                       autoflush=False,
-                                       bind=engine))
+    db_session = scoped_session(sessionmaker(autocommit=False,
+                                             autoflush=False,
+                                             bind=engine))
+    tls.db_session = db_session
+    tls.counter = 0
+    return db_session
 
 
 def get_db_engine():

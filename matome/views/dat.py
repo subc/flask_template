@@ -7,7 +7,7 @@ from module.site.keyword import Keyword
 from module.site.page import Page, PageViewLevel
 from module.site.page_keyword import PageKeywordRelation
 from module.view_manager.view_util import generate_index_contents
-from views.view_util import requires_site_title
+from views.view_util import requires_site_title, err
 
 app = Blueprint('dat',
                 __name__,
@@ -16,6 +16,7 @@ app = Blueprint('dat',
 
 # テンプレート内で呼び出すときは {{ url_for('dat.index', site_title=site.title, page_id=page.id) }}
 @app.route('/<page_id>', methods=['GET'], strict_slashes=False)
+@err
 @requires_site_title
 def index(site, page_id):
     # パラメータチェックとメインコンテンツ生成
@@ -33,6 +34,7 @@ def index(site, page_id):
 
 
 @app.route('/matome/<keyword_id>/<start_keyword_id>', methods=['GET'], strict_slashes=False)
+@err
 @requires_site_title
 def keyword(site, keyword_id, start_keyword_id):
     _limit = 20
@@ -66,6 +68,7 @@ def keyword(site, keyword_id, start_keyword_id):
 
 
 @app.route('/history/<start_page_id>', methods=['GET'], strict_slashes=False)
+@err
 @requires_site_title
 def history(site, start_page_id):
     """

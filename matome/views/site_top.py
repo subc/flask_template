@@ -2,8 +2,8 @@
 import random
 
 from flask import render_template, Blueprint
-
 from module.site.site import Site
+from views.view_util import err
 
 app = Blueprint("site_top",
                 __name__,
@@ -12,6 +12,7 @@ app = Blueprint("site_top",
 
 # テンプレート内で呼び出すときは {{ url_for('site_top.index') }}
 @app.route("/")
+@err
 def index():
     """
     全てのサイトのトップページ

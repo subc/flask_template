@@ -1,4 +1,7 @@
 #!/bin/sh
+# エラーなら停止
+set -eu
+
 echo "conoha deploy start"
 /Users/ikeda/.virtualenvs/py35/bin/py.test /Users/ikeda/punk/matome/matome/tests/tests_deploy.py
 ssh -l root conoha "date"

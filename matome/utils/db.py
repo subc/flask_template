@@ -13,13 +13,7 @@ def get_db_session():
     :rtype : scoped_session
     """
     if hasattr(tls, "db_session"):
-        tls.counter += 1
-
-        # 定期的にDBセッションをリセットする
-        if tls.counter >= 10 * 10000:
-            tls.db_session.close()
-        else:
-            return tls.db_session
+        return tls.db_session
 
     # DBセッションの生成
     engine = get_db_engine()
@@ -27,7 +21,6 @@ def get_db_session():
                                              autoflush=False,
                                              bind=engine))
     tls.db_session = db_session
-    tls.counter = 0
     return db_session
 
 

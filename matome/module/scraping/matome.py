@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
-
+from hashlib import md5
 import requests
 from werkzeug.utils import cached_property
 from janome.tokenizer import Tokenizer
@@ -62,6 +62,13 @@ def final_filter(prev_token, token):
         return False
 
     return True
+
+
+def get_md5_hash(text):
+    text = text.encode('utf-8')
+    m = md5()
+    m.update(text)
+    return m.digest()
 
 
 def main(subject):
@@ -136,12 +143,24 @@ def analyze_post(posts):
     :return: dict{int: Posted}
     """
     _r = {}
+    _r_md5 = defaultdict(list)
+    _md5 = defaultdict(int)
     for key in posts:
+        post = posts[key]
         try:
-            posts[key].self_check(posts)
+            post.self_check(posts)
         except:
             pass
-        _r[key] = posts[key]
+        _r[key] = post
+        _md5[post.md5] += 1
+        _r_md5[post.md5].append(post)
+
+    # 同一投稿が3以上のコメントは全てNG扱いする
+    for target_md5 in _md5:
+        if _md5[target_md5] > 1:
+            for _post in _r_md5[target_md5]:
+                _post.set_cheap()
+                print('同一投稿でNG!:{}'.format(_post.post_message))
     return _r
 
 
@@ -289,9 +308,10 @@ def printer_res(r_index, all_posts):
     # 子供は除外
     posts = [p for p in posts if not p.i_am_child]
 
-    limit = 7
+    limit = 10
     count = len(posts)
     if count >= limit:
+        # 上限以上は削る
         print('~~~~~~~~~~~~~~~~~~~~~~~~~')
         print(["{}:{}".format(p.num, p.priority) for p in posts])
         _posts = roulette(posts, limit)
@@ -413,6 +433,7 @@ class Posted(object):
         self.child = []
         self.i_am_child = None
         self.keywords = []
+        self.md5 = get_md5_hash(self.post_message)
 
     def __repr__(self):
         return self.parse_post_message[0]

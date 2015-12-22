@@ -17,7 +17,7 @@
             <ul class="nav navbar-nav">
                 <li {% if selector=='home' %}class="active"{% endif %}><a href="{{ url_for('index.index', site_title=site.title) }}">Home</a></li>
                 <li {% if selector=='history' %}class="active"{% endif %}><a href="{{ url_for('dat.history', site_title=site.title, start_page_id=100000000) }}">過去ログ</a></li>
-                <li> <a href="{{ url_for('site_top.index') }}">他アプリまとめ</a></li>
+                <li> <a href="{{ url_for('site_top.index') }}">別ゲームの記事へ</a></li>
             </ul>
 
         </div><!--/.navbar-collapse -->

@@ -461,6 +461,15 @@ class Posted(object):
             if a_tag_is_exist and len(s) < 2:
                 continue
             r.append(s)
+
+        # もし1行かつ、2文字以内なら取り込み対象外にする
+        if len(r) <= 1:
+            if r:
+                if len(r[0]) <= 2:
+                    self.set_cheap()
+            else:
+                self.set_cheap()
+
         return r
 
     @property

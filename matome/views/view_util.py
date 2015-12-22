@@ -33,4 +33,5 @@ def err(f):
             from app import create_app
             create_app().logger.critical(datetime.datetime.now())
             create_app().logger.critical(traceback.format_exc())
+            raise e
     return decorated_function

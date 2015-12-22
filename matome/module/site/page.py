@@ -233,6 +233,13 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         return cls.objects().filter(cls.site_id == site_id).order_by(desc(cls.id)).limit(_limit).all()
 
+    def get_history_from_myself(self):
+        """
+        自身のIDを基準にデータ取得
+        :return: list(Page)
+        """
+        return Page.get_history(self.site_id, self.id - 1, _limit=20)
+
     def set_favorite(self, result):
         """
         :param result: bool

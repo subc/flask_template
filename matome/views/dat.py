@@ -22,10 +22,13 @@ def index(site, page_id):
     # パラメータチェックとメインコンテンツ生成
     page_id = int(page_id)
     contents = Page.get_by_site(page_id, site.id)
-    svm = generate_index_contents(site)
+
+    # 追加用ページ
+    extend_page = contents.get_history_from_myself()
+    svm = generate_index_contents(site, extend_page=extend_page)
 
     # pvを記録
-    contents.count_up()
+    # contents.count_up()
 
     return render_template('dat/page.html',
                            contents=contents,

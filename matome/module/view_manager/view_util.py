@@ -16,17 +16,22 @@ class SiteViewModel(object):
         self.page_list = page_list
 
 
-def generate_index_contents(site):
+def generate_index_contents(site, _limit=30, extend_page=None):
     """
     トップページ表示用のデータを生成する
     :param site: Site
+    :param _limit: int
+    :param extend_page: list(Page)
     :return: SiteViewModel
     """
-    pages = Page.get_new_history(site.id, _limit=50)
+    pages = Page.get_new_history(site.id, _limit=_limit)
+    if extend_page:
+        pages += extend_page
     pages_repository = {page.id: page for page in pages}
+    pages = pages_repository.values()
 
-    # 50件未満
-    if len(pages) <= 20:
+    # 10件未満
+    if len(pages) <= 10:
         return SiteViewModel(site=site,
                              contents=random.choice(pages),
                              panels=[random.choice(pages) for x in range(6)],
@@ -67,7 +72,6 @@ def generate_index_contents(site):
 
     # 残りをidで降順ソートする
     left_pages = sorted(left_pages, key=lambda x:x.id, reverse=True)
-
 
     return SiteViewModel(site=site,
                          contents=contents,

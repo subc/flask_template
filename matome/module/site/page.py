@@ -252,6 +252,6 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         self._level = level
 
-    def count_up(self):
-        self.view_count += 1
+    def count_up(self, count=1):
+        self.view_count += count
         self.save()

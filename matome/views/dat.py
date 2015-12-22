@@ -28,7 +28,8 @@ def index(site, page_id):
     svm = generate_index_contents(site, extend_page=extend_page)
 
     # pvを記録
-    # contents.count_up()
+    if random.randint(0, 20) == 1:
+        contents.count_up(20)
 
     return render_template('dat/page.html',
                            contents=contents,

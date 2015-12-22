@@ -335,7 +335,7 @@ class PageRepository(object):
         DB出力するならTrue
         :return: bool
         """
-        return self.count > 4
+        return self.count > 4 and len(self.output) > 3
 
     @property
     def matome_type(self):

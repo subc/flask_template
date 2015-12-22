@@ -12,7 +12,9 @@ manager = Manager(create_app)
 # manage.py option
 manager.add_option('-c', '--config', dest='config', required=False)
 
+######################
 # コマンド追加
+######################
 manager.add_command('migrate', MigrateDB())
 manager.add_command('scraping', Scraping())
 manager.add_command('search', Search())
@@ -22,6 +24,7 @@ manager.add_command('inspection', InsertInspection())
 manager.add_command('ins', InsertInspection())
 manager.add_command('check', InspectionCheck())
 manager.add_command('ck', InspectionCheck())
+# runserver
 manager.add_command('runserver', Server(use_reloader=True))
 
 

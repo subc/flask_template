@@ -1,4 +1,5 @@
 pip3 install mysqlclient
+pip3 install PIL --allow-external PIL --allow-unverified PIL
 
 # uwsgi
 sudo CC=gcc pip3 install uwsgi

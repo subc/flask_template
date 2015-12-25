@@ -28,7 +28,7 @@ def generate_index_contents(site, _limit=30, extend_page=None):
     if extend_page:
         pages += extend_page
     pages_repository = {page.id: page for page in pages}
-    pages = pages_repository.values()
+    pages = list(pages_repository.values())
 
     # 10件未満
     if len(pages) <= 10:
@@ -52,7 +52,7 @@ def generate_index_contents(site, _limit=30, extend_page=None):
         pages_repository.pop(panel_page.id)
 
     # 残りの46件からviewが多い3件を取る
-    left_pages = pages_repository.values()
+    left_pages = list(pages_repository.values())
     left_pages = sorted(left_pages, key=lambda x: x.view_count, reverse=True)
     for x in range(3):
         panel_page = left_pages.pop()

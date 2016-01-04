@@ -18,7 +18,7 @@ def index(site):
     """
     各サイト毎のトップページ
     """
-    svm = generate_index_contents(site, _limit=50)
+    svm = generate_index_contents(site)
     return render_template('root/index.html',
                            svm=svm,
                            site=site)

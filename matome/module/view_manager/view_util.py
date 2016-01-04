@@ -20,7 +20,7 @@ class SiteViewModel(object):
         self.page_list = page_list
 
 
-def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
+def generate_index_contents(site, _limit=100, extend_page=None, ignore_ids=()):
     """
     トップページ表示用のデータを生成する
     :param site: Site

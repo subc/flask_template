@@ -1,0 +1,3 @@
+# restart web server
+15 */4 * * * /usr/bin/supervisorctl -c /etc/supervisord.conf restart gunicorn
+55 3 * * * /usr/bin/supervisorctl -c /etc/supervisord.conf restart scraping

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
+
+import pytz
 from pip._vendor.distlib.util import cached_property
 from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -96,7 +98,8 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         表示用
         """
-        t = self.created_at + datetime.timedelta(hours=8)
+        base_time = self.start_at if self.start_at else self.created_at
+        t = base_time + datetime.timedelta(hours=8)
         return t.strftime("%Y年%m月%d日 %H:%M")
 
     @cached_property
@@ -104,7 +107,8 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         表示用
         """
-        t = self.created_at + datetime.timedelta(hours=8)
+        base_time = self.start_at if self.start_at else self.created_at
+        t = base_time + datetime.timedelta(hours=8)
         return t.strftime("%Y/%m/%d")
 
     @cached_property
@@ -261,6 +265,21 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         return cls.objects().filter(cls.site_id == site_id).order_by(desc(cls.id)).limit(_limit).all()
 
+    @classmethod
+    def get_feature_page(cls, site_id):
+        """
+        未来日に公開設定してあるページの件数を返却
+        :param site_id: int
+        :return: list(Page)
+        """
+        # 300件取る
+        pages = cls.objects().filter(cls.site_id == site_id).order_by(desc(cls.id)).limit(300).all()
+
+        if pages:
+            now = datetime.datetime.now(pytz.utc)
+            return [page for page in pages if not page.is_enable(now)]
+        return []
+
     def get_history_from_myself(self):
         """
         自身のIDを基準にデータ取得
@@ -292,4 +311,4 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         if self.start_at is None:
             return True
-        return self.start_at < now
+        return pytz.utc.localize(self.start_at) < now

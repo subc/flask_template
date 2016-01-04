@@ -3,6 +3,8 @@ import random
 
 import datetime
 
+import pytz
+
 from module.site.page import Page, PageViewLevel
 from utils.tls_property import cached_tls
 
@@ -32,7 +34,7 @@ def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
         pages += extend_page
 
     # 未来日公開の記事は公開しない
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(pytz.utc)
     pages = [page for page in pages if page.is_enable(now)]
 
     if ignore_ids:
@@ -51,6 +53,8 @@ def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
     # 最新の10件からviewが多い1件を取る
     new_list = sorted(pages, key=lambda x: x.id, reverse=True)[:10]
     new_list = sorted(new_list, key=lambda x: x.view_count, reverse=True)
+    if len(new_list) == len([page for page in pages if page.start_at]):
+        new_list = sorted(new_list, key=lambda x: x.start_at, reverse=True)
     contents = new_list[0]
     new_list = new_list[1:]
     pages_repository.pop(contents.id)

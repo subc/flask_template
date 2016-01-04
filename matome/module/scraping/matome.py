@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 from module.scraping.inspection import InspectionWord
 from module.scraping.storage import SearchStorage
+from module.scraping.timeshift import set_start_at
 from module.site.keyword import Keyword
 from module.site.page import Page, PageType
 from module.site.page_keyword import PageKeywordRelation
@@ -111,6 +112,9 @@ def main(subject):
     # バルク!
     pages = Page.bulk_insert(bulk_pages)
     PageKeywordRelation.register(pages)
+
+    # 公開日を最適に設定する
+    set_start_at(pages)
 
 
 def filter_overlap(pages):

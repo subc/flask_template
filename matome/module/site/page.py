@@ -58,6 +58,25 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         return cls.objects().filter(cls.id==pk, cls.site_id==site_id).all()[0]
 
+    @classmethod
+    @cached_tls
+    def get_prev(cls, pk, site_id):
+        """
+        1つ前のページを返却
+
+        # 以下
+        select * from page
+        where id < 6500
+        order by id desc
+        limit 1
+        >>6499
+
+        :param pk: int
+        :param site_id: int
+        :rtype: cls
+        """
+        return cls.objects().filter(cls.id<pk, cls.site_id==site_id).order_by(desc(cls.id)).first()
+
     @cached_property
     def site(self):
         return Site.get(self.site_id)
@@ -105,6 +124,14 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
             return self.page_top
         s = self.page_top.split('<br/>')
         return s[0]
+
+    @cached_property
+    def prev_page(self):
+        """
+        1つ前のページ
+        :return: Page
+        """
+        return self.get_prev(self.id, self.site_id)
 
     def generate_top_body(self, _limit):
         top_body = self.page_top.replace('<br/>', '')

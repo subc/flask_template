@@ -38,6 +38,12 @@
 
         {{ svm.contents.page|safe }}
 
+        <div style="margin-top: 30px"></div>
+        {% with contents=svm.contents %}
+            {% include '/parts/parts_prev_page.html' %}
+        {% endwith %}
+
+
         {% include '/parts/parts_contents_footer.html' %}
 
     </div> <!-- /container -->

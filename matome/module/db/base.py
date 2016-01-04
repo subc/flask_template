@@ -108,4 +108,4 @@ class DBBaseMixin(object):
 
 class CreateUpdateMixin(object):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    updated_at = Column(DateTime, onupdate=datetime.datetime.now, nullable=True)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.utcnow, nullable=True)

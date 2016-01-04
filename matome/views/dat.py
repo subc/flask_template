@@ -25,7 +25,7 @@ def index(site, page_id):
 
     # 追加用ページ
     extend_page = contents.get_history_from_myself()
-    svm = generate_index_contents(site, extend_page=extend_page)
+    svm = generate_index_contents(site, extend_page=extend_page, ignore_ids=[page_id])
 
     # pvを記録
     if random.randint(0, 20) == 1:

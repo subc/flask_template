@@ -16,18 +16,22 @@ class SiteViewModel(object):
         self.page_list = page_list
 
 
-def generate_index_contents(site, _limit=30, extend_page=None):
+def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
     """
     トップページ表示用のデータを生成する
     :param site: Site
     :param _limit: int
     :param extend_page: list(Page)
+    :param ignore_ids: list(int)
     :return: SiteViewModel
     """
     pages = Page.get_new_history(site.id, _limit=_limit)
     if extend_page:
         pages += extend_page
-    pages_repository = {page.id: page for page in pages}
+    if ignore_ids:
+        pages_repository = {page.id: page for page in pages if page.id not in ignore_ids}
+    else:
+        pages_repository = {page.id: page for page in pages}
     pages = list(pages_repository.values())
 
     # 10件未満

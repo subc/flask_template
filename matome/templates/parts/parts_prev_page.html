@@ -1,7 +1,7 @@
 {% if contents %}
     <div class="row">
         <a href="{{ url_for('dat.index', site_title=site.title, page_id=contents.prev_page.id) }}"
-           class="list-group-item">
+           class="list-group-item bg-gray">
             <p class="m-name">次の記事</p><br/>
             <p class="m-body" style="margin-top: -18px">{{ contents.prev_page.title }}</p>
         </a>

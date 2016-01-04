@@ -19,7 +19,7 @@ def index():
     """
     sites = Site.get_all()
     random.shuffle(sites)
-    name = 'ゲーム速報（肉）'
+    name = 'はみにく速報'
     return render_template('site_top/index.html',
                            sites=sites,
                            name=name)

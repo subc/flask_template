@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 from pip._vendor.distlib.util import cached_property
-from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc
+from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 import enum
@@ -35,6 +35,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     page_top = Column('page_top', UnicodeText)
     type = Column('type', Integer, index=True, default=0)  # PageTypeのenum
     _keywords = Column('_keywords', String(1000))
+    start_at = Column(DateTime, default=None, nullable=True)
 
     def __repr__(self):
         return 'Page[{}]'.format(str(self.id))
@@ -282,3 +283,13 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     def count_up(self, count=1):
         self.view_count += count
         self.save()
+
+    def is_enable(self, now):
+        """
+        有効ならTrue
+        :param now: datetime
+        :return: bool
+        """
+        if self.start_at is None:
+            return True
+        return self.start_at < now

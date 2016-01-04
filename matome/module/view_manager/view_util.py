@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import random
 
+import datetime
+
 from module.site.page import Page, PageViewLevel
 from utils.tls_property import cached_tls
 
@@ -28,6 +30,11 @@ def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
     pages = Page.get_new_history(site.id, _limit=_limit)
     if extend_page:
         pages += extend_page
+
+    # 未来日公開の記事は公開しない
+    now = datetime.datetime.now()
+    pages = [page for page in pages if page.is_enable(now)]
+
     if ignore_ids:
         pages_repository = {page.id: page for page in pages if page.id not in ignore_ids}
     else:

@@ -53,7 +53,7 @@ def generate_index_contents(site, _limit=50, extend_page=None, ignore_ids=()):
     # 最新の10件からviewが多い1件を取る
     new_list = sorted(pages, key=lambda x: x.id, reverse=True)[:10]
     new_list = sorted(new_list, key=lambda x: x.view_count, reverse=True)
-    if len(new_list) == len([page for page in pages if page.start_at]):
+    if len(new_list) == len([page for page in new_list if page.start_at]):
         new_list = sorted(new_list, key=lambda x: x.start_at, reverse=True)
     contents = new_list[0]
     new_list = new_list[1:]

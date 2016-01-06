@@ -3,13 +3,18 @@ import traceback
 from functools import wraps
 import datetime
 from module.site.site import Site
+from flask import redirect, url_for
 
 
 def requires_site_title(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         site_title = kwargs.pop('site_title')
-        site = Site.get_title(site_title)
+        try:
+            site = Site.get_title(site_title)
+        except IndexError:
+            # サイトトップにリダイレクト
+            return redirect(url_for('site_top.index'))
         return f(site, **kwargs)
     return decorated_function
 

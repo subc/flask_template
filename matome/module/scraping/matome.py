@@ -34,6 +34,7 @@ def token_is_sub(token):
     if "サ変接続" in token.part_of_speech:
         return True
 
+    # 英語をキーワードに含めない（offにするとURLをまとめはじめる）
     if re.match(r'[a-zA-Z0-9]', token.surface):
         return True
     return False
@@ -165,6 +166,14 @@ def analyze_post(posts):
             for _post in _r_md5[target_md5]:
                 _post.set_cheap()
                 print('同一投稿でNG!:{}'.format(_post.post_message))
+
+    # <BR>のみで構成された投稿の評価を下げる
+    for key in posts:
+        post = posts[key]
+        s = ''.join(post.post_message_for_output)
+        if len(s) <= 1:
+            post.set_cheap()
+
     return _r
 
 
@@ -191,6 +200,9 @@ class KeywordReverseIndex(object):
         出現数が一定以上のキーワードのみ有効
         :return: bool
         """
+        # NGワードチェック
+        if InspectionWord.inspection(self.keyword):
+            return False
         return 4 <= self.count
 
     def insert_keyword_info(self):

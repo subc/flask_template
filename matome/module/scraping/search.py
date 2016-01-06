@@ -175,6 +175,77 @@ class SearchManager(object):
         keywords_ignore += ignore_base
         return _base_search(subjects, site, keywords, keywords_ignore)
 
+    def dq10(self, subjects, site):
+        keywords = [
+            'DQ10',
+            'DQX',
+            'ドラゴンクエストX',
+            'ドラゴンクエスト10',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def fgo(self, subjects, site):
+        keywords = [
+            'Grand Order',
+            'FateGO',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def splatoon(self, subjects, site):
+        keywords = [
+            'Splatoon',
+            'スプラトゥーン',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def star(self, subjects, site):
+        keywords = [
+            '星の',
+            'スプラトゥーン',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def ffrk(self, subjects, site):
+        keywords = [
+            'FFRK',
+        ]
+        keywords_ignore = [
+            '動画配信',
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def sekaiju(self, subjects, site):
+        keywords = [
+            '世界樹',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def lol(self, subjects, site):
+        keywords = [
+            'LoL',
+            'League of Legends',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
 
 def _base_search(subjects, site, keywords, keywords_ignore):
     """

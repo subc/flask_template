@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import random
 
+import datetime
+
+import pytz
 from flask import Module, render_template, Blueprint
 
 from module.site.keyword import Keyword
@@ -8,6 +11,7 @@ from module.site.page import Page, PageViewLevel
 from module.site.page_keyword import PageKeywordRelation
 from module.view_manager.view_util import generate_index_contents
 from views.decorator import requires_site_title, err
+from views.errorpage import error_page, ErrorPageCategory
 
 app = Blueprint('dat',
                 __name__,
@@ -21,7 +25,14 @@ app = Blueprint('dat',
 def index(site, page_id):
     # パラメータチェックとメインコンテンツ生成
     page_id = int(page_id)
-    contents = Page.get_by_site(page_id, site.id)
+    try:
+        contents = Page.get_by_site(page_id, site.id)
+    except Page.DoesNotExist:
+        return error_page(site, ErrorPageCategory.DoesNotExist)
+
+    # ページが有効期間外ならエラー
+    if not contents.is_enable(datetime.datetime.now(pytz.utc)):
+        return error_page(site, ErrorPageCategory.NotOpen)
 
     # 追加用ページ
     extend_page = contents.get_history_from_myself()

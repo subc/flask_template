@@ -38,6 +38,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     type = Column('type', Integer, index=True, default=0)  # PageTypeのenum
     _keywords = Column('_keywords', String(1000))
     start_at = Column(DateTime, default=None, nullable=True)
+    delete_at = Column(DateTime, default=None, nullable=True)
 
     def __repr__(self):
         return 'Page[{}]'.format(str(self.id))
@@ -59,7 +60,10 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         :param site_id: int
         :rtype: cls
         """
-        return cls.objects().filter(cls.id==pk, cls.site_id==site_id).all()[0]
+        try:
+            return cls.objects().filter(cls.id==pk, cls.site_id==site_id).all()[0]
+        except IndexError:
+            raise Page.DoesNotExist
 
     @classmethod
     @cached_tls
@@ -317,6 +321,10 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         :param now: datetime
         :return: bool
         """
+        # 削除チェック
+        if self.delete_at is not None:
+            return False
+
         if self.start_at is None:
             return True
         return pytz.utc.localize(self.start_at) < now

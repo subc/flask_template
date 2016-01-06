@@ -34,6 +34,7 @@ def camel_to_snake(s):
 
 class DBBaseMixin(object):
     id = Column('id', Integer, primary_key=True, index=True)
+    DoesNotExist = Exception
 
     def __repr__(self):
         return '<{0}.{1} object at {2}>'.format(

@@ -136,7 +136,15 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         1つ前のページ
         :return: Page
         """
-        return self.get_prev(self.id, self.site_id)
+        prev_page = self.get_prev(self.id, self.site_id)
+
+        if prev_page is None:
+            return None
+
+        # 論理削除されたり配信前の記事の場合はスキップする
+        if not prev_page.is_enable(datetime.datetime.now(tz=pytz.utc)):
+            return prev_page.prev_page
+        return prev_page
 
     def generate_top_body(self, _limit):
         top_body = self.page_top.replace('<br/>', '')

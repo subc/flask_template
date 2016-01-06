@@ -1,4 +1,4 @@
-{% if contents %}
+{% if contents and contents.prev_page %}
     <div class="row">
         <a href="{{ url_for('dat.index', site_title=site.title, page_id=contents.prev_page.id) }}"
            class="list-group-item bg-gray">

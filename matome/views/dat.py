@@ -7,7 +7,7 @@ from module.site.keyword import Keyword
 from module.site.page import Page, PageViewLevel
 from module.site.page_keyword import PageKeywordRelation
 from module.view_manager.view_util import generate_index_contents
-from views.view_util import requires_site_title, err
+from views.decorator import requires_site_title, err
 
 app = Blueprint('dat',
                 __name__,

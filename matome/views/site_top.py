@@ -3,7 +3,7 @@ import random
 
 from flask import render_template, Blueprint
 from module.site.site import Site
-from views.view_util import err
+from views.decorator import err
 
 app = Blueprint("site_top",
                 __name__,

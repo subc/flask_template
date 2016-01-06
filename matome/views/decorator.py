@@ -9,10 +9,7 @@ def requires_site_title(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         site_title = kwargs.pop('site_title')
-        try:
-            site = Site.get_title(site_title)
-        except IndexError:
-            return 'error site_title does not exist'
+        site = Site.get_title(site_title)
         return f(site, **kwargs)
     return decorated_function
 
@@ -23,7 +20,6 @@ def err(f):
         """
         エラーをログファイルに記録する
         """
-
         try:
             r = f(*args, **kwargs)
             return r

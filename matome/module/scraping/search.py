@@ -51,22 +51,9 @@ class SearchManager(object):
         keywords = [
             'ファンキル',
             'オブキル',
-            'トムオ'
         ]
-        keywords_ignore = [
-
-        ]
-
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
-
-        # 禁止名でフィルタ
-
-        return subjects_dict
+        keywords_ignore = ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
     def fallout4(self, subjects, site):
         """
@@ -80,32 +67,7 @@ class SearchManager(object):
         keywords_ignore = [
         ]
         keywords_ignore += ignore_base
-
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
-
-        # 禁止名でフィルタ
-        ignore_keys = []
-        for key_subject in subjects_dict:
-            _subject = subjects_dict[key_subject]
-            _title = _subject.title
-            for key_ignore in keywords_ignore:
-                if key_ignore in _title:
-                    ignore_keys.append(key_subject)
-
-        # 禁止名でフィルタの削除部分
-        for key in ignore_keys:
-            del subjects_dict[key]
-
-        # 結果出力
-        for key_subject in subjects_dict:
-            print(subjects_dict[key_subject].title)
-
-        return subjects_dict
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
     def fallout4pc(self, *args, **kwargs):
         return self.fallout4(*args, **kwargs)
@@ -123,32 +85,7 @@ class SearchManager(object):
             '糞猫',
         ]
         keywords_ignore += ignore_base
-
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
-
-        # 禁止名でフィルタ
-        ignore_keys = []
-        for key_subject in subjects_dict:
-            _subject = subjects_dict[key_subject]
-            _title = _subject.title
-            for key_ignore in keywords_ignore:
-                if key_ignore in _title:
-                    ignore_keys.append(key_subject)
-
-        # 禁止名でフィルタの削除部分
-        for key in ignore_keys:
-            del subjects_dict[key]
-
-        # 結果出力
-        for key_subject in subjects_dict:
-            print(subjects_dict[key_subject].title)
-
-        return subjects_dict
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
     def logres(self, subjects, site):
         """
@@ -161,32 +98,7 @@ class SearchManager(object):
         keywords_ignore = [
         ]
         keywords_ignore += ignore_base
-
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
-
-        # 禁止名でフィルタ
-        ignore_keys = []
-        for key_subject in subjects_dict:
-            _subject = subjects_dict[key_subject]
-            _title = _subject.title
-            for key_ignore in keywords_ignore:
-                if key_ignore in _title:
-                    ignore_keys.append(key_subject)
-
-        # 禁止名でフィルタの削除部分
-        for key in ignore_keys:
-            del subjects_dict[key]
-
-        # 結果出力
-        for key_subject in subjects_dict:
-            print(subjects_dict[key_subject].title)
-
-        return subjects_dict
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
     def pawaapp(self, subjects, site):
         """
@@ -199,32 +111,7 @@ class SearchManager(object):
         keywords_ignore = [
         ]
         keywords_ignore += ignore_base
-
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
-
-        # 禁止名でフィルタ
-        ignore_keys = []
-        for key_subject in subjects_dict:
-            _subject = subjects_dict[key_subject]
-            _title = _subject.title
-            for key_ignore in keywords_ignore:
-                if key_ignore in _title:
-                    ignore_keys.append(key_subject)
-
-        # 禁止名でフィルタの削除部分
-        for key in ignore_keys:
-            del subjects_dict[key]
-
-        # 結果出力
-        for key_subject in subjects_dict:
-            print(subjects_dict[key_subject].title)
-
-        return subjects_dict
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
     def pd(self, subjects, site):
         """
@@ -237,32 +124,7 @@ class SearchManager(object):
         keywords_ignore = [
         ]
         keywords_ignore += ignore_base
-
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
-
-        # 禁止名でフィルタ
-        ignore_keys = []
-        for key_subject in subjects_dict:
-            _subject = subjects_dict[key_subject]
-            _title = _subject.title
-            for key_ignore in keywords_ignore:
-                if key_ignore in _title:
-                    ignore_keys.append(key_subject)
-
-        # 禁止名でフィルタの削除部分
-        for key in ignore_keys:
-            del subjects_dict[key]
-
-        # 結果出力
-        for key_subject in subjects_dict:
-            print(subjects_dict[key_subject].title)
-
-        return subjects_dict
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
     def mstrike(self, subjects, site):
         """
@@ -275,32 +137,7 @@ class SearchManager(object):
         keywords_ignore = [
         ]
         keywords_ignore += ignore_base
-
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
-
-        # 禁止名でフィルタ
-        ignore_keys = []
-        for key_subject in subjects_dict:
-            _subject = subjects_dict[key_subject]
-            _title = _subject.title
-            for key_ignore in keywords_ignore:
-                if key_ignore in _title:
-                    ignore_keys.append(key_subject)
-
-        # 禁止名でフィルタの削除部分
-        for key in ignore_keys:
-            del subjects_dict[key]
-
-        # 結果出力
-        for key_subject in subjects_dict:
-            print(subjects_dict[key_subject].title)
-
-        return subjects_dict
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
     def destiny(self, subjects, site):
         """
@@ -314,32 +151,7 @@ class SearchManager(object):
         keywords_ignore = [
         ]
         keywords_ignore += ignore_base
-
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
-
-        # 禁止名でフィルタ
-        ignore_keys = []
-        for key_subject in subjects_dict:
-            _subject = subjects_dict[key_subject]
-            _title = _subject.title
-            for key_ignore in keywords_ignore:
-                if key_ignore in _title:
-                    ignore_keys.append(key_subject)
-
-        # 禁止名でフィルタの削除部分
-        for key in ignore_keys:
-            del subjects_dict[key]
-
-        # 結果出力
-        for key_subject in subjects_dict:
-            print(subjects_dict[key_subject].title)
-
-        return subjects_dict
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
     def ffbe(self, subjects, site):
         """
@@ -352,30 +164,49 @@ class SearchManager(object):
         keywords_ignore = [
         ]
         keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
-        # 名前でフィルタ
-        subjects_dict = {}
-        for key in keywords:
-            for subject in subjects:
-                if key in subject.title:
-                    subjects_dict[subject.dat] = subject
+    def tos(self, subjects, site):
+        keywords = [
+            'Savior',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
 
-        # 禁止名でフィルタ
-        ignore_keys = []
-        for key_subject in subjects_dict:
-            _subject = subjects_dict[key_subject]
-            _title = _subject.title
-            for key_ignore in keywords_ignore:
-                if key_ignore in _title:
-                    ignore_keys.append(key_subject)
 
-        # 禁止名でフィルタの削除部分
-        for key in ignore_keys:
-            if key in subjects_dict:
-                del subjects_dict[key]
+def _base_search(subjects, site, keywords, keywords_ignore):
+    """
+    :param subjects: list[Subject]
+    :param site: Site
+    :param keywords: list[str]
+    :param keywords_ignore: list[str]
+    :return: dict{id: Subject}
+    """
+    # 名前でフィルタ
+    subjects_dict = {}
+    for key in keywords:
+        for subject in subjects:
+            if key in subject.title:
+                subjects_dict[subject.dat] = subject
 
-        # 結果出力
-        for key_subject in subjects_dict:
-            print(subjects_dict[key_subject].title)
+    # 禁止名でフィルタ
+    ignore_keys = []
+    for key_subject in subjects_dict:
+        _subject = subjects_dict[key_subject]
+        _title = _subject.title
+        for key_ignore in keywords_ignore:
+            if key_ignore in _title:
+                ignore_keys.append(key_subject)
 
-        return subjects_dict
+    # 禁止名でフィルタの削除部分
+    for key in ignore_keys:
+        if key in subjects_dict:
+            del subjects_dict[key]
+
+    # 結果出力
+    for key_subject in subjects_dict:
+        print(subjects_dict[key_subject].title)
+
+    return subjects_dict

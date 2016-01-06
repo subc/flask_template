@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+import logging
 import traceback
 from functools import wraps
 import datetime
 from module.site.site import Site
 from flask import redirect, url_for
+from utils.app_log import app_log
 
 
 def requires_site_title(f):
@@ -14,6 +16,7 @@ def requires_site_title(f):
             site = Site.get_title(site_title)
         except IndexError:
             # サイトトップにリダイレクト
+            app_log(logging.ERROR, "Site title does not exist :{}".format(site_title))
             return redirect(url_for('site_top.index'))
         return f(site, **kwargs)
     return decorated_function

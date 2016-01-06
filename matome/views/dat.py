@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 import random
 
 import datetime
@@ -10,6 +11,7 @@ from module.site.keyword import Keyword
 from module.site.page import Page, PageViewLevel
 from module.site.page_keyword import PageKeywordRelation
 from module.view_manager.view_util import generate_index_contents
+from utils.app_log import app_log
 from views.decorator import requires_site_title, err
 from views.errorpage import error_page, ErrorPageCategory
 
@@ -28,10 +30,12 @@ def index(site, page_id):
     try:
         contents = Page.get_by_site(page_id, site.id)
     except Page.DoesNotExist:
+        app_log(logging.ERROR, "Page does not exist site_id:{} page_id:{}".format(site.id, page_id))
         return error_page(site, ErrorPageCategory.DoesNotExist)
 
     # ページが有効期間外ならエラー
     if not contents.is_enable(datetime.datetime.now(pytz.utc)):
+        app_log(logging.ERROR, "Page is not open site_id:{} page_id:{}".format(site.id, page_id))
         return error_page(site, ErrorPageCategory.NotOpen)
 
     # 追加用ページ

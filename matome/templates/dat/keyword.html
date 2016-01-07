@@ -3,6 +3,21 @@
 {% block title %}『{{ keyword.keyword }}』についてまとめた記事{{ site.title_suffix }}{% endblock %}
 {% block siteurl %}{{ site.title }}/{% endblock %}
 {% block body %}
+    <!-- KEYWORD HEADER-->
+    <nav class="navbar-inverse navbar-fixed-top" style="background-color: #122b40 ">
+        <div class="keyword-header"><a href="aaa">
+            <div class="close-icon">
+                <div class="batu1"></div>
+                <div class="batu2"></div>
+            </div>
+            <p class="keyword-header-body">キーワード：{{ keyword.keyword }}</p>
+            </a>
+        </div>
+    </nav>
+    <!--HEADER-->
+
+    <div style="margin-top: 33px"></div>
+
     {% include '/parts/parts_sub_header.html' %}
 
     <!--TITLE-->

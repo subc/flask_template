@@ -71,6 +71,10 @@ def keyword(site, keyword_id, start_keyword_id):
     else:
         relation = PageKeywordRelation.get_from_keyword(keyword_id, start_keyword_id, _limit=_limit)
 
+    # pageが公開可能かチェックする
+    now = datetime.datetime.now(tz=pytz.utc)
+    relation = [r for r in relation if r.page.is_enable(now=now)]
+
     is_end = False
     if len(relation) >= 2:
         pages = [r.page for r in relation]

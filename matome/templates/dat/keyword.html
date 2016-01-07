@@ -47,7 +47,7 @@
         <!--BODY-->
         {% if list_pages %}
             <hr>
-            {% with title="関連記事", list_pages=list_pages %}
+            {% with title="『" + keyword.keyword + "』関連記事", list_pages=list_pages, is_keyword=1 %}
                 {% include '/parts/parts_full_list.html' %}
             {% endwith %}
         {% endif %}
@@ -58,7 +58,7 @@
             <div class="row">
                 <a href="{{ url_for('index.index', site_title=site.title) }}"
                    class="list-group-item bg-gray">
-                    <p class="m-name">最終ページです。</p><br/>
+                    <p class="m-name">もうデータないぴょん</p><br/>
                     <p class="m-body" style="margin-top: -18px">トップに戻る</p>
                 </a>
             </div>

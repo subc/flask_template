@@ -7,7 +7,11 @@
                 </a>
             {% endif %}
             {% for page in list_pages %}
-                <a href="{{ url_for('dat.index', site_title=site.title, page_id=page.id) }}" class="list-group-item">
+                {% if is_keyword %}
+                    <a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=keyword.id, start_keyword_id=is_next) }}" class="list-group-item">
+                {% else %}
+                    <a href="{{ url_for('dat.index', site_title=site.title, page_id=page.id) }}" class="list-group-item">
+                {% endif %}
                     <div class="keyword-list-wrap">
                         <div class="keyword-list-wrap-icon"
                              style='background-image:url("{{ page.background_image }}");'>

@@ -6775,6 +6775,7 @@ button.close {
 @media (min-width: 100px) {
   .bg-custom {
     background-repeat: no-repeat;
+    background-size: cover;
   }
   .label-bottom {
     height: 35px;
@@ -6971,7 +6972,6 @@ button.close {
 @media (max-width: 767px) {
   .bg-custom {
     background-position: 0px 50px;
-    background-size: cover;
     background-repeat: repeat-x;
     margin-left: 8px;
     /*padding-left: 8px;*/

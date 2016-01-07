@@ -2,8 +2,27 @@
     <div class="row">
         <a href="{{ url_for('dat.index', site_title=site.title, page_id=prev_contents.id) }}"
            class="list-group-item bg-gray">
-            <p class="m-name">次の記事</p><br/>
+            <p class="m-name">次の記事.1</p><br/>
             <p class="m-body" style="margin-top: -18px">{{ prev_contents.title }}</p>
         </a>
     </div>
+    {% if prev_contents.prev_page %}
+    <div class="row">
+        <a href="{{ url_for('dat.index', site_title=site.title, page_id=prev_contents.prev_page.id) }}"
+           class="list-group-item bg-gray">
+            <p class="m-name">次の記事.2</p><br/>
+            <p class="m-body" style="margin-top: -18px">{{ prev_contents.prev_page.title }}</p>
+        </a>
+    </div>
+
+    {% if prev_contents.prev_page.prev_page %}
+        <div class="row">
+            <a href="{{ url_for('dat.index', site_title=site.title, page_id=prev_contents.prev_page.prev_page.id) }}"
+               class="list-group-item bg-gray">
+                <p class="m-name">次の記事.3</p><br/>
+                <p class="m-body" style="margin-top: -18px">{{ prev_contents.prev_page.prev_page.title }}</p>
+            </a>
+        </div>
+    {% endif %}
+    {% endif %}
 {% endif %}

@@ -5,7 +5,7 @@
 {% block body %}
     <!-- KEYWORD HEADER-->
     <nav class="navbar-inverse navbar-fixed-top" style="background-color: #122b40 ">
-        <div class="keyword-header"><a href="aaa">
+        <div class="keyword-header"><a href="{{ url_for('dat.index', site_title=site.title, page_id=contents.id) }}">
             <div class="close-icon">
                 <div class="batu1"></div>
                 <div class="batu2"></div>
@@ -23,25 +23,46 @@
     <!--TITLE-->
     <div class="jumbotron-top-view-list-header bg-blue">
         <div class="container">
-            <h1>『{{ keyword.keyword }}』についてまとめた記事</h1>
+            <h1>{{ contents.title }}</h1>
+            <p>{{ contents.sub_time }}に投稿</p>
         </div>
     </div>
     <!--TITLE-->
 
     <div class="container">
         <!--BODY-->
+        {{ contents.page|safe }}
+        <!--BODY-->
+
+        <!--TAG-->
+        <div class="tags-bottom">
+            {% include '/parts/parts_tag.html' %}
+        </div>
+        <!--TAG-->
+
+        {% with prev_contents=prev_contents %}
+            {% include '/parts/parts_prev_page_keyword.html' %}
+        {% endwith %}
+
+        <!--BODY-->
         {% if list_pages %}
-            {% include '/parts/parts_full_list.html' %}
-            {% if is_next %}
-                <a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=keyword.id, start_keyword_id=is_next) }}" class="list-group-item">次のページへ</a>
-            {% endif %}
-        {% else %}
-            でーたないぴょん
+            <hr>
+            {% with title="関連記事", list_pages=list_pages %}
+                {% include '/parts/parts_full_list.html' %}
+            {% endwith %}
         {% endif %}
         <!--BODY-->
 
-        {% include '/parts/parts_contents_footer.html' %}
-
+        {% if is_end %}
+            <hr>
+            <div class="row">
+                <a href="{{ url_for('index.index', site_title=site.title) }}"
+                   class="list-group-item bg-gray">
+                    <p class="m-name">最終ページです。</p><br/>
+                    <p class="m-body" style="margin-top: -18px">トップに戻る</p>
+                </a>
+            </div>
+        {% endif %}
 
     </div> <!-- /container -->
 

@@ -1,9 +1,9 @@
-{% if contents and contents.prev_page %}
+{% if prev_contents %}
     <div class="row">
-        <a href="{{ url_for('dat.index', site_title=site.title, page_id=contents.prev_page.id) }}"
+        <a href="{{ url_for('dat.index', site_title=site.title, page_id=prev_contents.id) }}"
            class="list-group-item bg-gray">
             <p class="m-name">次の記事</p><br/>
-            <p class="m-body" style="margin-top: -18px">{{ contents.prev_page.title }}</p>
+            <p class="m-body" style="margin-top: -18px">{{ prev_contents.title }}</p>
         </a>
     </div>
 {% endif %}

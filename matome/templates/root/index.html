@@ -39,7 +39,7 @@
         {{ svm.contents.page|safe }}
 
         <div style="margin-top: 30px"></div>
-        {% with contents=svm.contents %}
+        {% with prev_contents=svm.contents.prev_page %}
             {% include '/parts/parts_prev_page.html' %}
         {% endwith %}
 

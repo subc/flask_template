@@ -70,24 +70,35 @@ def keyword(site, keyword_id, start_keyword_id):
         relation = PageKeywordRelation.get_from_new_keyword(keyword_id, _limit=_limit)
     else:
         relation = PageKeywordRelation.get_from_keyword(keyword_id, start_keyword_id, _limit=_limit)
-    pages = [r.page for r in relation]
-    svm = generate_index_contents(site)
 
-    # pageのランク付け
-    pages = page_rank(pages)
-
-    # 次のページの遷移先
-    is_next = None
-    if relation and len(relation) == _limit:
-        last_page_id = relation[-1].id
-        is_next = last_page_id - 1
+    is_end = False
+    if len(relation) >= 2:
+        pages = [r.page for r in relation]
+        contents = pages[0]
+        prev_contents = pages[1]
+        is_next = relation[1].id
+        pages = pages[2:]
+    elif len(relation) == 1:
+        pages = [r.page for r in relation]
+        contents = pages[0]
+        prev_contents = None
+        is_next = None
+        is_end = True
+        pages = pages[2:]
+    else:
+        pages = None
+        contents = None
+        prev_contents = None
+        is_next = None
 
     return render_template('dat/keyword.html',
                            site=site,
                            keyword=keyword,
-                           svm=svm,
+                           contents=contents,
+                           prev_contents=prev_contents,
                            list_pages=pages,
-                           is_next=is_next)
+                           is_next=is_next,
+                           is_end=is_end)
 
 
 @app.route('/history/<start_page_id>', methods=['GET'], strict_slashes=False)

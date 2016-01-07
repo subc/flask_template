@@ -1,0 +1,9 @@
+{% if prev_contents and is_next %}
+    <div class="row">
+        <a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=keyword.id, start_keyword_id=is_next) }}"
+           class="list-group-item bg-gray">
+            <p class="m-name">次の『{{ keyword.keyword }}』関連記事</p><br/>
+            <p class="m-body" style="margin-top: -18px">{{ prev_contents.title }}</p>
+        </a>
+    </div>
+{% endif %}

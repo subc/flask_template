@@ -35,7 +35,7 @@ def generate_index_contents(site, _limit=50, extend_page=None, ignore_ids=()):
 
     # 未来日公開の記事は公開しない
     now = datetime.datetime.now(pytz.utc)
-    pages = [page for page in pages if page.is_enable(now)]
+    pages = [page for page in pages if page.is_enable(now=now)]
 
     if ignore_ids:
         pages_repository = {page.id: page for page in pages if page.id not in ignore_ids}

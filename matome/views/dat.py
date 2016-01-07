@@ -34,7 +34,7 @@ def index(site, page_id):
         return error_page(site, ErrorPageCategory.DoesNotExist)
 
     # ページが有効期間外ならエラー
-    if not contents.is_enable(datetime.datetime.now(pytz.utc)):
+    if not contents.is_enable():
         app_log(logging.ERROR, "Page is not open site_id:{} page_id:{}".format(site.id, page_id))
         return error_page(site, ErrorPageCategory.NotOpen)
 

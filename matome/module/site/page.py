@@ -146,7 +146,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
             return None
 
         # 論理削除されたり配信前の記事の場合はスキップする
-        if not prev_page.is_enable(datetime.datetime.now(tz=pytz.utc)):
+        if not prev_page.is_enable():
             return prev_page.prev_page
         return prev_page
 
@@ -289,7 +289,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
         if pages:
             now = datetime.datetime.now(pytz.utc)
-            return [page for page in pages if not page.is_enable(now)]
+            return [page for page in pages if not page.is_enable(now=now)]
         return []
 
     def get_history_from_myself(self):
@@ -315,7 +315,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         self.view_count += count
         self.save()
 
-    def is_enable(self, now):
+    def is_enable(self, now=None):
         """
         有効ならTrue
         :param now: datetime
@@ -327,4 +327,8 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
         if self.start_at is None:
             return True
+
+        if not now:
+            now = datetime.datetime.now(pytz.utc)
+
         return pytz.utc.localize(self.start_at) < now

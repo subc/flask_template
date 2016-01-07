@@ -16,10 +16,10 @@ def set_start_at(pages):
         if len(pages) <= 3:
             return
 
-        # 既に48時間先に10件以上予約がある場合は設定しない。
+        # 既に48時間先に30件以上予約がある場合は設定しない。
         feature_page = Page.get_feature_page(pages[0].site_id)
         print(feature_page)
-        if len(feature_page) >= 10:
+        if len(feature_page) >= 30:
             return
 
         # 最適化して並び替える

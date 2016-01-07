@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from pip._vendor.distlib.util import cached_property
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, desc
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 from utils.tls_property import cached_tls
@@ -28,7 +28,7 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
     @classmethod
     @cached_tls
     def get_all(cls):
-        return cls.objects().filter().all()
+        return cls.objects().filter().order_by(desc(cls.id)).all()
 
     @classmethod
     @cached_tls

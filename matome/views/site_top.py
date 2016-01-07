@@ -18,7 +18,6 @@ def index():
     全てのサイトのトップページ
     """
     sites = Site.get_all()
-    random.shuffle(sites)
     name = 'ぼすにく速報'
     return render_template('site_top/index.html',
                            sites=sites,

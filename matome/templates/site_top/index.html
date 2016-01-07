@@ -27,7 +27,7 @@
                 <div class="wrap wrap-sp-margin"><a class="wrap" href="{{ url_for('index.index', site_title=site.title) }}">
                     <div class="label-top label-new">{{ site.short_name }}</div>
                     <p class="tile-font">{{ site.tile_body }} </p>
-                    <p class="label-bottom wrap-sp-margin">{{ site.name }}</p>
+                    <p class="label-bottom wrap-sp-margin">{{ site.id }}&nbsp;-&nbsp;{{ site.name }}</p>
                 </a></div>
             </div>
         {% endfor %}

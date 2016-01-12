@@ -60,7 +60,7 @@ def index(site, page_id):
 @err
 @requires_site_title
 def keyword(site, keyword_id, start_keyword_id):
-    _limit = 20
+    _limit = 25
 
     # パラメータチェック
     keyword_id = int(keyword_id)

@@ -39,6 +39,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     _keywords = Column('_keywords', String(1000))
     start_at = Column(DateTime, default=None, nullable=True)
     delete_at = Column(DateTime, default=None, nullable=True)
+    _is_pr = False
 
     def __repr__(self):
         return 'Page[{}]'.format(str(self.id))

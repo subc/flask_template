@@ -6810,7 +6810,6 @@ button.close {
     margin-right: 80px;
     margin-top: 75px;
   }
-
   .label-top {
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
@@ -6822,7 +6821,14 @@ button.close {
     background-color: rgba(255, 0, 0, 0.7);
     right: 10px;
   }
-
+  .label-pr {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    position: absolute;
+    padding: 3px;
+    right: 10px;
+    bottom: 5px;
+  }
   .tile-font {
     color: white;
     text-shadow: 2px 2px 1px #000000;

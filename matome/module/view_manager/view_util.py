@@ -6,6 +6,7 @@ import datetime
 import pytz
 
 from module.site.page import Page, PageViewLevel
+from module.site.site import Site
 from utils.tls_property import cached_tls
 
 
@@ -88,7 +89,38 @@ def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
     # 残りをidで降順ソートする
     left_pages = sorted(left_pages, key=lambda x:x.id, reverse=True)
 
+    # クローラー用のPRページを追加
+    left_pages += get_pr_page(site)
+
     return SiteViewModel(site=site,
                          contents=contents,
                          panels=panels,
                          page_list=left_pages)
+
+
+def get_pr_page(site, _limit=3):
+    """
+    クローラー最適化のために、外部サイトのページを取得する
+    :param site: site
+    :return: list[Page]
+    """
+    other_site = _get_other_site(site)
+    pages = Page.get_new_history(other_site.id, _limit=30)
+    pages = sorted(pages, key=lambda x: x.view_count, reverse=True)
+    result = []
+    now = datetime.datetime.now(pytz.utc)
+    for page in pages:
+        if page.is_enable(now):
+            result.append(page)
+        if len(result) >= _limit:
+            return result
+    return result
+
+
+def _get_other_site(site):
+    all_site = Site.get_all()
+    for x in range(100):
+        _site = random.choice(all_site)
+        if _site.id != site.id:
+            return _site
+    raise ValueError

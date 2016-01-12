@@ -10,9 +10,14 @@
                 {% if is_keyword %}
                     <a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=keyword.id, start_keyword_id=is_next) }}" class="list-group-item">
                 {% else %}
-                    <a href="{{ url_for('dat.index', site_title=site.title, page_id=page.id) }}" class="list-group-item">
+                    <a href="{{ url_for('dat.index', site_title=page.site.title, page_id=page.id) }}" class="list-group-item">
                 {% endif %}
                     <div class="keyword-list-wrap">
+                        {% if page.site.id != site.id %}
+                            {# クローラー用のPR記事#}
+                            <div class="label-pr">【PR】{{ page.site.short_name }}</div>
+                        {% endif %}
+
                         <div class="keyword-list-wrap-icon"
                              style='background-image:url("{{ page.background_image }}");'>
                         </div>
@@ -21,8 +26,10 @@
                                 <p class="keyword-list-text-title">{{ page.list_label }}</p><br />
                             </div>
                             <div>
-                                <p class="keyword-list-text-position">{{ page.time }} </p>
-                                <div class="keyword-list-text-position {{ page.star_level }}" style="margin-left: 10px; margin-top: 11px"></div>
+                                {% if page.site.id == site.id %}
+                                    <p class="keyword-list-text-position">{{ page.time }} </p>
+                                    <div class="keyword-list-text-position {{ page.star_level }}" style="margin-left: 10px; margin-top: 11px"></div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

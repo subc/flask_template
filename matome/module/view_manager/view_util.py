@@ -46,10 +46,11 @@ def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
 
     # 10件未満
     if len(pages) <= 10:
+        pr_pages = get_pr_page(site)
         return SiteViewModel(site=site,
                              contents=random.choice(pages),
                              panels=[random.choice(pages) for x in range(6)],
-                             page_list=pages)
+                             page_list=pages + pr_pages)
 
     # 最新の10件からviewが多い1件を取る
     new_list = sorted(pages, key=lambda x: x.id, reverse=True)[:10]
@@ -91,7 +92,6 @@ def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
 
     # クローラー用のPRページを追加
     left_pages += get_pr_page(site)
-
     return SiteViewModel(site=site,
                          contents=contents,
                          panels=panels,

@@ -13,7 +13,7 @@
                     <a href="{{ url_for('dat.index', site_title=page.site.title, page_id=page.id) }}" class="list-group-item">
                 {% endif %}
                     <div class="keyword-list-wrap">
-                        {% if page.site.id != site.id %}
+                        {% if page.site_id != site.id %}
                             {# クローラー用のPR記事#}
                             <div class="label-pr">【PR】{{ page.site.short_name }}</div>
                         {% endif %}
@@ -26,7 +26,7 @@
                                 <p class="keyword-list-text-title">{{ page.list_label }}</p><br />
                             </div>
                             <div>
-                                {% if page.site.id == site.id %}
+                                {% if page.site_id == site.id %}
                                     <p class="keyword-list-text-position">{{ page.time }} </p>
                                     <div class="keyword-list-text-position {{ page.star_level }}" style="margin-left: 10px; margin-top: 11px"></div>
                                 {% endif %}

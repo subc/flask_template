@@ -91,6 +91,7 @@ def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
     left_pages = sorted(left_pages, key=lambda x:x.id, reverse=True)
 
     # クローラー用のPRページを追加
+    left_pages = left_pages[:20]
     left_pages += get_pr_page(site)
     return SiteViewModel(site=site,
                          contents=contents,

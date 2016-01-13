@@ -17,6 +17,7 @@ def requires_site_title(f):
         except IndexError:
             # サイトトップにリダイレクト
             app_log(logging.ERROR, "Site title does not exist :{}".format(site_title))
+            raise
             return redirect(url_for('site_top.index'))
         return f(site, **kwargs)
     return decorated_function

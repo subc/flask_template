@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import random
-
 from flask import render_template, Blueprint
 from module.site.site import Site
 from views.decorator import err
@@ -22,3 +20,18 @@ def index():
     return render_template('site_top/index.html',
                            sites=sites,
                            name=name)
+
+
+# テンプレート内で呼び出すときは {{ url_for('site_top.index') }}
+# @app.route("/sitemap.xml")
+# # @err
+# def xml():
+#     """
+#     全てのサイトのトップページ
+#     """
+#     sites = Site.get_all()
+#     name = 'ぼすにく速報'
+#     return render_template('site_top/index.html',
+#                            sites=sites,
+#                            name=name)
+

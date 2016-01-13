@@ -1,20 +1,19 @@
-<?xml version=’1.0′ encoding=’UTF-8′?>
-<!– generator=”Inspyder Sitemap Creator” –>
-<urlset xmlns=”http://www.sitemaps.org/schemas/sitemap/0.9″>
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {#ページトップ#}
-    <url>
+    <sitemap>
         <loc>{{ url_base }}</loc>
         <lastmod>{{ new_site_date.strftime('%Y-%m-%d') }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
-    </url>
+    </sitemap>
 {#ゲーム毎のトップ#}
     {% for site in all_sites %}
-    <url>
+    <sitemap>
         <loc>{{ url_base }}{{ site.title }}</loc>
         <lastmod>{{ site.update_at.strftime('%Y-%m-%d') }}</lastmod>
         <changefreq>hourly</changefreq>
         <priority>1.0</priority>
-    </url>
+    </sitemap>
     {% endfor %}
-</urlset>
+</sitemapindex>

@@ -208,6 +208,11 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         if not words:
             return []
 
+        # page relationが存在しない場合は非表示
+        words = [w for w in words if w.is_enable]
+        if not words:
+            return []
+
         # 並び替えて6個返却
         words = sorted(words, key=lambda x: x.id, reverse=True)
         words = sorted(words, key=lambda x: x.count, reverse=True)

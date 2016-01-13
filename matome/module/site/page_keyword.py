@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from pip._vendor.distlib.util import cached_property
-from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc
+from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc, func
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 from module.site.page import Page
@@ -30,6 +30,11 @@ class PageKeywordRelation(DBBaseMixin, Base):
         :return: list(cls)
         """
         return cls.objects().filter(cls.keyword_id==keyword_id, cls.id<=pk_until).order_by(desc(cls.id)).limit(_limit).all()
+
+    @classmethod
+    @cached_tls
+    def get_count(cls, keyword_id):
+        return cls.objects().filter(cls.keyword_id==keyword_id).count()
 
     @cached_property
     def page(self):

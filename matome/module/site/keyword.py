@@ -62,6 +62,15 @@ class Keyword(DBBaseMixin, Base):
 
         return objs + keyword_records
 
+    @classmethod
+    def get_count(cls, keyword_id):
+        from module.site.page_keyword import PageKeywordRelation
+        return PageKeywordRelation.get_count(keyword_id)
+
+    @property
+    def is_enable(self):
+        return bool(Keyword.get_count(self.id))
+
     def count_up(self):
         self.count += 1
         self.save()

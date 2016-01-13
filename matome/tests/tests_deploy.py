@@ -48,7 +48,7 @@ def parse_and_request(url):
     host = o.netloc
 
     # 指定されたURLをGETして解析
-    response = requests.get(url, timeout=2)
+    response = requests.get(url, timeout=4)
     assert response.status_code == 200
     soup = BeautifulSoup(response.text, "lxml")
     test_urls = []

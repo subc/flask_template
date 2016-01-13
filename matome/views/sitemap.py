@@ -25,5 +25,6 @@ def sitemap():
                            new_site_date=max([site.created_at for site in all_sites]),
                            all_sites=all_sites,
                            new_pages=new_pages,
-                           three_days_ago=datetime.datetime.now() - datetime.timedelta(days=3)
+                           one_days_ago=datetime.datetime.now() - datetime.timedelta(days=1),
+                           three_days_ago=datetime.datetime.now() - datetime.timedelta(days=3),
                            )

@@ -22,7 +22,7 @@
         <loc>{{ url_base }}{{ page.site.title }}/dat/{{ page.id }}</loc>
         <lastmod>{{ page.open_at.strftime('%Y-%m-%d') }}</lastmod>
         <changefreq>daily</changefreq>
-        <priority>{% if page.open_at > three_days_ago %}0.5{% else %}0.3{% endif %}</priority>
+        <priority>{% if page.open_at > one_days_ago %}0.8{% elif page.open_at > three_days_ago %}0.5{% else %}0.3{% endif %}</priority>
     </url>
     {% endfor %}
 </urlset>

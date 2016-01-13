@@ -62,7 +62,7 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
         """
         return ' - {}'.format(self.name)
 
-    @cached_property
+    @property
     def update_at(self):
         from module.site.page import Page
         import datetime
@@ -72,7 +72,7 @@ class Site(DBBaseMixin, CreateUpdateMixin, Base):
         now = datetime.datetime.now(pytz.utc)
         for page in new_list:
             if page.is_enable(now):
-                return page.start_at if page.start_at else page.created_at
+                return page.open_at
         raise ValueError
 
     def get_background_image_id(self, _id):

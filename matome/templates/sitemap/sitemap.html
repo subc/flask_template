@@ -16,4 +16,13 @@
         <priority>1.0</priority>
     </url>
     {% endfor %}
+{#ページ毎10000件#}
+    {% for page in new_pages %}
+    <url>
+        <loc>{{ url_base }}{{ page.site.title }}/dat/{{ page.id }}</loc>
+        <lastmod>{{ page.open_at.strftime('%Y-%m-%d') }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>{% if page.open_at > three_days_ago %}0.5{% else %}0.3{% endif %}</priority>
+    </url>
+    {% endfor %}
 </urlset>

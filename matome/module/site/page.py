@@ -3,7 +3,7 @@ import datetime
 
 import pytz
 from pip._vendor.distlib.util import cached_property
-from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc, DateTime
+from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc, DateTime, or_
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 import enum
@@ -54,6 +54,11 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         return cls.objects().get(pk)
 
     @classmethod
+    def gets_new(cls, _limit):
+        now = datetime.datetime.now(pytz.utc)
+        return cls.objects().filter(or_(cls.start_at==None, cls.start_at<=now)).order_by(desc(cls.id)).limit(_limit).all()
+
+    @classmethod
     @cached_tls
     def get_by_site(cls, pk, site_id):
         """
@@ -98,13 +103,16 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
     def is_post_rank(self):
         return self.type == PageType.POST_RANK.value
 
+    @property
+    def open_at(self):
+        return self.start_at if self.start_at else self.created_at
+
     @cached_property
     def time(self):
         """
         表示用
         """
-        base_time = self.start_at if self.start_at else self.created_at
-        t = base_time + datetime.timedelta(hours=8)
+        t = self.open_at + datetime.timedelta(hours=8)
         return t.strftime("%Y年%m月%d日 %H:%M")
 
     @cached_property
@@ -112,8 +120,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         """
         表示用
         """
-        base_time = self.start_at if self.start_at else self.created_at
-        t = base_time + datetime.timedelta(hours=8)
+        t = self.open_at + datetime.timedelta(hours=8)
         return t.strftime("%Y/%m/%d")
 
     @cached_property
@@ -150,6 +157,10 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
         if not prev_page.is_enable():
             return prev_page.prev_page
         return prev_page
+
+    @property
+    def created_in_3days(self):
+        pass
 
     def generate_top_body(self, _limit):
         top_body = self.page_top.replace('<br/>', '')

@@ -55,7 +55,7 @@ class Page(DBBaseMixin, CreateUpdateMixin, Base):
 
     @classmethod
     def gets_new(cls, _limit):
-        now = datetime.datetime.now(pytz.utc)
+        now = datetime.datetime.now(pytz.utc) - datetime.timedelta(seconds=3600)
         return cls.objects().filter(or_(cls.start_at==None, cls.start_at<=now)).order_by(desc(cls.id)).limit(_limit).all()
 
     @classmethod

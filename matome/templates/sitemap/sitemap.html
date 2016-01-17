@@ -25,4 +25,13 @@
         <priority>{% if page.open_at > one_days_ago %}0.8{% elif page.open_at > three_days_ago %}0.5{% else %}0.3{% endif %}</priority>
     </url>
     {% endfor %}
+{#キーワードページ毎10000件#}
+    {% for keyword in new_keyword_pages %}
+    <url>
+        <loc>{{ url_base }}{{ keyword.page.site.title }}/dat/matome/{{ keyword.keyword_id }}/100000000</loc>
+        <lastmod>{{ keyword.page.open_at.strftime('%Y-%m-%d') }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>{% if keyword.page.open_at > one_days_ago %}0.8{% elif keyword.page.open_at > three_days_ago %}0.5{% else %}0.3{% endif %}</priority>
+    </url>
+    {% endfor %}
 </urlset>

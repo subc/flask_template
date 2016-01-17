@@ -18,6 +18,7 @@ IGNORE_NAMES = [
     "browserconfig.xml",
 ]
 
+
 def requires_site_title(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

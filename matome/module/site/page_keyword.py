@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+import datetime
+
+import pytz
 from pip._vendor.distlib.util import cached_property
-from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc, func
+from sqlalchemy import Column, String, Integer, Text, UnicodeText, UniqueConstraint, Index, desc, func, or_
 from sqlalchemy.ext.declarative import declarative_base
 from module.db.base import DBBaseMixin, CreateUpdateMixin
 from module.site.page import Page
@@ -39,6 +42,10 @@ class PageKeywordRelation(DBBaseMixin, Base):
     @cached_property
     def page(self):
         return Page.get(self.page_id)
+
+    @classmethod
+    def gets_new(cls, _limit):
+        return cls.objects().filter().order_by(desc(cls.id)).limit(_limit).all()
 
     @classmethod
     def register(cls, pages):

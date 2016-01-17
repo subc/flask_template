@@ -45,10 +45,10 @@
         {% endwith %}
 
         <!--BODY-->
-        {% if list_pages %}
+        {% if relations %}
             <hr>
-            {% with title="『" + keyword.keyword + "』関連記事", list_pages=list_pages, is_keyword=1 %}
-                {% include '/parts/parts_full_list.html' %}
+            {% with title="『" + keyword.keyword + "』関連記事", relations=relations %}
+                {% include '/parts/parts_full_list_keyword.html' %}
             {% endwith %}
         {% endif %}
         <!--BODY-->

@@ -67,40 +67,40 @@ def keyword(site, keyword_id, start_keyword_id):
     start_keyword_id = int(start_keyword_id)
     keyword = Keyword.get(keyword_id)
     if start_keyword_id == 100000000:
-        relation = PageKeywordRelation.get_from_new_keyword(keyword_id, _limit=_limit)
+        keyword_relation = PageKeywordRelation.get_from_new_keyword(keyword_id, _limit=_limit)
     else:
-        relation = PageKeywordRelation.get_from_keyword(keyword_id, start_keyword_id, _limit=_limit)
+        keyword_relation = PageKeywordRelation.get_from_keyword(keyword_id, start_keyword_id, _limit=_limit)
 
     # pageが公開可能かチェックする
     now = datetime.datetime.now(tz=pytz.utc)
-    relation = [r for r in relation if r.page.is_enable(now=now)]
+    keyword_relation = [r for r in keyword_relation if r.page.is_enable(now=now)]
 
     is_end = False
-    if len(relation) >= 2:
-        pages = [r.page for r in relation]
+    if len(keyword_relation) >= 2:
+        pages = [r.page for r in keyword_relation]
         contents = pages[0]
         prev_contents = pages[1]
-        is_next = relation[1].id
-        pages = pages[2:]
-    elif len(relation) == 1:
-        pages = [r.page for r in relation]
+        is_next = keyword_relation[1].id
+        relations = keyword_relation[2:]
+    elif len(keyword_relation) == 1:
+        pages = [r.page for r in keyword_relation]
         contents = pages[0]
         prev_contents = None
         is_next = None
         is_end = True
-        pages = pages[2:]
+        relations = keyword_relation[2:]
     else:
-        pages = None
         contents = None
         prev_contents = None
         is_next = None
+        relations = None
 
     return render_template('dat/keyword.html',
                            site=site,
                            keyword=keyword,
                            contents=contents,
                            prev_contents=prev_contents,
-                           list_pages=pages,
+                           relations=relations,
                            is_next=is_next,
                            is_end=is_end)
 

@@ -1,0 +1,36 @@
+<div class="row">
+    <div>
+        <div class="list-group">
+            {% if title %}
+                <a href="#" class="list-group-item active">
+                    <h4 class="list-group-item-heading">{{ title }}</h4>
+                </a>
+            {% endif %}
+            {% for relation in relations %}
+                <a href="{{ url_for('dat.keyword', site_title=site.title, keyword_id=keyword.id, start_keyword_id=relation.id) }}" class="list-group-item">
+                    <div class="keyword-list-wrap">
+                        {% if relation.page.site_id != site.id %}
+                            {# クローラー用のPR記事#}
+                            <div class="label-pr">【PR】{{ relation.page.site.short_name }}</div>
+                        {% endif %}
+
+                        <div class="keyword-list-wrap-icon"
+                             style='background-image:url("{{ relation.page.background_image }}");'>
+                        </div>
+                        <div class="keyword-list-wrap-body">
+                            <div style="height: 50px">
+                                <p class="keyword-list-text-title">{{ relation.page.list_label }}</p><br />
+                            </div>
+                            <div>
+                                {% if relation.page.site_id == site.id %}
+                                    <p class="keyword-list-text-position">{{ relation.page.time }} </p>
+                                    <div class="keyword-list-text-position {{ relation.page.star_level }}" style="margin-left: 10px; margin-top: 11px"></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -6,12 +6,25 @@ import datetime
 from module.site.site import Site
 from flask import redirect, url_for
 from utils.app_log import app_log
+from flask import abort
 
+
+IGNORE_NAMES = [
+    "favicon.ico",
+    "robots.txt",
+    "apple-touch-icon.png",
+    "apple-touch-icon-precomposed.png",
+    "mstile-144x144.png",
+    "browserconfig.xml",
+]
 
 def requires_site_title(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         site_title = kwargs.pop('site_title')
+
+        if site_title in IGNORE_NAMES:
+            return abort(404)
         try:
             site = Site.get_title(site_title)
         except IndexError:

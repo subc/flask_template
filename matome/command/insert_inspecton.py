@@ -8,6 +8,8 @@ from module.scraping.inspection import InspectionWord
 INSPECTION_WORD = [
     "在日",
     "畜生以下",
+    "池沼",
+    "低スペカス",
     "ゴミカス",
     "知恵遅れ",
     "気持ち悪い",

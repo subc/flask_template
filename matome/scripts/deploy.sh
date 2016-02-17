@@ -2,11 +2,11 @@
 # エラーなら停止
 set -eu
 
-echo "conoha deploy start"
+echo "conoha2 deploy start"
 /Users/ikeda/.virtualenvs/py35/bin/py.test /Users/ikeda/punk/matome/matome/tests/tests_deploy.py
-ssh -l root conoha "date"
-ssh -l root conoha "cd /var/flask/matome/matome && git pull origin master"
-ssh -l root conoha "/usr/bin/supervisorctl -c /etc/supervisord.conf restart gunicorn"
+ssh -l root conoha2 "date"
+ssh -l root conoha2 "cd /var/flask/matome/matome && git pull origin master"
+ssh -l root conoha2 "/usr/bin/supervisorctl -c /etc/supervisord.conf restart gunicorn"
 echo "~~~~~~~~~~~~"
 echo "deploy finish"
 echo "~~~~~~~~~~~~"
@@ -23,5 +23,5 @@ curl -LI http://www.niku.tokyo/phantom/ -o /dev/null -w '%{http_code}\n' -s
 curl -LI http://www.niku.tokyo/fallout4/ -o /dev/null -w '%{http_code}\n' -s
 curl -LI http://www.niku.tokyo/fallout4/ -o /dev/null -w '%{http_code}\n' -s
 echo "~~~~~~~~~~~~"
-echo "conoha deploy finish"
+echo "conoha2 deploy finish"
 echo "~~~~~~~~~~~~"

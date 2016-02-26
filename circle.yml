@@ -10,11 +10,11 @@ dependencies:
 dependencies:
   pre:
     - chmod -R 777 ./matome
-    - export PYTHONPATH="~/matome"
+    - export PYTHONPATH="/home/ubuntu/flask_template/matome/matome"
 
 
 test:
   override:
-    - pwd ~/matome/
-    - cd ./matome & python ./manage.py ci
+    - pwd ~
+    - python ./matome/matome/manage.py ci
     - exit 0

@@ -6,8 +6,10 @@ dependencies:
   override:
     - pip install -r ./requirements.txt
 
-test:
-  override:
+# 実行権限付与
+dependencies:
+  pre:
+    - chmod -x ./matome
 
 test:
   override:

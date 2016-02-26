@@ -10,8 +10,11 @@ dependencies:
 dependencies:
   pre:
     - chmod -R 777 ./matome
+    - export PYTHONPATH="~/matome"
+
 
 test:
   override:
+    - pwd ~/matome/
     - cd ./matome & python ./manage.py ci
     - exit 0

@@ -11,7 +11,12 @@ dependencies:
     - chmod -R 777 ./matome
     - export PYTHONPATH="/home/ubuntu/flask_template/matome/matome"
     - mkdir /tmp/log
-    - python ./matome/manage.py runserver &
+
+machine:
+  post:
+    - python ./matome/manage.py runserver:
+          background: true
+    - sleep 5
 
 test:
   override:

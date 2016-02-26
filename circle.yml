@@ -17,5 +17,6 @@ test:
   override:
     - pwd ~
     - python ./matome/manage.py ci
-    - curl http://localhost:5000/
+    - ifconfig
+    - curl http://127.0.0.1:5000/
     - exit 0

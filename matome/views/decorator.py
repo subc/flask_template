@@ -25,13 +25,14 @@ def requires_site_title(f):
         site_title = kwargs.pop('site_title')
 
         if site_title in IGNORE_NAMES:
-            return abort(404)
+            # faviconやrobots.txtにアクセスされた場合
+            app_log(logging.ERROR, "File does not exist :{}".format(site_title))
+            return "File does not exist"
         try:
             site = Site.get_title(site_title)
         except IndexError:
             # サイトトップにリダイレクト
             app_log(logging.ERROR, "Site title does not exist :{}".format(site_title))
-            raise
             return redirect(url_for('site_top.index'))
         return f(site, **kwargs)
     return decorated_function

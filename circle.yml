@@ -6,13 +6,12 @@ dependencies:
   override:
     - pip install -r ./requirements.txt
 
-# 実行権限付与
 dependencies:
   pre:
     - chmod -R 777 ./matome
     - export PYTHONPATH="/home/ubuntu/flask_template/matome/matome"
     - mkdir /tmp/log
-    - python ./matome/manage.py runserver
+    - python ./matome/manage.py runserver &
 
 test:
   override:

@@ -12,6 +12,7 @@ class CI(Command):
     def run(self):
         test_urls = [
             "http://127.0.0.1:5000/example/",
+            "http://127.0.0.1:5000/example/hogehoge/ghost-url",
         ]
 
         for url in test_urls:

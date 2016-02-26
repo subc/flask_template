@@ -9,7 +9,7 @@ dependencies:
 # 実行権限付与
 dependencies:
   pre:
-    - chmod -x ./matome
+    - chmod 777 ./matome
 
 test:
   override:

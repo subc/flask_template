@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from command.insert_inspecton import INSPECTION_WORD
+from command.insert_inspection import INSPECTION_WORD
 from module.scraping.inspection import inspection_affiliate
 from flask_script import Command, Option
 from module.scraping.inspection import InspectionWord

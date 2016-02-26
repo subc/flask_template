@@ -13,5 +13,5 @@ dependencies:
 
 test:
   override:
-    - ./matome/manage.py ci
+    - cd ./matome & python ./manage.py ci
     - exit 0

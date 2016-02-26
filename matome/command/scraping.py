@@ -4,7 +4,7 @@ import traceback
 import time
 from flask_script import Command, Option
 
-from command.insert_inspecton import INSPECTION_WORD
+from command.insert_inspection import INSPECTION_WORD
 from module.scraping.inspection import InspectionWord
 from module.scraping.search import SearchManager
 from module.site.site import Site

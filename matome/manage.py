@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask_script import Manager, Server
 from app import create_app
-from command.insert_inspecton import InsertInspection
+from command.insert_inspection import InsertInspection
 from command.inspecton_check import InspectionCheck
 from command.migrate_db import MigrateDB
 from command.scraping import Scraping

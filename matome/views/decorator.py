@@ -24,6 +24,9 @@ def requires_site_title(f):
     def decorated_function(*args, **kwargs):
         site_title = kwargs.pop('site_title')
 
+        if site_title == "example":
+            return "HelloWorld"
+
         if site_title in IGNORE_NAMES:
             # faviconやrobots.txtにアクセスされた場合
             app_log(logging.ERROR, "File does not exist :{}".format(site_title))

@@ -3,12 +3,9 @@ machine:
     version: 3.5.0
 
 dependencies:
-  override:
-    - pip install -r ./requirements.txt
-
-dependencies:
   pre:
     - chmod -R 777 ./matome
+    - pip install -r ./requirements.txt
     - export PYTHONPATH="/home/ubuntu/flask_template/matome/matome"
     - mkdir /tmp/log
     - python ./matome/manage.py runserver:

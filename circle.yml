@@ -11,7 +11,7 @@ dependencies:
   pre:
     - chmod -R 777 ./matome
     - export PYTHONPATH="/home/ubuntu/flask_template/matome/matome"
-
+    - mkdir -r /tmp/log
 
 test:
   override:

@@ -12,7 +12,6 @@ class CI(Command):
     def run(self):
         test_urls = [
             "http://127.0.0.1:5000/example/",
-            "http://127.0.0.1:5000/example/hogehoge/ghost-url",
         ]
 
         for url in test_urls:
@@ -25,5 +24,5 @@ def get_test(url):
         "content-type": "text/html; charset=UTF-8"
     }
     response = requests.get(url, headers=headers)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.status_code
     assert "Error" not in response.text

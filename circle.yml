@@ -16,5 +16,5 @@ dependencies:
 test:
   override:
     - pwd ~
-    - python ./matome/matome/manage.py ci
+    - python ./matome/manage.py ci
     - exit 0

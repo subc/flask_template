@@ -6,6 +6,7 @@ from command.inspecton_check import InspectionCheck
 from command.migrate_db import MigrateDB
 from command.scraping import Scraping
 from command.search import Search
+from command.ci import CI
 
 manager = Manager(create_app)
 
@@ -26,6 +27,8 @@ manager.add_command('check', InspectionCheck())
 manager.add_command('ck', InspectionCheck())
 # runserver
 manager.add_command('runserver', Server(use_reloader=True))
+# ci
+manager.add_command('ci', CI())
 
 
 if __name__ == "__main__":

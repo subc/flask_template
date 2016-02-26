@@ -8,4 +8,8 @@ dependencies:
 
 test:
   override:
+
+test:
+  override:
+    - ./matome/manage.py ci
     - exit 0

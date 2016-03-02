@@ -3,7 +3,7 @@ import os
 import threading
 import logging
 from logging.handlers import RotatingFileHandler
-from views import root, dat, site_top, sitemap
+from views import root, dat, site_top, sitemap, vote
 from flask import Flask
 
 tls = threading.local()
@@ -29,6 +29,7 @@ def create_app(config=None):
     # 機能毎のURLを定義
     app.register_blueprint(site_top.app, url_prefix="/")
     app.register_blueprint(sitemap.app, url_prefix="/sitemap")
+    app.register_blueprint(vote.app, url_prefix="/vote")
     app.register_blueprint(root.app, url_prefix="/<site_title>")
     app.register_blueprint(dat.app, url_prefix="/<site_title>/dat")
 

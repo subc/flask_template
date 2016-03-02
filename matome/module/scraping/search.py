@@ -53,6 +53,7 @@ class SearchManager(object):
         keywords = [
             'ファンキル',
             'オブキル',
+            'ファントムオブキル',
         ]
         keywords_ignore = ignore_base
         return _base_search(subjects, site, keywords, keywords_ignore)

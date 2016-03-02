@@ -66,7 +66,10 @@ def result():
     body = ''
     for k, v in r:
         body += '{}:{}<br />'.format(k, v)
-    return body
+
+    body2 = '<br />'.join(VoteStorage.get_names())
+
+    return body + '<hr />' + body2
 
 
 @app.route("/delete123/", methods=['GET'])

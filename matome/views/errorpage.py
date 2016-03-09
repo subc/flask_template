@@ -2,6 +2,7 @@
 import datetime
 from flask import render_template
 
+from module.site.exceptions import SiteEmptyError
 from module.site.page import Page
 from module.view_manager.view_util import generate_index_contents
 from enum import Enum
@@ -20,7 +21,11 @@ def error_page(site, error):
                     page_top=error.value,
                     _keywords="",
                     created_at=datetime.datetime.now())
-    svm = generate_index_contents(site)
+    svm = None
+    try:
+        svm = generate_index_contents(site)
+    except SiteEmptyError:
+        pass
     return render_template('dat/page.html',
                            contents=contents,
                            site=site,
@@ -30,3 +35,4 @@ def error_page(site, error):
 class ErrorPageCategory(Enum):
     DoesNotExist = "存在しないページです。"
     NotOpen = "非公開中のページです。"
+    SiteIsEmpty = "記事が存在しません。"

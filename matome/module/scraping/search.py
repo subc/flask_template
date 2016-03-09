@@ -13,6 +13,7 @@ ignore_base = [
     '募集',
     '垢',
     '乞食',
+    '葬式',
 ]
 
 
@@ -253,6 +254,47 @@ class SearchManager(object):
         keywords = [
             'タガタメ',
             '誰ガ為',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def darksouls3(self, subjects, site):
+        keywords = [
+            'ダークソウル3',
+            'ダークソウル３',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def dqmj3(self, subjects, site):
+        keywords = [
+            'DQMJ3',
+            'ドラゴンクエストモンスターズ ジョーカー3',
+            'ドラゴンクエストモンスターズ ジョーカー３',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def clashroyal(self, subjects, site):
+        """
+        INSERT INTO `site` (`id`, `created_at`, `updated_at`, `name`, `short_name`, `title`, `url`, `background_image_count`, `ad_type`)
+        VALUES
+            (23, '2016-03-09 00:00:00', NULL, 'クラロワ速報（ぼす肉）', 'クラロワ3', 'clashroyal', 'http://anago.2ch.sc/applism/', NULL, NULL);
+        :param subjects:
+        :param site:
+        :return:
+        """
+        keywords = [
+            'クラッシュ・ロワイヤル',
+            'クラッシュ ロワイヤル',
+            'クラッシュロワイヤル',
+            'クラロワ',
         ]
         keywords_ignore = [
         ]

@@ -7,6 +7,7 @@ import datetime
 import pytz
 from flask import Module, render_template, Blueprint
 
+from module.site.exceptions import SiteEmptyError
 from module.site.keyword import Keyword
 from module.site.page import Page, PageViewLevel
 from module.site.page_keyword import PageKeywordRelation
@@ -44,7 +45,12 @@ def index(site, page_id):
         ignore_ids = [page_id, contents.prev_page.id]
     else:
         ignore_ids = [page_id]
-    svm = generate_index_contents(site, extend_page=extend_page, ignore_ids=ignore_ids)
+
+    try:
+        svm = generate_index_contents(site, extend_page=extend_page, ignore_ids=ignore_ids)
+    except SiteEmptyError:
+        app_log(logging.WARNING, "site is empty site_id:{} page_id:{}".format(site.id, page_id))
+        return error_page(site, ErrorPageCategory.SiteIsEmpty)
 
     # pvを記録
     if random.randint(0, 20) == 1:

@@ -5,6 +5,7 @@ import datetime
 
 import pytz
 
+from module.site.exceptions import SiteEmptyError
 from module.site.page import Page, PageViewLevel
 from module.site.site import Site
 from utils.tls_property import cached_tls
@@ -43,6 +44,10 @@ def generate_index_contents(site, _limit=30, extend_page=None, ignore_ids=()):
     else:
         pages_repository = {page.id: page for page in pages}
     pages = list(pages_repository.values())
+
+    # ページが存在しない
+    if bool(pages) is False:
+        raise SiteEmptyError
 
     # 10件未満
     if len(pages) <= 10:

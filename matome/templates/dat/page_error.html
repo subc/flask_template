@@ -1,0 +1,51 @@
+{% extends "master.html" %}
+
+{% block title %}{{ contents.title }}{{ site.title_suffix }}{% endblock %}
+{% block siteurl %}{{ site.title }}/{% endblock %}
+{% block body %}
+    {% include '/parts/parts_sub_header.html' %}
+
+    <!--TITLE-->
+    <div class="jumbotron-top-view-list-header bg-green">
+        <div class="container">
+            <h1>{{ contents.title }}</h1>
+            <p>{{ contents.sub_time }}に投稿</p>
+        </div>
+    </div>
+    <!--TITLE-->
+
+    <div class="container">
+        <!--BODY-->
+        {{ contents.page|safe }}
+        <!--BODY-->
+
+
+        <!--TAG-->
+        <div class="tags-bottom">
+            {% include '/parts/parts_tag.html' %}
+        </div>
+        <!--TAG-->
+
+        {% with prev_contents=contents.prev_page %}
+            {% include '/parts/parts_prev_page.html' %}
+        {% endwith %}
+
+{#        {% include '/parts/parts_share.html' %}#}
+
+        <!--FOOTER-->
+{#        {% with panel_pages=svm.panels %}#}
+{#            {% include '/parts/parts_panel.html' %}#}
+{#        {% endwith %}#}
+{##}
+{#        <hr>#}
+{#        {% with title="人気記事", list_pages=svm.page_list %}#}
+{#            {% include '/parts/parts_full_list.html' %}#}
+{#        {% endwith %}#}
+
+    </div> <!-- /container -->
+
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

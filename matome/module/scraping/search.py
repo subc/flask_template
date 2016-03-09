@@ -283,9 +283,6 @@ class SearchManager(object):
 
     def clashroyal(self, subjects, site):
         """
-        INSERT INTO `site` (`id`, `created_at`, `updated_at`, `name`, `short_name`, `title`, `url`, `background_image_count`, `ad_type`)
-        VALUES
-            (23, '2016-03-09 00:00:00', NULL, 'クラロワ速報（ぼす肉）', 'クラロワ3', 'clashroyal', 'http://anago.2ch.sc/applism/', NULL, NULL);
         :param subjects:
         :param site:
         :return:

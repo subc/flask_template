@@ -26,7 +26,7 @@ def error_page(site, error):
         svm = generate_index_contents(site)
     except SiteEmptyError:
         pass
-    return render_template('dat/page.html',
+    return render_template('dat/page_error.html',
                            contents=contents,
                            site=site,
                            svm=svm)

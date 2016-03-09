@@ -35,4 +35,4 @@ def error_page(site, error):
 class ErrorPageCategory(Enum):
     DoesNotExist = "存在しないページです。"
     NotOpen = "非公開中のページです。"
-    SiteIsEmpty = "記事が存在しません。"
+    SiteIsEmpty = "現在記事を準備中です。もうしばらくお待ちください。ごめんなさい。"

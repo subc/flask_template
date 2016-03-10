@@ -3,18 +3,25 @@
 {% block title %}{{ contents.title }}{{ site.title_suffix }}{% endblock %}
 {% block siteurl %}{{ site.title }}/{% endblock %}
 {% block body %}
+    <!--HEADER-->
+    {% with selector="home" %}
+        {% include '/parts/parts_header.html' %}
+    {% endwith %}
+    <!--HEADER-->
+
     {% include '/parts/parts_sub_header.html' %}
 
-    <!--TITLE-->
-    <div class="jumbotron-top-view-list-header bg-green">
-        <div class="container">
+    <div class="container">
+        <!-- トップの背景画像 -->
+        <div class="top-view-title" style='background-image: url("{{ site.top_image_path }}");'>
+            <div class="label-top-view">{{ site.name }}</div>
+        </div>
+
+        <div class="page-header">
             <h1>{{ contents.title }}</h1>
             <p>{{ contents.sub_time }}に投稿</p>
         </div>
-    </div>
-    <!--TITLE-->
 
-    <div class="container">
         <!--BODY-->
         {{ contents.page|safe }}
         <!--BODY-->

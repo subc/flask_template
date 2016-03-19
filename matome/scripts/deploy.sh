@@ -6,6 +6,7 @@ echo "conoha2 deploy start"
 /Users/ikeda/.virtualenvs/py35/bin/py.test /Users/ikeda/punk/matome/matome/tests/tests_deploy.py
 ssh -l root conoha2 "date"
 ssh -l root conoha2 "cd /var/flask/matome/matome && git pull origin master"
+ssh -l root conoha2 "cd /var/flask/matome/matome && /root/.virtualenvs/matome/bin/python manage.py -c ./config/production.py ins"
 ssh -l root conoha2 "/usr/bin/supervisorctl -c /etc/supervisord.conf restart gunicorn"
 echo "~~~~~~~~~~~~"
 echo "deploy finish"

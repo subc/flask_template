@@ -15,6 +15,9 @@ class InspectionCheck(Command):
     )
 
     def run(self, word):
+        if word is None:
+            raise ValueError('word is None:  python manage.py check  --word="あいう"')
+
         # insert
         InspectionWord.register(INSPECTION_WORD)
 

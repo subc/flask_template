@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask_script import Manager, Server
 from app import create_app
+from command.create_page_keyword_relation import CreatePageKeywordRelation
 from command.insert_inspection import InsertInspection
 from command.inspecton_check import InspectionCheck
 from command.migrate_db import MigrateDB
@@ -25,6 +26,8 @@ manager.add_command('inspection', InsertInspection())
 manager.add_command('ins', InsertInspection())
 manager.add_command('check', InspectionCheck())
 manager.add_command('ck', InspectionCheck())
+manager.add_command('create_page_keyword_relation', CreatePageKeywordRelation())
+
 # runserver
 manager.add_command('runserver', Server(use_reloader=True))
 # ci

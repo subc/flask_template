@@ -55,8 +55,8 @@ class PageKeywordRelation(DBBaseMixin, Base):
         """
         objs = []
         for page in pages:
-            for keyword in page.keywords:
-                obj = cls(page_id=page.id, keyword_id=keyword.id)
+            for keyword_id in page._keyword_ids:
+                obj = cls(page_id=page.id, keyword_id=keyword_id)
                 objs.append(obj)
 
         # バルク!

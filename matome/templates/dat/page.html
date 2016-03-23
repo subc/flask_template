@@ -22,16 +22,22 @@
             <p>{{ contents.sub_time }}に投稿</p>
         </div>
 
+        {% include '/parts/ad/1.html' %}
+
         <!--BODY-->
         {{ contents.page|safe }}
         <!--BODY-->
 
+        {% include '/parts/ad/1.html' %}
 
         <!--TAG-->
         <div class="tags-bottom">
             {% include '/parts/parts_tag.html' %}
         </div>
         <!--TAG-->
+
+        {% include '/parts/ad/1.html' %}
+
 
         {% with prev_contents=contents.prev_page %}
             {% include '/parts/parts_prev_page.html' %}

@@ -34,7 +34,9 @@
         {{ contents.page|safe }}
         <!--BODY-->
 
-        {% include '/parts/ad/1.html' %}
+        {% with each_time=5 %}
+            {% include '/parts/ad/1.html' %}
+        {% endwith %}
 
         <!--TAG-->
         <div class="tags-bottom">
@@ -42,7 +44,9 @@
         </div>
         <!--TAG-->
 
-        {% include '/parts/ad/1.html' %}
+        {% with each_time=4 %}
+            {% include '/parts/ad/1.html' %}
+        {% endwith %}
 
         {% with prev_contents=prev_contents %}
             {% include '/parts/parts_prev_page_keyword.html' %}

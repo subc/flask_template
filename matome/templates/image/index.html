@@ -1,0 +1,30 @@
+{% extends "master.html" %}
+
+
+{% block title %}{{ name }}{% endblock %}
+{% block siteurl %}{% endblock %}
+{% block headmeta %}
+<meta content="{{ name }}" name="title">
+<meta content="{{ name }}は、ゲーム好きのための情報共有サービスです。 様々なゲームに関する最新のTips、ノウハウ、メモが公開されています。" name="description">
+<meta name="robots" content="noindex">
+<meta name="googlebot" content="noindex">
+{% endblock %}
+
+{% block body %}
+    <!--HEADER-->
+    {% with selector="home" %}
+        {% include '/parts/parts_header_top.html' %}
+    {% endwith %}
+    <!--HEADER-->
+
+    <div class="container">
+        {% for site in site_all %}
+            <p style="margin-top: 200px"></p>
+            {% include '/image/parts_site_image.html' %}
+        {% endfor %}
+    </div> <!-- /container -->
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

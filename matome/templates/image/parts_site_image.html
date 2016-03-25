@@ -1,0 +1,35 @@
+<div style="">
+    <hr>
+    <h3>Title:{{ site.name }}</h3>
+    <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom"
+         style='background-image:url("{{ site.top_image_path }}")'>
+        <div class="wrap wrap-sp-margin"><a class="wrap" href="{{ url_for('index.index', site_title=site.title) }}">
+            <div class="label-top label-new">{{ site.short_name }}</div>
+            <p class="tile-font">{{ site.tile_body }} </p>
+            <p class="label-bottom wrap-sp-margin">{{ site.id }}&nbsp;-&nbsp;{{ site.name }}</p>
+        </a></div>
+    </div>
+
+    <br />
+
+    <div class="top-view-title" style='background-image: url("{{ site.top_image_path }}"); margin-top: 200px'>
+        <div class="label-top-view">{{ site.name }}</div>
+    </div>
+
+    <hr>
+
+    {#背景パネル#}
+    <div class="row">
+    {% for x in range(site.background_image_count) %}
+        <div class="col-xs-12 col-sm-6 col-lg-4 span4-custom bg-custom"
+             style='background-image:url("/static/img/site/{{ site.title }}/{{ loop.index }}.jpg")'>
+            <div class="wrap wrap-sp-margin"><a class="wrap" href="#">
+                <div class="label-top label-new">New!!</div>
+                <div class="label-top">2001年1月1日 13:00</div>
+                <p class="tile-font">{{ loop.index }}:生贄の道を右に行くとファランの城塞 左端に行くと深みの聖堂 深みの聖堂の前に結晶の古老がおるよ</p>
+                <p class="label-bottom wrap-sp-margin">{{ loop.index }}:生贄の道を右に行くとファランの城塞</p>
+            </a></div>
+        </div>
+    {% endfor %}
+    </div>
+</div>

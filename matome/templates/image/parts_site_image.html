@@ -32,4 +32,34 @@
         </div>
     {% endfor %}
     </div>
+
+    {#40px x 40px の背景パネル#}
+    <div class="row" style="margin-top: 50px">
+        <div>
+            <div class="list-group">
+                <a href="#" class="list-group-item active">
+                    <h4 class="list-group-item-heading">{{ site.name }}</h4>
+                </a>
+                {% for x in range(site.background_image_count) %}
+                        <a href="#" class="list-group-item">
+                        <div class="keyword-list-wrap">
+                            <div class="keyword-list-wrap-icon"
+                                 style='background-image:url("/static/img/site/{{ site.title }}/{{ loop.index }}.jpg");'>
+                            </div>
+                            <div class="keyword-list-wrap-body">
+                                <div style="height: 50px">
+                                    <p class="keyword-list-text-title">{{ loop.index }}:生贄の道を右に行くとファランの城塞 左端に行くと深みの聖堂</p><br />
+                                </div>
+                                <div>
+                                    <p class="keyword-list-text-position">2001年1月1日 13:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
 </div>

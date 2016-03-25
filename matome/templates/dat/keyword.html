@@ -34,11 +34,15 @@
         {{ contents.page|safe }}
         <!--BODY-->
 
+        {% include '/parts/ad/1.html' %}
+
         <!--TAG-->
         <div class="tags-bottom">
             {% include '/parts/parts_tag.html' %}
         </div>
         <!--TAG-->
+
+        {% include '/parts/ad/1.html' %}
 
         {% with prev_contents=prev_contents %}
             {% include '/parts/parts_prev_page_keyword.html' %}

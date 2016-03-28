@@ -59,8 +59,9 @@
 
         {% include '/parts/ad/2.html' %}
 
-        {% include '/parts/ad/parts_ad_footer.html' %}
-
+        {% with each_time=3 %}
+            {% include '/parts/ad/parts_ad_footer.html' %}
+        {% endwith %}
 
     </div> <!-- /container -->
 

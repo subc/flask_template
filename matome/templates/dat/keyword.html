@@ -34,7 +34,7 @@
         {{ contents.page|safe }}
         <!--BODY-->
 
-        {% with each_time=5 %}
+        {% with each_time=3 %}
             {% include '/parts/ad/1.html' %}
         {% endwith %}
 
@@ -71,6 +71,10 @@
                 </a>
             </div>
         {% endif %}
+
+        {% with each_time=3 %}
+            {% include '/parts/ad/parts_ad_footer.html' %}
+        {% endwith %}
 
     </div> <!-- /container -->
 

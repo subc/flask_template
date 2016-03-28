@@ -7008,6 +7008,10 @@ button.close {
       font-size: 14px;
   }
 }
-
+@media (max-height: 660px) {
+  .disabled-small-browser{
+      display: none;
+  }
+}
 
 /*# sourceMappingURL=bootstrap.css.map */

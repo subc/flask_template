@@ -7008,7 +7008,7 @@ button.close {
       font-size: 14px;
   }
 }
-@media (max-height: 660px) {
+@media (max-height: 600px) {
   .disabled-small-browser{
       display: none;
   }

@@ -4,13 +4,10 @@
 {% block siteurl %}{{ site.title }}/{% endblock %}
 {% block body %}
     <!--HEADER-->
-    {% with selector="home" %}
+    {% with selector="page" %}
         {% include '/parts/parts_header.html' %}
     {% endwith %}
     <!--HEADER-->
-
-    {% include '/parts/parts_sub_header.html' %}
-
     <div class="container">
         <!-- トップの背景画像 -->
         <div class="top-view-title" style='background-image: url("{{ site.top_image_path }}");'>

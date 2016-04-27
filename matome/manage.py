@@ -5,6 +5,7 @@ from command.create_page_keyword_relation import CreatePageKeywordRelation
 from command.insert_inspection import InsertInspection
 from command.inspecton_check import InspectionCheck
 from command.migrate_db import MigrateDB
+from command.pickup import Pickup
 from command.scraping import Scraping
 from command.search import Search
 from command.ci import CI
@@ -21,11 +22,11 @@ manager.add_command('migrate', MigrateDB())
 manager.add_command('scraping', Scraping())
 manager.add_command('search', Search())
 manager.add_command('sc', Scraping())
-# inspectionコマンド
 manager.add_command('inspection', InsertInspection())
 manager.add_command('ins', InsertInspection())
 manager.add_command('check', InspectionCheck())
 manager.add_command('ck', InspectionCheck())
+manager.add_command('pickup', Pickup())
 manager.add_command('create_page_keyword_relation', CreatePageKeywordRelation())
 
 # runserver

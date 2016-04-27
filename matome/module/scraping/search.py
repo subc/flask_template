@@ -313,6 +313,20 @@ class SearchManager(object):
         keywords_ignore += ignore_base
         return _base_search(subjects, site, keywords, keywords_ignore)
 
+    def seven(self, subjects, site):
+        """
+        :param subjects:
+        :param site:
+        :return:
+        """
+        keywords = [
+            'セブンナイツ',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
 
 def _base_search(subjects, site, keywords, keywords_ignore):
     """

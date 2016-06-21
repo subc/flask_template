@@ -342,6 +342,37 @@ class SearchManager(object):
         keywords_ignore += ignore_base
         return _base_search(subjects, site, keywords, keywords_ignore)
 
+    def dp(self, subjects, site):
+        """
+        :param subjects:
+        :param site:
+        :return:
+        """
+        keywords = [
+            'ドラプロ',
+            'ドラゴンプロジェクト',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
+    def hstone(self, subjects, site):
+        """
+        :param subjects:
+        :param site:
+        :return:
+        """
+        keywords = [
+            'シャドバ',
+            'シャドウバース',
+            'Shadowverse',
+        ]
+        keywords_ignore = [
+        ]
+        keywords_ignore += ignore_base
+        return _base_search(subjects, site, keywords, keywords_ignore)
+
 
 def _base_search(subjects, site, keywords, keywords_ignore):
     """

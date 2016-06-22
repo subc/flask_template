@@ -10,10 +10,9 @@
     <!--HEADER-->
     <div class="container">
         <!-- トップの背景画像 -->
-        <div class="top-view-title" style='background-image: url("{{ site.top_image_path }}");'>
-{#        <div class="top-view-title">#}
-            <div class="label-top-view">{{ site.name }}</div>
-        </div>
+{#        <div class="top-view-title" style='background-image: url("{{ site.top_image_path }}");'>#}
+{#            <div class="label-top-view">{{ site.name }}</div>#}
+{#        </div>#}
 
         <div class="page-header">
             <h1>{{ contents.title }}</h1>
@@ -26,7 +25,7 @@
 
         {% with seed=range(3)|random %}
             {% if seed==0 or seed==2 %}
-{#                {% include '/parts/ad/1.html' %}#}
+                {% include '/parts/ad/1.html' %}
             {% endif %}
 
             <!--TAG-->
@@ -36,7 +35,7 @@
             <!--TAG-->
 
             {% if seed==1 or seed==2 %}
-{#                {% include '/parts/ad/1.html' %}#}
+                {% include '/parts/ad/1.html' %}
             {% endif %}
         {% endwith %}
 
@@ -44,7 +43,7 @@
             {% include '/parts/parts_prev_page.html' %}
         {% endwith %}
 
-        {% include '/parts/parts_share.html' %}
+{#        {% include '/parts/parts_share.html' %}#}
 
         <!--FOOTER-->
 

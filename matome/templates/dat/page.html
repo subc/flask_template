@@ -23,21 +23,21 @@
         {{ contents.page|safe }}
         <!--BODY-->
 
-        {% with seed=range(3)|random %}
-            {% if seed==0 or seed==2 %}
-                {% include '/parts/ad/1.html' %}
-            {% endif %}
-
-            <!--TAG-->
-            <div class="tags-bottom">
-                {% include '/parts/parts_tag.html' %}
-            </div>
-            <!--TAG-->
-
-            {% if seed==1 or seed==2 %}
-                {% include '/parts/ad/1.html' %}
-            {% endif %}
-        {% endwith %}
+{#        {% with seed=range(3)|random %}#}
+{#            {% if seed==0 or seed==2 %}#}
+{#                {% include '/parts/ad/1.html' %}#}
+{#            {% endif %}#}
+{##}
+{#            <!--TAG-->#}
+{#            <div class="tags-bottom">#}
+{#                {% include '/parts/parts_tag.html' %}#}
+{#            </div>#}
+{#            <!--TAG-->#}
+{##}
+{#            {% if seed==1 or seed==2 %}#}
+{#                {% include '/parts/ad/1.html' %}#}
+{#            {% endif %}#}
+{#        {% endwith %}#}
 
         {% with prev_contents=contents.prev_page %}
             {% include '/parts/parts_prev_page.html' %}
@@ -47,14 +47,14 @@
 
         <!--FOOTER-->
 
-        {% with panel_pages=svm.panels %}
-            {% include '/parts/parts_panel.html' %}
-        {% endwith %}
+{#        {% with panel_pages=svm.panels %}#}
+{#            {% include '/parts/parts_panel.html' %}#}
+{#        {% endwith %}#}
 
         <hr>
-        {% with title="人気記事", list_pages=svm.page_list %}
-            {% include '/parts/parts_full_list.html' %}
-        {% endwith %}
+{#        {% with title="人気記事", list_pages=svm.page_list %}#}
+{#            {% include '/parts/parts_full_list.html' %}#}
+{#        {% endwith %}#}
 
 {#        {% with each_time=3 %}#}
 {#            {% include '/parts/ad/parts_ad_footer.html' %}#}

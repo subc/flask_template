@@ -6979,15 +6979,11 @@ button.close {
   .bg-custom {
     background-position: 0px 50px;
     background-repeat: repeat-x;
-    margin-left: 8px;
+    /*margin-left: 8px;*/
     /*padding-left: 8px;*/
   }
   .wrap-sp-margin{
     margin-left: -10px;
-  }
-  .span4-custom {
-    height: 210px;
-    position: relative;
   }
   .label-bottom {
     width: 100%;

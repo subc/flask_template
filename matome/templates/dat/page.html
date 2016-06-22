@@ -47,9 +47,9 @@
 
         <!--FOOTER-->
 
-{#        {% with panel_pages=svm.panels %}#}
-{#            {% include '/parts/parts_panel.html' %}#}
-{#        {% endwith %}#}
+        {% with panel_pages=svm.panels %}
+            {% include '/parts/parts_panel.html' %}
+        {% endwith %}
 
         <hr>
         {% with title="人気記事", list_pages=svm.page_list %}

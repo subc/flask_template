@@ -6922,7 +6922,6 @@ button.close {
   }
 }
 
-
 @media (min-width: 1200px) {
   .bg-custom {
     background-position: 10px 30px;
@@ -6932,6 +6931,12 @@ button.close {
   }
   .keyword-list-text-title{
       font-size: 20px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .bg-custom {
+    margin-top: -30px;
   }
 }
 

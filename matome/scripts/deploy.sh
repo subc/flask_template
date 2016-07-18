@@ -4,10 +4,10 @@ set -eu
 
 echo "conoha2 deploy start"
 ~/.virtualenvs/matome/bin/py.test ~/python/matome/matome/tests/tests_deploy.py
-ssh -l root conoha2 "date"
-ssh -l root conoha2 "cd /var/flask/matome/matome && git pull origin master"
-ssh -l root conoha2 "cd /var/flask/matome/matome && /root/.virtualenvs/matome/bin/python manage.py -c ./config/production.py ins"
-ssh -l root conoha2 "/usr/bin/supervisorctl -c /etc/supervisord.conf restart gunicorn"
+ssh -l root conoha "date"
+ssh -l root conoha "cd /var/flask/matome/matome && git pull origin master"
+ssh -l root conoha "cd /var/flask/matome/matome && /root/.virtualenvs/matome/bin/python manage.py -c ./config/production.py ins"
+ssh -l root conoha "/usr/bin/supervisorctl -c /etc/supervisord.conf restart gunicorn"
 echo "~~~~~~~~~~~~"
 echo "deploy finish"
 echo "~~~~~~~~~~~~"

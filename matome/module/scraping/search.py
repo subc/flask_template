@@ -87,6 +87,8 @@ class SearchManager(object):
         ]
         keywords_ignore = [
             '糞猫',
+            'テニス',
+            '白テニ',
         ]
         keywords_ignore += ignore_base
         return _base_search(subjects, site, keywords, keywords_ignore)

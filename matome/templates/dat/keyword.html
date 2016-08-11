@@ -35,18 +35,18 @@
         <!--BODY-->
 
         {% with seed=range(3)|random %}
-            {% if seed==0 or seed==2 %}
-                {% include '/parts/ad/1.html' %}
-            {% endif %}
+{#            {% if seed==0 or seed==2 %}#}
+{#                {% include '/parts/ad/1.html' %}#}
+{#            {% endif %}#}
 
             <!--TAG-->
             <div class="tags-bottom">
                 {% include '/parts/parts_tag.html' %}
             </div>
             <!--TAG-->
-            {% if seed==1 or seed==2 %}
-                {% include '/parts/ad/1.html' %}
-            {% endif %}
+{#            {% if seed==1 or seed==2 %}#}
+{#                {% include '/parts/ad/1.html' %}#}
+{#            {% endif %}#}
         {% endwith %}
 
         {% with prev_contents=prev_contents %}

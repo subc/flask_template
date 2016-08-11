@@ -24,9 +24,9 @@
         <!--BODY-->
 
         {% with seed=range(3)|random %}
-            {% if seed==0 or seed==2 %}
-                {% include '/parts/ad/1.html' %}
-            {% endif %}
+{#            {% if seed==0 or seed==2 %}#}
+{#                {% include '/parts/ad/1.html' %}#}
+{#            {% endif %}#}
 
             <!--TAG-->
             <div class="tags-bottom">
@@ -34,9 +34,9 @@
             </div>
             <!--TAG-->
 
-            {% if seed==1 or seed==2 %}
-                {% include '/parts/ad/1.html' %}
-            {% endif %}
+{#            {% if seed==1 or seed==2 %}#}
+{#                {% include '/parts/ad/1.html' %}#}
+{#            {% endif %}#}
         {% endwith %}
 
         {% with prev_contents=contents.prev_page %}
@@ -56,9 +56,9 @@
             {% include '/parts/parts_full_list.html' %}
         {% endwith %}
 
-        {% with each_time=3 %}
-            {% include '/parts/ad/parts_ad_footer.html' %}
-        {% endwith %}
+{#        {% with each_time=3 %}#}
+{#            {% include '/parts/ad/parts_ad_footer.html' %}#}
+{#        {% endwith %}#}
 
     </div> <!-- /container -->
 

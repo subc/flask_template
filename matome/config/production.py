@@ -11,3 +11,6 @@ DB = {
 }
 
 debug = False
+
+import config.credentials
+TWITTER = config.credentials.Twitter

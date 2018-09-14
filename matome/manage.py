@@ -9,6 +9,7 @@ from command.pickup import Pickup
 from command.scraping import Scraping
 from command.search import Search
 from command.ci import CI
+from command.task_twitter import TaskTwitter
 
 manager = Manager(create_app)
 
@@ -18,6 +19,11 @@ manager.add_option('-c', '--config', dest='config', required=False)
 ######################
 # コマンド追加
 ######################
+
+# v2
+manager.add_command('tw', TaskTwitter())
+
+# v1
 manager.add_command('migrate', MigrateDB())
 manager.add_command('scraping', Scraping())
 manager.add_command('search', Search())
@@ -31,6 +37,7 @@ manager.add_command('create_page_keyword_relation', CreatePageKeywordRelation())
 
 # runserver
 manager.add_command('runserver', Server(use_reloader=True))
+
 # ci
 manager.add_command('ci', CI())
 

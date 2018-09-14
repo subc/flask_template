@@ -5,7 +5,7 @@ import random
 import datetime
 
 import pytz
-from flask import Module, render_template, Blueprint
+from flask import render_template, Blueprint
 
 from module.site.exceptions import SiteEmptyError
 from module.site.keyword import Keyword

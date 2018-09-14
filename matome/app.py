@@ -9,22 +9,9 @@ from flask import Flask
 tls = threading.local()
 
 
-def create_app(config=None):
+def create_app(config):
     app = Flask(__name__, static_url_path='/static')
-
-    # configをtlsに保存して、2回目以降呼び出したときにもmanage.pyで指定したconfigにアクセスする
-    if config:
-        tls.config_path = config
-    if hasattr(tls, "config_path"):
-        config_path = tls.config_path
-        config = os.path.join(app.root_path, config_path)
-
-    # config未設定のときはdefault configを読む
-    if config is None:
-        config = os.path.join(app.root_path, 'config/config_local.py')
-
-    app.config.from_pyfile(config)
-    app.debug = app.config.get('debug')
+    app.config.from_object(config)
 
     # 機能毎のURLを定義
     app.register_blueprint(site_top.app, url_prefix="/")
